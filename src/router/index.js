@@ -7,6 +7,7 @@ import Component3 from "../views/Component3.vue";
 import Component4 from "../views/Component4.vue";
 import SoftGrid1 from "../views/SoftGrid1.vue";
 import editGrid from "../views/editGrid.vue";
+import editGrid1 from "../views/EditGrid1.vue";
 import TheNavigation from "../components/TheNavigation.vue";
 
 
@@ -61,7 +62,13 @@ const routes = [
     path: "/edit",
     name: "editGrid",
     component: editGrid
+  },
+  {
+    path: "/editLayout",
+    name: "editLayout",
+    component: editGrid1
   }
+
 
 ];
 
