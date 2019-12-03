@@ -6,6 +6,7 @@
                              :key="index"
                              :card-style=instance.card_parameters.style
                              :card-id="instance.id"
+                             :card-position=instance.card_position
                              @storeValue="processClick"
                              ref="instance.id">{{instance.message}}</blank-component>
         </div>
@@ -41,6 +42,7 @@
     methods:{
       processClick(msg){
         console.log(msg[0]);
+        debugger;
         if(this.topLeftClicked==0){
           this.topLeftClicked=msg[0];
         }else{

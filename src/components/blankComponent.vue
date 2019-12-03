@@ -7,7 +7,7 @@
 </template>
 
 <script>
-  /* eslint-disable no-console */
+  /* eslint-disable no-console,no-debugger */
 
   export default {
     name: "blankComponent",
@@ -18,6 +18,10 @@
       },
       cardId: {
         type: String,
+        required: true
+      },
+      cardPosition: {
+        type: Array,
         required: true
       }
     },
