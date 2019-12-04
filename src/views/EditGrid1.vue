@@ -30,7 +30,11 @@
         topLeftClicked: 0,
         bottomRightClicked: 0,
         cstatus: 0,
-        showButtons: false
+        showButtons: false,
+        topLeftRow:0,
+        topLeftCol:0,
+        bottomRightRow:0,
+        bottomRightCol:0
       }
     },
     created: function() {
@@ -65,6 +69,7 @@
             this.cstatus=this.BOTTOMRIGHTCLICKED;
             this.showButtons=true;
             this.$refs.key[msg].$el.style.backgroundColor='#66bb6a';
+            this.cardInstances.forEach(this.fillInCell);
             this.$refs.prompt.innerHTML = "Is this the area you wish to fill ? ";
             break;
           case this.BOTTOMRIGHTCLICKED:
@@ -83,6 +88,18 @@
       },
       noButtonClicked(){
         console.log('noButton clicked');
+      },
+      fillInCell(item, index, arr){
+        var thisCardCol = arr[index].card_position[1];
+        var thisCardRow = arr[index].card_position[0];
+        var topLeftCol = arr[this.topLeftClicked].card_position[1];
+        var topLeftRow = arr[this.topLeftClicked].card_position[0];
+        var bottomRightCol = arr[this.bottomRightClicked].card_position[1];
+        var bottomRightRow = arr[this.bottomRightClicked].card_position[0];
+        if(thisCardCol >= topLeftCol && thisCardRow >= topLeftRow && thisCardCol <= bottomRightCol && thisCardRow <= bottomRightRow){
+          console.log(item.id);
+          this.$refs.key[index].$el.style.backgroundColor='#66bb6a';
+        }
       }
     }
   };
