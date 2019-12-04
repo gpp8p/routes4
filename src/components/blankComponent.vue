@@ -20,6 +20,10 @@
         type: String,
         required: true
       },
+      cardKey:{
+        type: String,
+        required: true
+      },
       cardPosition: {
         type: Array,
         required: true
@@ -28,7 +32,10 @@
     methods: {
       cellClicked: function() {
         console.log('clicked');
-        this.$emit('storeValue', [this.cardId])
+        this.$emit('storeValue', [this.cardKey])
+      },
+      refId: function(){
+        return "card"+this.cardId;
       }
     }
   };
