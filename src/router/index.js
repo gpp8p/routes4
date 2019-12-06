@@ -64,7 +64,7 @@ const routes = [
     component: editGrid
   },
   {
-    path: "/editLayout",
+    path: "/editLayout/:layoutId",
     name: "editLayout",
     component: editGrid1
   }

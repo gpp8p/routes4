@@ -1,6 +1,18 @@
 <template>
     <div>
-        <span class="prompt" ref="prompt">Click on the top left cell of where you wish to place the card.</span><span v-show="showButtons"><MyButton @myButtonClicked="yesButtonClicked" buttonLabel="Yes"></MyButton><MyButton @myButtonClicked="noButtonClicked" buttonLabel="No"></MyButton></span>
+        <span v-show="showTopLeftPrompt" class="prompt">Click on the top left cell of where you wish to place the card ?</span>
+        <span v-show="showBottomRightPrompt" class="prompt">Click Bottom Right Cell</span>
+        <span v-show="showSelectOkButtons" class="prompt">Is this area ok for the new card ?<MyButton @myButtonClicked="yesButtonClicked" buttonLabel="Yes"></MyButton><MyButton @myButtonClicked="cancelClicked" buttonLabel="No"></MyButton></span>
+        <span v-show="showCardNamePrompt" class="prompt">
+            What do you want to name this card ?<input ref="cardName" type="text" size="20"/>
+        </span>
+        <span v-show="showCardComponentSelect">
+            <select ref="cardComponentSelect">
+                <option value="select">Select Card Type</option>
+                <option  value="blankComponent">Blank Card</option>
+            </select>
+        </span>
+        <span v-show="showSubmbitButtons"><MyButton @myButtonClicked="yesButtonClicked" buttonLabel="Submit"></MyButton><MyButton @myButtonClicked="cancelClicked" buttonLabel="Cancel"></MyButton></span>
         <div class="softGridWrapper">
             <blank-component v-for="(instance, index) in cardInstances"
                              :key="index"
@@ -30,11 +42,17 @@
         topLeftClicked: 0,
         bottomRightClicked: 0,
         cstatus: 0,
-        showButtons: false,
+        showSelectOkButtons: false,
+        showTopLeftPrompt: true,
+        showBottomRightPrompt: false,
+        showCardNamePrompt: false,
+        showCardComponentSelect: false,
+        showSubmbitButtons: false,
         topLeftRow:0,
         topLeftCol:0,
         bottomRightRow:0,
-        bottomRightCol:0
+        bottomRightCol:0,
+        layoutId:0
       }
     },
     created: function() {
@@ -43,7 +61,12 @@
       this.BOTTOMRIGHTCLICKED=2;
       this.WAITINGTOSAVE=3;
       this.CANCELLAYOUTUPDFATE=4;
-      axios.get(`http://localhost:8000/getLayout?layoutId=5`)
+      this.SELECTAREAOK = 5;
+      this.WAITINGFORNAME = 6;
+      this.WAITINGFORTYPE = 7;
+      this.WAITINGFORSUBMIT = 8;
+      this.layoutId = this.$route.params.layoutId;
+      axios.get(`http://localhost:8000/getLayout?layoutId=`+this.layoutId)
         .then(response => {
           // JSON responses are automatically parsed.
           this.cardInstances = response.data;
@@ -60,34 +83,69 @@
           case this.WAITINGFORCLICK:
             this.topLeftClicked=msg[0];
             this.cstatus=this.TOPLEFTCLICKED;
-            this.showButtons=false;
-            this.$refs.prompt.innerHTML = "Click Bottom Right Cell";
+            this.showSelectOkButtons = false;
+            this.showTopLeftPrompt = false;
+            this.showBottomRightPrompt =  true;
+            this. showCardNamePrompt = false;
+            this.showCardComponentSelect =  false;
+            this.showSubmbitButtons =  false;
             this.$refs.key[msg].$el.style.backgroundColor='#66bb6a';
             break;
           case this.TOPLEFTCLICKED:
             this.bottomRightClicked = msg[0];
             this.cstatus=this.BOTTOMRIGHTCLICKED;
-            this.showButtons=true;
+            this.showSelectOkButtons = true;
+            this.showTopLeftPrompt = false;
+            this.showBottomRightPrompt =  false;
+            this. showCardNamePrompt = false;
+            this.showCardComponentSelect =  false;
+            this.showSubmbitButtons =  false;
             this.$refs.key[msg].$el.style.backgroundColor='#66bb6a';
             this.cardInstances.forEach(this.fillInCell);
-            this.$refs.prompt.innerHTML = "Is this the area you wish to fill ? ";
             break;
           case this.BOTTOMRIGHTCLICKED:
-            this.$refs.prompt.innerHTML = "Start over - click on top left cell";
-            this.cstatus = this.WAITINGFORCLICK;
-            this.showButtons=false;
-            this.topLeftClicked=0;
-            this.bottomRightClicked
+            this.cstatus = this.WAITINGFORNAME;
+            this.showSelectOkButtons = false;
+            this.showTopLeftPrompt = false;
+            this.showBottomRightPrompt =  false;
+            this. showCardNamePrompt = false;
+            this.showCardComponentSelect =  false;
+            this.showSubmbitButtons =  false;
+            break;
+          case this.WAITINGFORNAME:
+            this.cstatus = this.WAITINGFORTYPE;
+            this.showSelectOkButtons = false;
+            this.showTopLeftPrompt = false;
+            this.showBottomRightPrompt =  false;
+            this. showCardNamePrompt = false;
+            this.showCardComponentSelect =  true;
+            this.showSubmbitButtons =  false;
             break;
 
 
         }
       },
       yesButtonClicked(){
+
         console.log('yesButton clicked');
+        this.cstatus = this.WAITINGFORNAME;
+        this.showSelectOkButtons = false;
+        this.showTopLeftPrompt = false;
+        this.showBottomRightPrompt =  false;
+        this. showCardNamePrompt = true;
+        this.showCardComponentSelect =  false;
+        this.showSubmbitButtons =  false;
+
       },
-      noButtonClicked(){
+      cancelClicked(){
         console.log('noButton clicked');
+        this.cstatus = this.WAITINGFORCLICK;
+        this.showSelectOkButtons = false;
+        this.showTopLeftPrompt = true;
+        this.showBottomRightPrompt =  false;
+        this. showCardNamePrompt = false;
+        this.showCardComponentSelect =  false;
+        this.showSubmbitButtons =  false;
       },
       fillInCell(item, index, arr){
         var thisCardCol = arr[index].card_position[1];
