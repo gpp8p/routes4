@@ -4,16 +4,16 @@
         <span v-show="showBottomRightPrompt" class="prompt">Click Bottom Right Cell</span>
         <span v-show="showSelectOkButtons" class="prompt">Is this area ok for the new card ?<MyButton @myButtonClicked="yesButtonClicked" buttonLabel="Yes"></MyButton><MyButton @myButtonClicked="cancelClicked" buttonLabel="No"></MyButton></span>
         <span v-show="showCardNamePrompt" class="prompt">
-            What do you want to name this card ?<input ref="cardName" type="text" size="20"/>
+            What do you want to name this card ?<input ref="cardName" v-model="nameField.value" type="text" size="20"/>
             <MyButton @myButtonClicked="doneButtonClicked" buttonLabel="Done"></MyButton>
         </span>
         <span v-show="showCardComponentSelect">
-            <select ref="cardComponentSelect">
+            <select ref="cardComponentSelect" @change="cardSelectionMade($event)">
                 <option value="select">Select Card Type</option>
                 <option  value="blankComponent">Blank Card</option>
             </select>
         </span>
-        <span v-show="showSubmbitButtons"><MyButton @myButtonClicked="yesButtonClicked" buttonLabel="Submit"></MyButton><MyButton @myButtonClicked="cancelClicked" buttonLabel="Cancel"></MyButton></span>
+        <span v-show="showSubmbitButtons">Save this card ? <MyButton @myButtonClicked="saveButtonClicked" buttonLabel="Submit"></MyButton><MyButton @myButtonClicked="cancelClicked" buttonLabel="Cancel"></MyButton></span>
         <div class="softGridWrapper">
             <blank-component v-for="(instance, index) in cardInstances"
                              :key="index"
@@ -53,7 +53,16 @@
         topLeftCol:0,
         bottomRightRow:0,
         bottomRightCol:0,
-        layoutId:0
+        layoutId:0,
+        selectedColor: '#66bb6a',
+        unSelectedColor: 'coral',
+        newCardType: '',
+        scolor: '',
+        nameField:
+          {
+            value:''
+          }
+
       }
     },
     created: function() {
@@ -105,6 +114,7 @@
             this.showCardComponentSelect =  false;
             this.showSubmbitButtons =  false;
             this.$refs.key[msg].$el.style.backgroundColor='#66bb6a';
+            this.scolor = this.selectedColor;
             this.cardInstances.forEach(this.fillInCell);
             break;
           case this.BOTTOMRIGHTCLICKED:
@@ -129,7 +139,7 @@
 
         }
       },
-      
+
       yesButtonClicked(){
 
         console.log('yesButton clicked');
@@ -163,6 +173,8 @@
         this. showCardNamePrompt = false;
         this.showCardComponentSelect =  false;
         this.showSubmbitButtons =  false;
+        this.scolor = this.unSelectedColor;
+        this.cardInstances.forEach(this.fillInCell);
       },
       fillInCell(item, index, arr){
         var thisCardCol = arr[index].card_position[1];
@@ -173,8 +185,38 @@
         var bottomRightRow = arr[this.bottomRightClicked].card_position[0];
         if(thisCardCol >= topLeftCol && thisCardRow >= topLeftRow && thisCardCol <= bottomRightCol && thisCardRow <= bottomRightRow){
           console.log(item.id);
-          this.$refs.key[index].$el.style.backgroundColor='#66bb6a';
+          this.$refs.key[index].$el.style.backgroundColor=this.scolor;
         }
+      },
+      cardSelectionMade(evt){
+        console.log('Card type selection made:'+evt.target.value);
+        this.newCardType = evt.target.value;
+        this.cstatus = this.WAITINGFORSUBMIT;
+        this.showSelectOkButtons = false;
+        this.showTopLeftPrompt = false;
+        this.showBottomRightPrompt =  false;
+        this. showCardNamePrompt = false;
+        this.showCardComponentSelect =  false;
+        this.showSubmbitButtons =  true;
+
+      },
+      saveButtonClicked(){
+        axios.post('http://localhost:8000/saveCard',
+          {
+            layoutId: this.layoutId,
+            cardType: this.cardType,
+            cardTitle: this.nameField.value,
+            topLeftRow: this.topLeftRow,
+            topLeftCol: this.topLeftCol,
+            bottomRightRow: this.bottomRightRow,
+            bottomRightCol: this.bottomRightCol
+          })
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
       }
     }
   };
