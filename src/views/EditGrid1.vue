@@ -5,6 +5,7 @@
         <span v-show="showSelectOkButtons" class="prompt">Is this area ok for the new card ?<MyButton @myButtonClicked="yesButtonClicked" buttonLabel="Yes"></MyButton><MyButton @myButtonClicked="cancelClicked" buttonLabel="No"></MyButton></span>
         <span v-show="showCardNamePrompt" class="prompt">
             What do you want to name this card ?<input ref="cardName" type="text" size="20"/>
+            <MyButton @myButtonClicked="doneButtonClicked" buttonLabel="Done"></MyButton>
         </span>
         <span v-show="showCardComponentSelect">
             <select ref="cardComponentSelect">
@@ -59,12 +60,15 @@
       this.WAITINGFORCLICK=0;
       this.TOPLEFTCLICKED =1;
       this.BOTTOMRIGHTCLICKED=2;
-      this.WAITINGTOSAVE=3;
-      this.CANCELLAYOUTUPDFATE=4;
-      this.SELECTAREAOK = 5;
-      this.WAITINGFORNAME = 6;
-      this.WAITINGFORTYPE = 7;
-      this.WAITINGFORSUBMIT = 8;
+      this.SELECTAREAOK = 3;
+      this.WAITINGFORNAME = 4;
+      this.WAITINGFORTYPE = 5;
+      this.WAITINGFORSUBMIT = 6;
+
+      this.WAITINGTOSAVE=8;
+      this.CANCELLAYOUTUPDATE=7;
+
+
       this.layoutId = this.$route.params.layoutId;
       axios.get(`http://localhost:8000/getLayout?layoutId=`+this.layoutId)
         .then(response => {
@@ -134,6 +138,18 @@
         this.showBottomRightPrompt =  false;
         this. showCardNamePrompt = true;
         this.showCardComponentSelect =  false;
+        this.showSubmbitButtons =  false;
+
+      },
+      doneButtonClicked(){
+
+        console.log('yesButton clicked');
+        this.cstatus = this.WAITINGFORTYPE;
+        this.showSelectOkButtons = false;
+        this.showTopLeftPrompt = false;
+        this.showBottomRightPrompt =  false;
+        this. showCardNamePrompt = false;
+        this.showCardComponentSelect =  true;
         this.showSubmbitButtons =  false;
 
       },
