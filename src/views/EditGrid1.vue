@@ -39,6 +39,7 @@
     components: { blankComponent, MyButton },
     data() {
       return {
+        csrf_token :'',
         cardInstances: [],
         topLeftClicked: 0,
         bottomRightClicked: 0,
@@ -95,6 +96,8 @@
         switch(this.cstatus){
           case this.WAITINGFORCLICK:
             this.topLeftClicked=msg[0];
+            this.topLeftRow = this.cardInstances[this.topLeftClicked].card_position[0];
+            this.topLeftCol = this.cardInstances[this.topLeftClicked].card_position[1];
             this.cstatus=this.TOPLEFTCLICKED;
             this.showSelectOkButtons = false;
             this.showTopLeftPrompt = false;
@@ -106,6 +109,8 @@
             break;
           case this.TOPLEFTCLICKED:
             this.bottomRightClicked = msg[0];
+            this.bottomRightRow = this.cardInstances[this.bottomRightClicked].card_position[0];
+            this.bottomRightCol = this.cardInstances[this.bottomRightClicked].card_position[1];
             this.cstatus=this.BOTTOMRIGHTCLICKED;
             this.showSelectOkButtons = true;
             this.showTopLeftPrompt = false;
@@ -198,7 +203,6 @@
         this. showCardNamePrompt = false;
         this.showCardComponentSelect =  false;
         this.showSubmbitButtons =  true;
-
       },
       saveButtonClicked(){
         axios.post('http://localhost:8000/saveCard',
