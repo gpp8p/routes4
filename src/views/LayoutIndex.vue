@@ -7,14 +7,46 @@
         </section>
         <section class="intro">
             <div class="content">
+                <LayoutListLine v-for="(layout, index) in allLayouts"
+                    :key="index"
+                    :id="layout.id"
+                    :description="layout.description"
+                    :menu_label="layout.menu_label"
+                    :height="layout.height"
+                    :width="layout.width"
+                >
+                </LayoutListLine>
             </div>
         </section>
     </span>
 </template>
 
 <script>
+  /* eslint-disable no-debugger */
+
+  import LayoutListLine from '../components/LayoutListLine.vue';
+    import axios from 'axios';
   export default {
-    name: "LayoutIndex"
+    name: "LayoutIndex",
+    components: {LayoutListLine},
+    data () {
+      return {
+        allLayouts: []
+      }
+    },
+    created: function(){
+      axios.get('http://localhost:8000//layoutList')
+        .then(response => {
+// eslint-disable-next-line no-debugger
+          // JSON responses are automatically parsed.
+          this.allLayouts = response.data;
+          debugger;
+        })
+        .catch(e => {
+          this.errors.push(e);
+        });
+    }
+
   };
 </script>
 
