@@ -14,7 +14,7 @@
             </select>
         </span>
         <span v-show="showSubmbitButtons">Save this card ? <MyButton @myButtonClicked="saveButtonClicked" buttonLabel="Submit"></MyButton><MyButton @myButtonClicked="cancelClicked" buttonLabel="Cancel"></MyButton></span>
-        <div class="softGridWrapper">
+        <div v-bind:style=gridParamDefinition>
             <blank-component v-for="(instance, index) in cardInstances"
                              :key="index"
                              :card-style=instance.card_parameters.style
@@ -59,6 +59,7 @@
         unSelectedColor: 'coral',
         newCardType: '',
         scolor: '',
+        gridParamDefinition: '',
         nameField:
           {
             value:''
@@ -83,7 +84,9 @@
       axios.get(`http://localhost:8000/getLayout?layoutId=`+this.layoutId)
         .then(response => {
           // JSON responses are automatically parsed.
-          this.cardInstances = response.data;
+          this.cardInstances = response.data.cards;
+          this.gridParamDefinition = this.layoutGridParameters(response.data.layout.height, response.data.layout.width);
+          debugger;
           this.cstatus=this.WAITINGFORCLICK;
         })
         .catch(e => {
@@ -221,6 +224,21 @@
           .catch(function (error) {
             console.log(error);
           });
+      },
+      layoutGridParameters(height, width){
+        var heightSize = Math.round(100/height);
+        var widthSize = Math.round(100/width);
+        var gridHeightCss = 'grid-template-rows: ';
+        var gridWidthCss = 'grid-template-rows: ';
+        var x = 0
+        for(x=0;x<height;x++){
+          gridHeightCss = gridHeightCss+heightSize+'% ';
+        }
+        for(x=0;x<width;x++){
+          gridWidthCss = gridWidthCss+widthSize+'% ';
+        }
+        var gridCss = 'display: grid; grid-gap: 3px; background-color: #fff; height: 90vh; color: #444; '+gridHeightCss+";"+gridWidthCss+";";
+        return gridCss;
       }
     }
   };
