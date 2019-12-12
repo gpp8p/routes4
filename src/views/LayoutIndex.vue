@@ -7,6 +7,7 @@
         </section>
         <section class="intro">
             <div class="content">
+                <layoutListHeader></layoutListHeader>
                 <LayoutListLine v-for="(layout, index) in allLayouts"
                     :key="index"
                     :id="layout.id"
@@ -25,10 +26,11 @@
   /* eslint-disable no-debugger */
 
   import LayoutListLine from '../components/LayoutListLine.vue';
+  import layoutListHeader from '../components/layoutListHeader.vue'
     import axios from 'axios';
   export default {
     name: "LayoutIndex",
-    components: {LayoutListLine},
+    components: {LayoutListLine, layoutListHeader},
     data () {
       return {
         allLayouts: []

@@ -1,5 +1,5 @@
 <template>
-    <span class="lline"><span>{{menu_label}}</span><span>{{description}}</span><span>{{height}}</span><span>{{width}}</span></span>
+    <span class="lline"><span class="gitem">{{menu_label}}</span><span class="gitem">{{description}}</span><span class="gitem">{{height}}</span><span class="gitem">{{width}}</span></span>
 </template>
 
 <script>
@@ -37,6 +37,14 @@
         grid-template-columns: 20% 60% 10% 10%;
         font-size: medium;
         font-family: Arial;
+        align-items: left;
+    }
+    .lline:hover {
+        background-color: burlywood;
+    }
+    .gitem {
+        text-align: left;
+        margin-left: 5px;
     }
 
 </style>
