@@ -15,6 +15,7 @@
                     :menu_label="layout.menu_label"
                     :height="layout.height"
                     :width="layout.width"
+                    @layoutSelected="layoutSelected"
                 >
                 </LayoutListLine>
             </div>
@@ -27,7 +28,8 @@
 
   import LayoutListLine from '../components/LayoutListLine.vue';
   import layoutListHeader from '../components/layoutListHeader.vue'
-    import axios from 'axios';
+  import EventBus  from '../event-bus.js';
+  import axios from 'axios';
   export default {
     name: "LayoutIndex",
     components: {LayoutListLine, layoutListHeader},
@@ -42,11 +44,16 @@
 // eslint-disable-next-line no-debugger
           // JSON responses are automatically parsed.
           this.allLayouts = response.data;
-          debugger;
         })
         .catch(e => {
           this.errors.push(e);
         });
+    },
+    methods: {
+      layoutSelected(msg){
+        debugger;
+        EventBus.$emit('load-layout', msg);
+      }
     }
 
   };

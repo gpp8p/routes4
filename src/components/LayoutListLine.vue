@@ -1,8 +1,10 @@
 <template>
-    <span class="lline"><span class="gitem">{{menu_label}}</span><span class="gitem">{{description}}</span><span class="gitem">{{height}}</span><span class="gitem">{{width}}</span></span>
+    <span class="lline" v-on:click="this.layoutSelected"><span class="gitem">{{menu_label}}</span><span class="gitem">{{description}}</span><span class="gitem">{{height}}</span><span class="gitem">{{width}}</span></span>
 </template>
 
 <script>
+  /* eslint-disable no-debugger */
+
   export default {
     name: "LayoutListLine",
     props:
@@ -27,7 +29,13 @@
           type: String,
           required: true
         }
+      },
+// eslint-disable-next-line no-debugger
+    methods:{
+      layoutSelected(){
+        this.$emit('layoutSelected', [this.id])
       }
+    }
   };
 </script>
 
