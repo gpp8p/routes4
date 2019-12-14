@@ -5,7 +5,7 @@
 
             </div>
         </section>
-        <section class="intro">
+        <section v-if="listView" class="intro">
             <div class="content">
                 <layoutListHeader></layoutListHeader>
                 <LayoutListLine v-for="(layout, index) in allLayouts"
@@ -20,6 +20,9 @@
                 </LayoutListLine>
             </div>
         </section>
+        <section v-if='gridView' class="gridSection">
+            <editGrid2 :layoutId="selectedLayoutId"></editGrid2>
+        </section>
     </span>
 </template>
 
@@ -28,14 +31,18 @@
 
   import LayoutListLine from '../components/LayoutListLine.vue';
   import layoutListHeader from '../components/layoutListHeader.vue'
-  import EventBus  from '../event-bus.js';
+  import EventBus  from '../main.js';
   import axios from 'axios';
+  import editGrid2 from '../components/editGrid2';
   export default {
     name: "LayoutIndex",
-    components: {LayoutListLine, layoutListHeader},
+    components: {LayoutListLine, layoutListHeader, editGrid2},
     data () {
       return {
-        allLayouts: []
+        allLayouts: [],
+        gridView: false,
+        listView: true,
+        selectedLayoutId: ''
       }
     },
     created: function(){
@@ -51,7 +58,8 @@
     },
     methods: {
       layoutSelected(msg){
-        debugger;
+        this.listView=false;
+        this.gridView=true;
         EventBus.$emit('load-layout', msg);
       }
     }
@@ -102,5 +110,10 @@
         border-width: 2px;
         border-style: solid;
         border-color: #0a3aff;
+    }
+    .gridSection {
+        height: 93vh;
+        width: 100vw;
+        background-color: #ffffff;
     }
 </style>

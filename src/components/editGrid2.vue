@@ -19,7 +19,7 @@
   /* eslint-disable no-debugger,no-console */
 
   import axios from "axios";
-import { EventBus } from './event-bus.js';
+import EventBus from '../main.js';
 
 export default {
   name: "editGrid2",
@@ -38,7 +38,8 @@ export default {
   },
   mounted () {
     EventBus.$on('load-layout', function (msg) {
-        this.reloadLayout(msg);
+      debugger;
+      this.reloadLayout(msg);
     });
   },
   created: function() {
@@ -79,6 +80,8 @@ export default {
       return gridCss;
     },
     reloadLayout: function(msg) {
+      this.layoutId = msg;
+      debugger;
       console.log("reloading" + msg);
     }
   }
