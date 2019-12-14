@@ -1,5 +1,5 @@
 <template>
-  <div v-bind:style="gridParamDefinition">
+  <div v-bind:style="gridParamDefinition" v-if="this.displayGrid">
     <generic-card
       v-for="(instance, index) in cardInstances"
       :key="index"
@@ -20,9 +20,11 @@
 
   import axios from "axios";
 import EventBus from '../main.js';
+import genericCard from '../components/genericCard.vue';
 
 export default {
   name: "editGrid2",
+  components: {genericCard},
   props: {
     layoutId: {
       type: String,
@@ -33,37 +35,22 @@ export default {
     return {
       csrf_token: "",
       cardInstances: [],
-      gridParamDefinition: ""
+      gridParamDefinition: "",
+      displayGrid: false,
+      evmsg:''
     };
   },
   mounted () {
-    EventBus.$on('load-layout', function (msg) {
-      debugger;
-      this.reloadLayout(msg);
+    EventBus.$on('load-layout', function () {
+    console.log('event bus recieved event');
     });
-  },
-  created: function() {
-    axios
-      .get("http://localhost:8000/getLayout?layoutId=" + this.layoutId)
-      .then(response => {
-        // JSON responses are automatically parsed.
-        this.cardInstances = response.data.cards;
-        this.gridParamDefinition = this.layoutGridParameters(
-          response.data.layout.height,
-          response.data.layout.width
-        );
-        debugger;
-      })
-      .catch(e => {
-        this.errors.push(e);
-      });
   },
   methods: {
     layoutGridParameters(height, width) {
       var heightSize = Math.round(100 / height);
       var widthSize = Math.round(100 / width);
       var gridHeightCss = "grid-template-rows: ";
-      var gridWidthCss = "grid-template-rows: ";
+      var gridWidthCss = "grid-template-columns: ";
       var x = 0;
       for (x = 0; x < height; x++) {
         gridHeightCss = gridHeightCss + heightSize + "% ";
@@ -80,9 +67,22 @@ export default {
       return gridCss;
     },
     reloadLayout: function(msg) {
+      this.displayGrid=true;
       this.layoutId = msg;
-      debugger;
       console.log("reloading" + msg);
+      axios
+        .get("http://localhost:8000/getLayout?layoutId=" + this.layoutId)
+        .then(response => {
+          // JSON responses are automatically parsed.
+          this.cardInstances = response.data.cards;
+          this.gridParamDefinition = this.layoutGridParameters(
+            response.data.layout.height,
+            response.data.layout.width
+          );
+        })
+        .catch(e => {
+          this.errors.push(e);
+        });
     }
   }
 };

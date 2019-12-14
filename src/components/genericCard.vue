@@ -1,7 +1,5 @@
 <template>
-    <span>
-        <span v-if="cardType=='blankCard'">
-            <blank-component
+            <blank-component v-if="cardType=='simpleCard'" class="genericCardStyle"
                     :card-style=cardStyle
                     :card-id=cardId
                     :card-key=cardKey
@@ -9,10 +7,6 @@
                     @storeValue="processClick"
                     ref="cardKey"
             ></blank-component>
-        </span>
-
-    </span>
-    
 </template>
 
 <script>
@@ -51,5 +45,9 @@
 </script>
 
 <style scoped>
-
+    .genericCardStyle{
+        height:100%;
+        width:100%;
+        background-color: coral;
+    }
 </style>

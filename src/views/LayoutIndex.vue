@@ -21,7 +21,7 @@
             </div>
         </section>
         <section v-if='gridView' class="gridSection">
-            <editGrid2 :layoutId="selectedLayoutId"></editGrid2>
+            <editGrid2 :layoutId="selectedLayoutId" ref="editGrid"></editGrid2>
         </section>
     </span>
 </template>
@@ -40,7 +40,7 @@
     data () {
       return {
         allLayouts: [],
-        gridView: false,
+        gridView: true,
         listView: true,
         selectedLayoutId: ''
       }
@@ -60,6 +60,7 @@
       layoutSelected(msg){
         this.listView=false;
         this.gridView=true;
+        this.$refs.editGrid.reloadLayout(msg);
         EventBus.$emit('load-layout', msg);
       }
     }

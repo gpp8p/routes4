@@ -1,5 +1,5 @@
 <template>
-    <div v-bind:style=cardStyle
+    <div v-bind:style='cardStyle'
          v-on:click="cellClicked"
     >
         {{cardId}}) Hello There...
@@ -43,5 +43,9 @@
 
 <style scoped>
 
+    .cardStyle {
+        height: 100%;
+        width: 100%;
+    }
 
 </style>
