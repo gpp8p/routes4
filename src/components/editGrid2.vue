@@ -1,5 +1,5 @@
 <template>
-  <div v-bind:style="gridParamDefinition" v-if="this.displayGrid">
+  <div v-bind:style="gridParamDefinition" v-if="this.displayGrid" class="gridSection">
     <generic-card
       v-for="(instance, index) in cardInstances"
       :key="index"
@@ -37,7 +37,20 @@ export default {
       cardInstances: [],
       gridParamDefinition: "",
       displayGrid: false,
-      evmsg:''
+      evmsg:'',
+      topLeftClicked: 0,
+      bottomRightClicked: 0,
+      cstatus: 0,
+      topLeftRow:0,
+      topLeftCol:0,
+      bottomRightRow:0,
+      bottomRightCol:0,
+      selectedColor: '#66bb6a',
+      unSelectedColor: 'coral',
+      newCardType: '',
+      scolor: '',
+
+
     };
   },
   mounted () {
@@ -47,8 +60,8 @@ export default {
   },
   methods: {
     layoutGridParameters(height, width) {
-      var heightSize = Math.round(100 / height);
-      var widthSize = Math.round(100 / width);
+      var heightSize = (95 / height).toFixed(2);
+      var widthSize = (98 / width.toFixed(2));
       var gridHeightCss = "grid-template-rows: ";
       var gridWidthCss = "grid-template-columns: ";
       var x = 0;
@@ -83,9 +96,37 @@ export default {
         .catch(e => {
           this.errors.push(e);
         });
-    }
+    },
+    processClick(msg){
+      console.log('editGrid2 gets storeValue-'+msg);
+      this.$refs.key[msg].$el.style.backgroundColor='#66bb6a';
+      this.$emit('storeValue', [msg])
+    },
+
+
   }
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+  .gridSection {
+    margin: 2px;
+    background-color: #dbddd0;
+    height:82vh;
+    width:98vw;
+    border-radius: 4px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #0a3aff;
+
+  }
+  .prompt {
+    font-size: medium;
+    color: blue;
+    margin-bottom: 5px;
+    text-align: left;
+  }
+
+
+
+</style>

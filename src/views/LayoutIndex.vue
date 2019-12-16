@@ -2,7 +2,7 @@
     <span>
         <section class="navbarWrapper">
             <div class="navbar">
-
+                <span v-show="showTopLeftPrompt" class="prompt">Click on the top left cell of where you wish to place the card ?</span>
             </div>
         </section>
         <section v-if="listView" class="intro">
@@ -20,14 +20,14 @@
                 </LayoutListLine>
             </div>
         </section>
-        <section v-if='gridView' class="gridSection">
-            <editGrid2 :layoutId="selectedLayoutId" ref="editGrid"></editGrid2>
+        <section v-if='gridView'>
+            <editGrid2 :layoutId="selectedLayoutId" ref="editGrid" @storeValue="cellClicked"></editGrid2>
         </section>
     </span>
 </template>
 
 <script>
-  /* eslint-disable no-debugger */
+  /* eslint-disable no-debugger,no-console */
 
   import LayoutListLine from '../components/LayoutListLine.vue';
   import layoutListHeader from '../components/layoutListHeader.vue'
@@ -39,13 +39,35 @@
     components: {LayoutListLine, layoutListHeader, editGrid2},
     data () {
       return {
+        WAITINGFORCLICK:0,
+        TOPLEFTCLICKED:1,
+        BOTTOMRIGHTCLICKED:2,
+        SELECTAREAOK:3,
+        WAITINGFORNAME:4,
+        WAITINGFORTYPE:5,
+        WAITINGFORSUBMIT:6,
+        WAITINGTOSAVE:8,
+        CANCELLAYOUTUPDATE:7,
+        
         allLayouts: [],
         gridView: true,
         listView: true,
-        selectedLayoutId: ''
+        selectedLayoutId: '',
+        showSelectOkButtons: false,
+        showTopLeftPrompt: false,
+        showBottomRightPrompt: false,
+        showCardNamePrompt: false,
+        showCardComponentSelect: false,
+        showSubmbitButtons: false,
+        nameField:
+          {
+            value:''
+          }
+
       }
     },
     created: function(){
+
       axios.get('http://localhost:8000//layoutList')
         .then(response => {
 // eslint-disable-next-line no-debugger
@@ -61,7 +83,11 @@
         this.listView=false;
         this.gridView=true;
         this.$refs.editGrid.reloadLayout(msg);
+        this.showTopLeftPrompt = true;
         EventBus.$emit('load-layout', msg);
+      },
+      cellClicked(msg){
+        console.log('layoutIndex notified of click in cell:'+msg)
       }
     }
 
@@ -111,10 +137,6 @@
         border-width: 2px;
         border-style: solid;
         border-color: #0a3aff;
-    }
-    .gridSection {
-        height: 93vh;
-        width: 100vw;
-        background-color: #ffffff;
+        text-align: left;
     }
 </style>

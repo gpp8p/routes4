@@ -10,6 +10,8 @@
 </template>
 
 <script>
+  /* eslint-disable no-console */
+
   import BlankComponent from "./blankComponent";
   export default {
     name: "genericCard",
@@ -38,6 +40,7 @@
     },
     methods: {
       processClick(msg){
+        console.log('generic component recieves storeValue');
         this.$emit('storeValue', [msg])
       }
     }
