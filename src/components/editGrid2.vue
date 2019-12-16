@@ -33,6 +33,15 @@ export default {
   },
   data() {
     return {
+      WAITINGFORCLICK:0,
+      TOPLEFTCLICKED:1,
+      BOTTOMRIGHTCLICKED:2,
+      SELECTAREAOK:3,
+      WAITINGFORNAME:4,
+      WAITINGFORTYPE:5,
+      WAITINGFORSUBMIT:6,
+      WAITINGTOSAVE:8,
+      CANCELLAYOUTUPDATE:7,
       csrf_token: "",
       cardInstances: [],
       gridParamDefinition: "",
@@ -97,9 +106,50 @@ export default {
           this.errors.push(e);
         });
     },
+    cancelLayoutEdit(){
+      console.log('noButton clicked');
+      this.cstatus = this.WAITINGFORCLICK;
+      this.scolor = this.unSelectedColor;
+      this.cardInstances.forEach(this.fillInCell);
+    },
+    fillInCell(item, index, arr){
+      var thisCardCol = arr[index].card_position[1];
+      var thisCardRow = arr[index].card_position[0];
+      var topLeftCol = arr[this.topLeftClicked].card_position[1];
+      var topLeftRow = arr[this.topLeftClicked].card_position[0];
+      var bottomRightCol = arr[this.bottomRightClicked].card_position[1];
+      var bottomRightRow = arr[this.bottomRightClicked].card_position[0];
+      if(thisCardCol >= topLeftCol && thisCardRow >= topLeftRow && thisCardCol <= bottomRightCol && thisCardRow <= bottomRightRow){
+        console.log(item.id);
+        this.$refs.key[index].$el.style.backgroundColor=this.scolor;
+      }
+    },
     processClick(msg){
       console.log('editGrid2 gets storeValue-'+msg);
-      this.$refs.key[msg].$el.style.backgroundColor='#66bb6a';
+      switch(this.cstatus){
+        case this.WAITINGFORCLICK:
+          this.topLeftClicked=msg[0];
+          this.topLeftRow = this.cardInstances[this.topLeftClicked].card_position[0];
+          this.topLeftCol = this.cardInstances[this.topLeftClicked].card_position[1];
+          this.cstatus=this.TOPLEFTCLICKED;
+          this.$refs.key[msg].$el.style.backgroundColor='#66bb6a';
+          break;
+        case this.TOPLEFTCLICKED:
+          this.bottomRightClicked = msg[0];
+          this.bottomRightRow = this.cardInstances[this.bottomRightClicked].card_position[0];
+          this.bottomRightCol = this.cardInstances[this.bottomRightClicked].card_position[1];
+          this.cstatus=this.BOTTOMRIGHTCLICKED;
+          this.$refs.key[msg].$el.style.backgroundColor='#66bb6a';
+          this.scolor = this.selectedColor;
+          this.cardInstances.forEach(this.fillInCell);
+          break;
+        case this.BOTTOMRIGHTCLICKED:
+          this.cstatus = this.WAITINGFORNAME;
+          break;
+        case this.WAITINGFORNAME:
+          this.cstatus = this.WAITINGFORTYPE;
+          break;
+      }
       this.$emit('storeValue', [msg])
     },
 
