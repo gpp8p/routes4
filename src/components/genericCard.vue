@@ -40,7 +40,7 @@
     },
     methods: {
       processClick(msg){
-        console.log('generic component recieves storeValue');
+//        console.log('generic component recieves storeValue');
         this.$emit('storeValue', [msg])
       }
     }

@@ -91,7 +91,7 @@ export default {
     reloadLayout: function(msg) {
       this.displayGrid=true;
       this.layoutId = msg;
-      console.log("reloading" + msg);
+//      console.log("reloading" + msg);
       axios
         .get("http://localhost:8000/getLayout?layoutId=" + this.layoutId)
         .then(response => {
@@ -107,7 +107,7 @@ export default {
         });
     },
     cancelLayoutEdit(){
-      console.log('noButton clicked');
+//      console.log('noButton clicked');
       this.cstatus = this.WAITINGFORCLICK;
       this.scolor = this.unSelectedColor;
       this.cardInstances.forEach(this.fillInCell);
@@ -119,13 +119,17 @@ export default {
       var topLeftRow = arr[this.topLeftClicked].card_position[0];
       var bottomRightCol = arr[this.bottomRightClicked].card_position[1];
       var bottomRightRow = arr[this.bottomRightClicked].card_position[0];
+//      console.log(thisCardCol+'-'+thisCardRow+'-'+topLeftCol+'-'+topLeftRow+'-'+bottomRightCol+'-'+bottomRightRow);
       if(thisCardCol >= topLeftCol && thisCardRow >= topLeftRow && thisCardCol <= bottomRightCol && thisCardRow <= bottomRightRow){
-        console.log(item.id);
+//        console.log(item.id);
         this.$refs.key[index].$el.style.backgroundColor=this.scolor;
+      }else{
+//        console.log(item.id);
+//        console.log(thisCardCol+'-'+thisCardRow+'-'+topLeftCol+'-'+topLeftRow+'-'+bottomRightCol+'-'+bottomRightRow);
       }
     },
     processClick(msg){
-      console.log('editGrid2 gets storeValue-'+msg);
+//      console.log('editGrid2 gets storeValue-'+msg);
       switch(this.cstatus){
         case this.WAITINGFORCLICK:
           this.topLeftClicked=msg[0];

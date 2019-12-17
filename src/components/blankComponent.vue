@@ -31,7 +31,7 @@
     },
     methods: {
       cellClicked: function() {
-        console.log(' blank-component clicked');
+//        console.log(' blank-component clicked');
         this.$emit('storeValue', [this.cardKey])
       },
       refId: function(){
