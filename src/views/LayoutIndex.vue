@@ -17,6 +17,10 @@
                     </select>
                 </span>
                 <span v-show="showSubmbitButtons">Save this card ? <MyButton @myButtonClicked="saveButtonClicked" buttonLabel="Submit"></MyButton><MyButton @myButtonClicked="cancelClicked" buttonLabel="Cancel"></MyButton></span>
+                <span v-show="showLayoutMenu" class="layoutMenu"><span class="layoutMenuItem" @click="createLayout">New Layout</span><span class="layoutMenuItem">User Administration</span></span>
+                <span v-show="showMenuLabelInput" class="prompt">
+                    <input ref="menuLabelInputField" v-model="menuLabelInput.value" type="text" size="32"/>
+                </span>
             </div>
         </section>
         <section v-if="listView" class="intro">
@@ -75,10 +79,17 @@
         showCardNamePrompt: false,
         showCardComponentSelect: false,
         showSubmbitButtons: false,
+        showLayoutMenu: true,
+        showMenuLabelInput: false
         nameField:
           {
             value:''
+          },
+        menuLabelInput:
+          {
+            value:''
           }
+
 
       }
     },
@@ -98,6 +109,7 @@
       layoutSelected(msg){
         this.listView=false;
         this.gridView=true;
+        this.showLayoutMenu = false;
         this.$refs.editGrid.reloadLayout(msg);
         this.showTopLeftPrompt = true;
         EventBus.$emit('load-layout', msg);
@@ -210,6 +222,9 @@
             this.showSubmbitButtons =  false;
             break;
         }
+      },
+      createLayout(){
+        this.showMenuLabelInput = true;
       }
     }
 
@@ -260,5 +275,22 @@
         border-style: solid;
         border-color: #0a3aff;
         text-align: left;
+    }
+    .layoutMenu {
+        display: flex;
+        justify-content: space-evenly;
+        height: 100%;
+        align-items: baseline;
+        margin-top: 6px;
+    }
+    .layoutMenuItem {
+        background-color: #ffcd90;
+        font-family: Arial;
+        font-size: 17px;
+        padding: 1px;
+    }
+    .layoutMenuItem:hover {
+        background-color: #fff722;
+        color:red;
     }
 </style>
