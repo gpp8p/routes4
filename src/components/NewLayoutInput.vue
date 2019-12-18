@@ -1,90 +1,156 @@
 <template>
 
-    <span class="layoutMenu">
-        <span v-show="this.menuInputStatus.isStatus('menu_label')">
-            What is the label you wish for this layout ?<input ref="menuLabelInput" v-model="menuLabelInput.value" type="text" size="32"/><MyButton @myButtonClicked="this.buttonClicked" buttonLabel="Next"></MyButton>
+    <span>
+        <span v-show="this.statusNow==INPUT_MENU_LABEL" class="layoutMenuItem">
+            What is the label you wish for this layout ?<input ref="menuLabelInput" v-model="menuLabelInput.value" type="text" size="32" @keydown.tab="bumpStatus" /><MyButton @myButtonClicked="this.bumpStatus" buttonLabel="Next"></MyButton><MyButton @myButtonClicked="this.cancel" buttonLabel="Cancel"></MyButton>
         </span>
-        <span v-show="this.menuInputStatus.isStatus('description')">
-            Please provide a short description of this layout: <input ref="menuDescriptionInput" v-model="menuDescriptionInput.value" type="text" size="80"/><MyButton @myButtonClicked="this.buttonClicked" buttonLabel="Next"></MyButton>
+        <span v-show="this.statusNow==INPUT_DESCRIPTION" class="layoutMenuItem">
+            <MyButton @myButtonClicked="this.goBack" buttonLabel="<-Go Back"></MyButton>Please provide a short description of this layout: <input ref="menuDescriptionInput" v-model="menuDescriptionInput.value" type="text" size="80" @keydown.tab="bumpStatus" /><MyButton @myButtonClicked="this.bumpStatus" buttonLabel="Next"></MyButton><MyButton @myButtonClicked="this.cancel" buttonLabel="Cancel"></MyButton>
         </span>
-        <span v-show="this.menuInputStatus.isStatus('rows')">
-            How many rows will the layout have ? <input ref="menuRowsInput" v-model="menuRowsInput.value" type="text" size="5"/><MyButton @myButtonClicked="this.buttonClicked" buttonLabel="Next"></MyButton>
+        <span v-show="this.statusNow==INPUT_ROWS" class="layoutMenuItem">
+            <MyButton @myButtonClicked="this.goBack" buttonLabel="<-Go Back"></MyButton>How many rows will the layout have ? <input ref="menuRowsInput" v-model="menuRowsInput.value" type="text" size="5" @keydown.tab="this.bumpStatus"/><MyButton @myButtonClicked="bumpStatus" buttonLabel="Next"></MyButton><MyButton @myButtonClicked="this.cancel" buttonLabel="Cancel"></MyButton>
         </span>
-        <span v-show="this.menuInputStatus.isStatus('rows')">
-            How many columns will the layout have ? <input ref="menuColumnsInput" v-model="menuColumnsInput.value" type="text" size="5"/><MyButton @myButtonClicked="this.buttonClicked" buttonLabel="Next"></MyButton>
+        <span v-show="this.statusNow==INPUT_COLUMNS" class="layoutMenuItem">
+            <MyButton @myButtonClicked="this.goBack" buttonLabel="<-Go Back"></MyButton>How many columns will the layout have ? <input ref="menuColumnsInput" v-model="menuColumnsInput.value" type="text" size="5" @keydown.tab="this.bumpStatus"/><MyButton @myButtonClicked="bumpStatus" buttonLabel="Next"></MyButton><MyButton @myButtonClicked="this.cancel" buttonLabel="Cancel"></MyButton>
         </span>
+        <span v-show="this.statusNow==SUBMIT_LAYOUT" class="layoutMenuItem">
+            <MyButton @myButtonClicked="this.goBack" buttonLabel="<-Go Back"></MyButton>Save and set up this layout ? <MyButton @myButtonClicked="this.submitInput" buttonLabel="Save"></MyButton><MyButton @myButtonClicked="this.cancel" buttonLabel="Cancel"></MyButton>
+        </span>
+        <span v-show="entryError" class="errorMsg">{{this.errorMsg}}</span>
 
     </span>
 
 </template>
 
 <script>
+
   /* eslint-disable no-debugger */
 
   import MyButton from "../components/MyButton.vue";
   export default {
     name: "NewLayoutInput",
-    components: {MyButton},
-    data(){
+    components: { MyButton },
+    data() {
       return {
+        INPUT_MENU_LABEL: 0,
+        INPUT_DESCRIPTION: 1,
+        INPUT_ROWS: 2,
+        INPUT_COLUMNS: 3,
+        SUBMIT_LAYOUT: 4,
+        statusNow: 0,
+        entryError: false,
+        errorMsg: '',
         menuLabelInput:
           {
-            value:''
+            value: ''
           },
         menuDescriptionInput:
           {
-            value:''
+            value: ''
           },
         menuRowsInput:
           {
-            value:''
+            value: ''
           },
         menuColumnsInput:
           {
-            value:''
-          },
-        menuInputStatus: {
-          status: ['menu_label', 'description', 'rows', 'columns', 'submit'],
-          statusNow: 0,
-          isStatus(testStatus) {
-            if(this.status[this.statusNow]==testStatus){
-              return true;
-            }else{
-              return false;
-            }
-          },
-          bumpStatus(){
-            debugger;
-            this.statusNow++;
-            if(this.statusNow>status.length){
-              this.statusNow =0;
-              return false;
-            }else{
-              return true;
-            }
-          },
-          backStatus(){
-            this.statusNow--;
-            if(this.statusNow<0){
-              this.statusNow =0;
-              return false;
-            }else{
-              return true;
-            }
+            value: ''
           }
-        },
       }
     },
-    methods:{
-      buttonClicked(){
-        if(!this.menuInputStatus.bumpStatus()){
-          this.$emit('layoutInputComplete', [this.menuLabelInput.value, this.menuDescriptionInput.value, this.menuRowsInput.value, this.menuColumnsInput.value]);
+    methods: {
+      bumpStatus() {
+        switch (this.statusNow) {
+          case this.INPUT_MENU_LABEL:
+            if(this.menuLabelInput.value==''){
+                this.errorMsg = "This is a required field";
+                this.entryError=true;
+            }else{
+              this.entryError=false;
+                this.statusNow++;
+                this.$refs.menuDescriptionInput.focus();
+            }
+            break;
+          case this.INPUT_DESCRIPTION:
+            if(this.menuDescriptionInput==''){
+              this.errorMsg = "This is a required field";
+              this.entryError=true;
+            }else{
+              this.entryError=false;
+              this.statusNow++;
+              this.$refs.menuRowsInput.focus();
+            }
+            break;
+          case this.INPUT_ROWS:
+            if(this.menuRowsInput==''){
+              this.errorMsg = "This is a required field";
+              this.entryError=true;
+            }else{
+              this.entryError=false;
+              this.statusNow++;
+              this.$refs.menuColumnsInput.focus();
+            }
+            break;
+          case this.INPUT_COLUMNS:
+            if(this.menuColumnsInput==''){
+              this.errorMsg = "This is a required field";
+              this.entryError=true;
+            }else{
+              this.entryError=false;
+              this.statusNow++;
+            }
+            break;
+
+
+
         }
+      },
+      submitInput(){
+        var mlabel = this.menuLabelInput.value;
+        var mdesc = this.menuDescriptionInput.value;
+        var mrows = this.menuRowsInput.value;
+        var mcols = this.menuColumnsInput.value;
+        this.statusNow = 0;
+        this.menuLabelInput.value='';
+        this.menuDescriptionInput.value='';
+        this.menuRowsInput.value='';
+        this.menuColumnsInput.value='';
+        this.$emit('layoutInputComplete', [mlabel, mdesc,mrows,mcols]);
+      },
+      goBack(){
+        this.statusNow--;
+      },
+      cancel(){
+        this.statusNow = 0;
+        this.menuLabelInput.value='';
+        this.menuDescriptionInput.value='';
+        this.menuRowsInput.value='';
+        this.menuColumnsInput.value='';
+        this.$emit('layoutInputCanceled');
       }
     }
-  };
+
+  }
 </script>
 
 <style scoped>
+
+    .layoutMenuItem {
+        text-align: left;
+        margin-top: 10px;
+        margin-left: 10px;
+    }
+
+    .layoutMenu{
+        padding: 3px;
+    }
+
+    .errorMsg {
+        text-align: right;
+        margin-right: 10px;
+        color: red;
+    }
+
+
 
 </style>

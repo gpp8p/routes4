@@ -19,7 +19,7 @@
                 <span v-show="showSubmbitButtons">Save this card ? <MyButton @myButtonClicked="saveButtonClicked" buttonLabel="Submit"></MyButton><MyButton @myButtonClicked="cancelClicked" buttonLabel="Cancel"></MyButton></span>
                 <span v-show="showLayoutMenu" class="layoutMenu"><span class="layoutMenuItem" @click="createLayout">New Layout</span><span class="layoutMenuItem">User Administration</span></span>
                 <span v-show="this.showMenuLabelInput">
-                    <NewLayoutInput @layoutInputComplete="submitNewLayout"></NewLayoutInput>
+                    <NewLayoutInput @layoutInputComplete="submitNewLayout" @layoutInputCanceled="cancelLayoutInput"></NewLayoutInput>
                 </span>
             </div>
         </section>
@@ -224,8 +224,15 @@
         this.showMenuLabelInput = true;
       },
       submitNewLayout(msg){
+        this.showLayoutMenu = true;
+        this.showMenuLabelInput = false;
         console.log(msg);
+      },
+      cancelLayoutInput(){
+        this.showLayoutMenu = true;
+        this.showMenuLabelInput = false;
       }
+
     }
 
   };
