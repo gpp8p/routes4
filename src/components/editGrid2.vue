@@ -88,6 +88,9 @@ export default {
         ";";
       return gridCss;
     },
+    hideGrid(){
+      this.displayGrid=false;
+    },
     reloadLayout: function(msg) {
       this.displayGrid=true;
       this.layoutId = msg;
@@ -130,6 +133,7 @@ export default {
     },
     processClick(msg){
 //      console.log('editGrid2 gets storeValue-'+msg);
+      debugger;
       switch(this.cstatus){
         case this.WAITINGFORCLICK:
           this.topLeftClicked=msg[0];
