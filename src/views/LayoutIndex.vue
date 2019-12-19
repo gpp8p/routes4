@@ -2,12 +2,12 @@
     <span>
         <section class="navbarWrapper">
             <div class="navbar">
-                <span v-show="this.cstatus==WAITINGFORCLICK" class="prompt">Click on the top left cell of where you wish to place the card: <MyButton @myButtonClicked="cancelExitClicked" buttonLabel="Cancel"></MyButton></span>
-                <span v-show="this.cstatus==this.TOPLEFTCLICKED" class="prompt">Click Bottom Right Cell<MyButton @myButtonClicked="cancelExitClicked" buttonLabel="Cancel"></MyButton></span>
+                <span v-show="this.cstatus==WAITINGFORCLICK" class="prompt">Click on the top left cell of where you wish to place the card: <MyButton @myButtonClicked="cancelExitClicked" buttonLabel="Cancel and Return to Layout List"></MyButton></span>
+                <span v-show="this.cstatus==this.TOPLEFTCLICKED" class="prompt">Click Bottom Right Cell<MyButton @myButtonClicked="cancelClicked" buttonLabel="Cancel"></MyButton></span>
                 <span v-show="this.cstatus==this.BOTTOMRIGHTCLICKED" class="prompt">Is this area ok for the new card ?<MyButton @myButtonClicked="yesButtonClicked" buttonLabel="Yes"></MyButton><MyButton @myButtonClicked="cancelClicked" buttonLabel="No"></MyButton></span>
                 <span v-show="this.cstatus==this.WAITINGFORNAME" class="prompt">
                     What do you want to name this card ?<input ref="cardName" v-model="nameField.value" type="text" size="20"/>
-                    <MyButton @myButtonClicked="doneButtonClicked" buttonLabel="Done"></MyButton><MyButton @myButtonClicked="cancelExitClicked" buttonLabel="Cancel"></MyButton>
+                    <MyButton @myButtonClicked="doneButtonClicked" buttonLabel="Done"></MyButton><MyButton @myButtonClicked="cancelClicked" buttonLabel="Cancel"></MyButton>
                 </span>
                 <span v-show="this.cstatus==this.WAITINGFORTYPE" class="prompt">
                     What kind of card are you adding ?
@@ -15,9 +15,9 @@
                         <option value="select">Select Card Type</option>
                         <option  value="blankComponent">Blank Card</option>
                     </select>
-                    <MyButton @myButtonClicked="cancelExitClicked" buttonLabel="Cancel"></MyButton>
+                    <MyButton @myButtonClicked="cancelClicked" buttonLabel="Cancel"></MyButton>
                 </span>
-                <span v-show="this.cstatus==this.WAITINGFORSUBMIT">Save this card ? <MyButton @myButtonClicked="saveButtonClicked" buttonLabel="Submit"></MyButton><MyButton @myButtonClicked="cancelExitClicked" buttonLabel="Cancel"></MyButton></span>
+                <span v-show="this.cstatus==this.WAITINGFORSUBMIT">Save this card ? <MyButton @myButtonClicked="saveButtonClicked" buttonLabel="Submit"></MyButton><MyButton @myButtonClicked="cancelClicked" buttonLabel="Cancel"></MyButton></span>
                 <span v-show="showLayoutMenu" class="layoutMenu"><span class="layoutMenuItem" @click="createLayout">New Layout</span><span class="layoutMenuItem">User Administration</span></span>
                 <span v-show="this.showMenuLabelInput">
                     <NewLayoutInput @layoutInputComplete="submitNewLayout" @layoutInputCanceled="cancelLayoutInput"></NewLayoutInput>
