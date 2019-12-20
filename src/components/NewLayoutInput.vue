@@ -2,16 +2,16 @@
 
     <span>
         <span v-show="this.statusNow==INPUT_MENU_LABEL" class="layoutMenuItem">
-            What is the label you wish for this layout ?<input ref="menuLabelInput" v-model="menuLabelInput.value" type="text" size="32" @keydown.tab="bumpStatus" /><MyButton @myButtonClicked="this.bumpStatus" buttonLabel="Next"></MyButton><MyButton @myButtonClicked="this.cancel" buttonLabel="Cancel"></MyButton>
+            What is the label you wish for this layout ?<input ref="menuLabelInput" v-model="menuLabelInput.value" type="text" size="32" @keydown.tab="bumpStatus" /><MyButton @myButtonClicked="bumpStatus" buttonLabel="Next"></MyButton><MyButton @myButtonClicked="this.cancel" buttonLabel="Cancel"></MyButton>
         </span>
         <span v-show="this.statusNow==INPUT_DESCRIPTION" class="layoutMenuItem">
             <MyButton @myButtonClicked="this.goBack" buttonLabel="<-Go Back"></MyButton>Please provide a short description of this layout: <input ref="menuDescriptionInput" v-model="menuDescriptionInput.value" type="text" size="80" @keydown.tab="bumpStatus" /><MyButton @myButtonClicked="this.bumpStatus" buttonLabel="Next"></MyButton><MyButton @myButtonClicked="this.cancel" buttonLabel="Cancel"></MyButton>
         </span>
         <span v-show="this.statusNow==INPUT_ROWS" class="layoutMenuItem">
-            <MyButton @myButtonClicked="this.goBack" buttonLabel="<-Go Back"></MyButton>How many rows will the layout have ? <input ref="menuRowsInput" v-model="menuRowsInput.value" type="text" size="5" @keydown.tab="this.bumpStatus"/><MyButton @myButtonClicked="bumpStatus" buttonLabel="Next"></MyButton><MyButton @myButtonClicked="this.cancel" buttonLabel="Cancel"></MyButton>
+            <MyButton @myButtonClicked="this.goBack" buttonLabel="<-Go Back"></MyButton>How many rows will the layout have ? <input ref="menuRowsInput" v-model="menuRowsInput.value" type="text" size="5" @keydown.tab="bumpStatus"/><MyButton @myButtonClicked="bumpStatus" buttonLabel="Next"></MyButton><MyButton @myButtonClicked="this.cancel" buttonLabel="Cancel"></MyButton>
         </span>
         <span v-show="this.statusNow==INPUT_COLUMNS" class="layoutMenuItem">
-            <MyButton @myButtonClicked="this.goBack" buttonLabel="<-Go Back"></MyButton>How many columns will the layout have ? <input ref="menuColumnsInput" v-model="menuColumnsInput.value" type="text" size="5" @keydown.tab="this.bumpStatus"/><MyButton @myButtonClicked="bumpStatus" buttonLabel="Next"></MyButton><MyButton @myButtonClicked="this.cancel" buttonLabel="Cancel"></MyButton>
+            <MyButton @myButtonClicked="this.goBack" buttonLabel="<-Go Back"></MyButton>How many columns will the layout have ? <input ref="menuColumnsInput" v-model="menuColumnsInput.value" type="text" size="5" @keydown.tab="bumpStatus"/><MyButton @myButtonClicked="bumpStatus" buttonLabel="Next"></MyButton><MyButton @myButtonClicked="this.cancel" buttonLabel="Cancel"></MyButton>
         </span>
         <span v-show="this.statusNow==SUBMIT_LAYOUT" class="layoutMenuItem">
             <MyButton @myButtonClicked="this.goBack" buttonLabel="<-Go Back"></MyButton>Save and set up this layout ? <MyButton @myButtonClicked="this.submitInput" buttonLabel="Save"></MyButton><MyButton @myButtonClicked="this.cancel" buttonLabel="Cancel"></MyButton>
@@ -27,6 +27,7 @@
   /* eslint-disable no-debugger */
 
   import MyButton from "../components/MyButton.vue";
+
   export default {
     name: "NewLayoutInput",
     components: { MyButton },
@@ -67,8 +68,8 @@
                 this.entryError=true;
             }else{
               this.entryError=false;
-                this.statusNow++;
-                this.$refs.menuDescriptionInput.focus();
+              this.statusNow++;
+              this.$refs.menuDescriptionInput.focus();
             }
             break;
           case this.INPUT_DESCRIPTION:
