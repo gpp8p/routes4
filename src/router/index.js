@@ -10,6 +10,7 @@ import editGrid from "../views/editGrid.vue";
 import editGrid1 from "../views/EditGrid1.vue";
 import layoutIndex from "../views/LayoutIndex.vue";
 import TheNavigation from "../components/TheNavigation.vue";
+import focusTest from "../views/focusTest.vue";
 
 
 Vue.use(VueRouter);
@@ -74,6 +75,11 @@ const routes = [
     name: "layoutIndex",
     component: layoutIndex
 
+  },
+  {
+    path: "/focusTest",
+    name: "focusTest",
+    component: focusTest
   }
 
 

@@ -10,8 +10,7 @@
             <router-link :to="{name: 'meetings', params: {id: index, attendeeNumber: meeting.attendees.length}}">{{meeting.title}}</router-link>
 
         </span>
-        <router-link :to="{name:'softGrid', params:{}}">SoftGrid</router-link>
-        <router-link :to="{name:'editGrid', params:{}}">EditGrid</router-link>
+        <router-link :to="{name:'layoutIndex', params:{}}">Layout Edit</router-link>
     </div>
 
 </template>
