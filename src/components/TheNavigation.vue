@@ -10,7 +10,7 @@
             <router-link :to="{name: 'meetings', params: {id: index, attendeeNumber: meeting.attendees.length}}">{{meeting.title}}</router-link>
 
         </span>
-        <router-link :to="{name:'layoutIndex', params:{}}">Layout Edit</router-link>
+        <router-link :to="{name:'layoutIndex', params:{}}">Layout Edit</router-link> -- <router-link :to="{name:'focusTest', params:{}}">Focus Test</router-link> -- <router-link :to="{name:'testLayoutTemplate', params:{}}">Test Layout Template</router-link>
     </div>
 
 </template>

@@ -11,6 +11,7 @@ import editGrid1 from "../views/EditGrid1.vue";
 import layoutIndex from "../views/LayoutIndex.vue";
 import TheNavigation from "../components/TheNavigation.vue";
 import focusTest from "../views/focusTest.vue";
+import testLayoutTemplate from "../views/testLayoutTemplate.vue";
 
 
 Vue.use(VueRouter);
@@ -80,6 +81,12 @@ const routes = [
     path: "/focusTest",
     name: "focusTest",
     component: focusTest
+  },
+  {
+    path: "/testLayoutTemplate",
+    name: "testLayoutTemplate",
+    component: testLayoutTemplate
+
   }
 
 
