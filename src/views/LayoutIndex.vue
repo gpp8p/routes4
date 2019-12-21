@@ -20,7 +20,7 @@
                 <span v-show="this.cstatus==this.WAITINGFORSUBMIT">Save this card ? <MyButton @myButtonClicked="saveButtonClicked" buttonLabel="Submit"></MyButton><MyButton @myButtonClicked="cancelClicked" buttonLabel="Cancel"></MyButton></span>
                 <span v-show="showLayoutMenu" class="layoutMenu"><span class="layoutMenuItem" @click="createLayout">New Layout</span><span class="layoutMenuItem">User Administration</span></span>
                 <span v-show="this.showMenuLabelInput">
-                    <NewLayoutInput @layoutInputComplete="submitNewLayout" @layoutInputCanceled="cancelLayoutInput"></NewLayoutInput>
+
                 </span>
             </div>
         </section>
@@ -54,11 +54,11 @@
   import axios from 'axios';
   import editGrid2 from '../components/editGrid2';
   import MyButton from "../components/MyButton";
-  import NewLayoutInput from '../components/NewLayoutInput.vue'
+//  import NewLayoutInput from '../components/NewLayoutInput.vue'
 //  import focusTest from "../views/focusTest.vue";
   export default {
     name: "LayoutIndex",
-    components: {LayoutListLine, layoutListHeader, editGrid2, MyButton, NewLayoutInput},
+    components: {LayoutListLine, layoutListHeader, editGrid2, MyButton},
     data () {
       return {
         WAITINGFORCLICK:0,

@@ -1,17 +1,15 @@
 <template>
-    <span>
-    <section v-if="this.viewStatus==this.VIEW_CREATE_LAYOUT" class="navbarWrapper">
-        <div class="navbar">
+    <span class="layoutScreen">
+    <section  class="navbar">
+        <div v-if="this.viewStatus==this.VIEW_CREATE_LAYOUT">
             <focusTest></focusTest>
         </div>
-    </section>
-    <section v-if="this.viewStatus==this.VIEW_TOP_MENU" class="navbarWrapper">
-        <div class="navbar">
+        <div v-if="this.viewStatus==this.VIEW_TOP_MENU">
             <span class="layoutMenu"><span class="layoutMenuItem" @click="createLayout">New Layout</span><span class="layoutMenuItem">User Administration</span></span>
         </div>
     </section>
-    <section class="intro">
-        <div class="content">
+    <section class="content">
+        <div>
 
         </div>
     </section>
@@ -42,49 +40,43 @@
 </script>
 
 <style scoped>
+
     section {
-        width: 100vw;
+
         padding: 0 0%;
         display: table;
         margin: 0;
-        max-width: none;
         height: 100vh;
 
     }
+    .layoutScreen {
+
+    }
     .content {
-        margin: 2px;
+        margin-left: 2px;
+        margin-top: 2px;
         background-color: #dbddd0;
-        height:90vh;
-        width:98vw;
+        height:87vh;
+        width:97vw;
         border-radius: 4px;
         border-width: 2px;
         border-style: solid;
         border-color: #0a3aff;
-
-    }
-    .intro {
-        height: 93vh;
-        width: 100vw;
-        background-color: #ffffff;
-
-
-    }
-    .navbarWrapper {
-        height: 7vh;
-        width: 100vw;
-        background-color: #ffffff;
-
+        padding-top: 16px;
+        padding-left: 5px;
     }
     .navbar {
-        margin: 2px;
+        margin-left: 2px;
         background-color: #ffcd90;
         height:6vh;
-        width:98vw;
+        width:97vw;
         border-radius: 4px;
         border-width: 2px;
         border-style: solid;
         border-color: #0a3aff;
         text-align: left;
+        padding-top: 16px;
+        padding-left: 5px;
     }
     .layoutMenu {
         display: flex;
