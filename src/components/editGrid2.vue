@@ -55,7 +55,7 @@ export default {
       bottomRightRow:0,
       bottomRightCol:0,
       selectedColor: '#66bb6a',
-      unSelectedColor: 'coral',
+      unSelectedColor: '#ffcd90',
       newCardType: '',
       scolor: '',
 
@@ -81,7 +81,7 @@ export default {
         gridWidthCss = gridWidthCss + widthSize + "% ";
       }
       var gridCss =
-        "display: grid; grid-gap: 3px; background-color: #fff; height: 90vh; color: #444; " +
+        "display: grid; grid-gap: 3px; background-color: #dbddd0; height: 90vh; color: #ffcd90; " +
         gridHeightCss +
         ";" +
         gridWidthCss +
@@ -168,15 +168,8 @@ export default {
 
 <style scoped>
   .gridSection {
-    margin: 2px;
-    background-color: #dbddd0;
-    height:82vh;
-    width:98vw;
-    border-radius: 4px;
-    border-width: 2px;
-    border-style: solid;
-    border-color: #0a3aff;
-
+    height:80vh;
+    width:96vw;
   }
   .prompt {
     font-size: medium;

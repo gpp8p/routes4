@@ -2,7 +2,7 @@
     <div v-bind:style='cardStyle'
          v-on:click="cellClicked"
     >
-        {{cardId}}) Hello There...
+
     </div>
 </template>
 

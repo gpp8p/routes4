@@ -51,6 +51,6 @@
     .genericCardStyle{
         height:100%;
         width:100%;
-        background-color: coral;
+        background-color: #ffcd90;
     }
 </style>
