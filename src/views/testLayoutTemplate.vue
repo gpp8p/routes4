@@ -7,6 +7,9 @@
         <div v-if="this.viewStatus==this.VIEW_TOP_MENU">
             <span class="layoutMenu"><span class="layoutMenuItem" @click="createLayout">New Layout</span><span class="layoutMenuItem">User Administration</span></span>
         </div>
+        <div v-if="this.viewStatus==this.VIEW_GRID_MENU">
+            <gridInput ref="gridInput" @storeValue="cellClicked"></gridInput>
+        </div>
     </section>
     <section class="content">
         <div v-if="listView">
@@ -23,7 +26,7 @@
                 </LayoutListLine>
         </div>
         <div v-if="gridView">
-            <editGrid2 :layoutId="selectedLayoutId" ref="editGrid" @storeValue="cellClicked"></editGrid2>
+            <editGrid2 :layoutId="selectedLayoutId"  ref="editGrid" @storeValue="cellClicked"></editGrid2>
         </div>
     </section>
     </span>
@@ -37,10 +40,11 @@
   import layoutListHeader from '../components/layoutListHeader.vue'
   import axios from 'axios';
   import editGrid2 from '../components/editGrid2';
+  import gridInput from '../components/gridInput.vue';
 
   export default {
     name: "testLayoutTemplate",
-    components: {LayoutListLine, layoutListHeader, focusTest, editGrid2},
+    components: {LayoutListLine, layoutListHeader, focusTest, editGrid2, gridInput},
     mounted: function() {
       this.viewStatus = this.VIEW_TOP_MENU;
       axios.get('http://localhost:8000//layoutList')
@@ -57,11 +61,13 @@
       return {
         VIEW_TOP_MENU: 0,
         VIEW_CREATE_LAYOUT:1,
+        VIEW_GRID_MENU:2,
         viewStatus: this.VIEW_TOP_MENU,
         allLayouts: [],
         gridView: true,
         listView: true,
-        selectedLayoutId: ''
+        selectedLayoutId: '',
+        gridKey: ''
       }
     },
     methods:{
@@ -75,10 +81,30 @@
         this.listView=false;
         this.gridView=true;
         this.showLayoutMenu = false;
+        this.viewStatus = this.VIEW_GRID_MENU;
         this.$refs.editGrid.reloadLayout(msg);
       },
       cellClicked(msg){
         console.log(msg);
+        if(msg[0]=='topLeft'){
+          this.$refs.gridInput.topLeftClicked();
+        }
+        if(msg[0]=='bottomRight'){
+          this.$refs.gridInput.bottomRightClicked();
+        }
+        if(msg[0]=='selectAreaOk'){
+          this.$refs.gridInput.selectAreaOk();
+        }
+        if(msg[0]=='nameEntered'){
+          this.$refs.gridInput.nameEntered();
+        }
+        if(msg[0]=='cardEntryCanceled'){
+          this.viewStatus = this.VIEW_TOP_MENU;
+          this.listView=true;
+          this.gridView=false;
+
+        }
+
       }
 
     }

@@ -1,0 +1,117 @@
+<template>
+    <span>
+        <span v-if="this.gridInputStatus==this.GRID_WAITINGFORCLICK" class="prompt">Click on the top left cell of where you wish to place the card: <MyButton @myButtonClicked="cancelExitClicked" buttonLabel="Cancel and Return to Layout List"></MyButton></span>
+        <span v-if="this.gridInputStatus==this.GRID_TOPLEFTCLICKED" class="prompt">Click on the bottom right cell of where you wish to place the card: <MyButton @myButtonClicked="cancelExitClicked" buttonLabel="Cancel and Return to Layout List"></MyButton></span>
+        <span v-if="this.gridInputStatus==this.GRID_BOTTOMRIGHTCLICKED" class="prompt">Is this area ok for the new card ? <MyButton @myButtonClicked="yesButtonClicked" buttonLabel="Yes"></MyButton><MyButton @myButtonClicked="cancelClicked" buttonLabel="No"></MyButton><MyButton @myButtonClicked="cancelExitClicked" buttonLabel="Cancel and Return to Layout List"></MyButton></span>
+        <span v-if="this.gridInputStatus==this.GRID_SELECTAREAOK" class="prompt">
+            What do you want to name this card ?<input @keyup.enter="this.nameEntered" ref="cardName" v-model="nameField.value"  type="text" size="30" v-focus="this.gridInputStatus==this.GRID_SELECTAREAOK"/>
+            <MyButton @myButtonClicked="nameHasBeenEntered"  buttonLabel="Done"></MyButton><MyButton @myButtonClicked="cancelClicked" buttonLabel="Cancel"></MyButton>
+        </span>
+        <span v-if="this.gridInputStatus==this.GRID_NAME_ENTERED" class="prompt">
+            What kind of card are you adding ?
+            <select ref="cardComponentSelect" @change="cardSelectionMade($event)">
+                <option value="select">Select Card Type</option>
+                <option  value="blankComponent">Blank Card</option>
+            </select>
+            <MyButton @myButtonClicked="cancelClicked" buttonLabel="Cancel"></MyButton>
+        </span>
+        <span v-if="this.gridInputStatus==this.GRID_TYPE_ENTERED">Save this card ? <MyButton @myButtonClicked="saveButtonClicked" buttonLabel="Submit"></MyButton><MyButton @myButtonClicked="cancelClicked" buttonLabel="Cancel"></MyButton></span>
+
+    </span>
+</template>
+
+<script>
+  /* eslint-disable no-debugger,no-console */
+
+  import Vue from "vue";
+  import MyButton from "../components/MyButton.vue";
+  export default {
+    name: "gridInput",
+    components: {MyButton},
+    directives:{
+      focus:{
+        inserted: function (el) {
+          //         debugger;
+          el.focus()
+        },
+        update: function (el) {
+          Vue.nextTick(function() {
+            el.focus();
+          })
+        }
+      }
+    },
+    created: function(){
+      this.gridInputStatus=this.GRID_WAITINGFORCLICK;
+    },
+    data(){
+      return {
+        gridInputStatus:0,
+        GRID_WAITINGFORCLICK:0,
+        GRID_TOPLEFTCLICKED:1,
+        GRID_BOTTOMRIGHTCLICKED:2,
+        GRID_SELECTAREAOK:3,
+        GRID_NAME_ENTERED:4,
+        GRID_TYPE_ENTERED:5,
+        GRID_WAITINGFORSUBMIT:6,
+        GRID_WAITINGTOSAVE:8,
+        GRID_CANCEL:9,
+        nameField:
+          {
+            value:''
+          },
+        newCardType: ''
+      }
+    },
+    methods:{
+        yesButtonClicked(){
+          this.$emit('storeValue', ['selectAreaOk', 0,0 ]);
+        },
+        topLeftClicked(){
+          this.gridInputStatus=this.GRID_TOPLEFTCLICKED;
+        },
+        bottomRightClicked(){
+          this.gridInputStatus=this.GRID_BOTTOMRIGHTCLICKED;
+        },
+        selectAreaOk(){
+//          debugger;
+          this.gridInputStatus=this.GRID_SELECTAREAOK;
+        },
+        nameEntered(){
+          this.gridInputStatus=this.GRID_NAME_ENTERED;
+        },
+        typeEntered(){
+          this.gridInputStatus=this.GRID_NAME_ENTERED;
+        },
+        nameHasBeenEntered(){
+          this.$emit('storeValue', ['nameEntered', this.nameField.value,0 ]);
+        },
+        saveButtonClicked(){
+
+        },
+        cancelExitClicked(){
+          this.$emit('storeValue', ['cardEntryCanceled', 0,0 ]);
+        },
+        cancelClicked(){
+          this.gridInputStatus=this.GRID_WAITINGFORCLICK;
+        },
+        cardSelectionMade(evt){
+            console.log('Card type selection made:'+evt.target.value);
+            this.newCardType = evt.target.value;
+            this.gridInputStatus = this.GRID_TYPE_ENTERED;
+         },
+
+    }
+  };
+</script>
+
+<style scoped>
+    .prompt {
+        font-size: medium;
+        color: blue;
+        margin-bottom: 5px;
+        text-align: left;
+    }
+
+
+</style>

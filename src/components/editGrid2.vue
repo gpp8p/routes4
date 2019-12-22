@@ -29,7 +29,7 @@ export default {
     layoutId: {
       type: String,
       required: true
-    }
+    },
   },
   data() {
     return {
@@ -133,7 +133,7 @@ export default {
     },
     processClick(msg){
 //      console.log('editGrid2 gets storeValue-'+msg);
-      debugger;
+//      debugger;
       switch(this.cstatus){
         case this.WAITINGFORCLICK:
           this.topLeftClicked=msg[0];
@@ -141,6 +141,7 @@ export default {
           this.topLeftCol = this.cardInstances[this.topLeftClicked].card_position[1];
           this.cstatus=this.TOPLEFTCLICKED;
           this.$refs.key[msg].$el.style.backgroundColor='#66bb6a';
+          this.$emit('storeValue', ['topLeft', this.topLeftRow,this.topLeftCol ]);
           break;
         case this.TOPLEFTCLICKED:
           this.bottomRightClicked = msg[0];
@@ -150,6 +151,7 @@ export default {
           this.$refs.key[msg].$el.style.backgroundColor='#66bb6a';
           this.scolor = this.selectedColor;
           this.cardInstances.forEach(this.fillInCell);
+          this.$emit('storeValue', ['bottomRight', this.bottomRightRow,this.bottomRightCol ]);
           break;
         case this.BOTTOMRIGHTCLICKED:
           this.cstatus = this.WAITINGFORNAME;
@@ -158,7 +160,6 @@ export default {
           this.cstatus = this.WAITINGFORTYPE;
           break;
       }
-      this.$emit('storeValue', [msg])
     },
 
 
