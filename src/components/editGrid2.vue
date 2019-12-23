@@ -29,7 +29,7 @@ export default {
     layoutId: {
       type: String,
       required: true
-    },
+    }
   },
   data() {
     return {
@@ -91,6 +91,9 @@ export default {
     hideGrid(){
       this.displayGrid=false;
     },
+    showGrid(){
+      this.displayGrid=true;
+    },
     reloadLayout: function(msg) {
       this.displayGrid=true;
       this.layoutId = msg;
@@ -131,6 +134,16 @@ export default {
 //        console.log(thisCardCol+'-'+thisCardRow+'-'+topLeftCol+'-'+topLeftRow+'-'+bottomRightCol+'-'+bottomRightRow);
       }
     },
+    checkClickPos(brClickRow, brClickCol, tlSelectRow, tlSelectCol){
+//      debugger;
+      if((brClickRow<tlSelectRow)||(brClickCol<tlSelectCol)){
+        return false;
+      }else{
+        return true;
+      }
+
+
+    },
     processClick(msg){
 //      console.log('editGrid2 gets storeValue-'+msg);
 //      debugger;
@@ -145,13 +158,19 @@ export default {
           break;
         case this.TOPLEFTCLICKED:
           this.bottomRightClicked = msg[0];
-          this.bottomRightRow = this.cardInstances[this.bottomRightClicked].card_position[0];
-          this.bottomRightCol = this.cardInstances[this.bottomRightClicked].card_position[1];
-          this.cstatus=this.BOTTOMRIGHTCLICKED;
-          this.$refs.key[msg].$el.style.backgroundColor='#66bb6a';
-          this.scolor = this.selectedColor;
-          this.cardInstances.forEach(this.fillInCell);
-          this.$emit('storeValue', ['bottomRight', this.bottomRightRow,this.bottomRightCol ]);
+          var brClickRow = this.cardInstances[this.bottomRightClicked].card_position[0];
+          var brClickCol = this.cardInstances[this.bottomRightClicked].card_position[1];
+          if(this.checkClickPos(brClickRow, brClickCol, this.topLeftRow, this.topLeftCol)){
+            this.bottomRightRow = this.cardInstances[this.bottomRightClicked].card_position[0];
+            this.bottomRightCol = this.cardInstances[this.bottomRightClicked].card_position[1];
+            this.cstatus=this.BOTTOMRIGHTCLICKED;
+            this.$refs.key[msg].$el.style.backgroundColor='#66bb6a';
+            this.scolor = this.selectedColor;
+            this.cardInstances.forEach(this.fillInCell);
+            this.$emit('storeValue', ['bottomRight', this.bottomRightRow,this.bottomRightCol ]);
+          }else{
+            this.$emit('storeValue', ['error', 'You must click and to the right',0 ]);
+          }
           break;
         case this.BOTTOMRIGHTCLICKED:
           this.cstatus = this.WAITINGFORNAME;

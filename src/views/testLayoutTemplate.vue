@@ -81,6 +81,7 @@
         this.listView=false;
         this.gridView=true;
         this.showLayoutMenu = false;
+        this.$refs.editGrid.showGrid();
         this.viewStatus = this.VIEW_GRID_MENU;
         this.$refs.editGrid.reloadLayout(msg);
       },
@@ -93,6 +94,7 @@
           this.$refs.gridInput.bottomRightClicked();
         }
         if(msg[0]=='selectAreaOk'){
+          this.$refs.gridInput.clearError();
           this.$refs.gridInput.selectAreaOk();
         }
         if(msg[0]=='nameEntered'){
@@ -101,8 +103,12 @@
         if(msg[0]=='cardEntryCanceled'){
           this.viewStatus = this.VIEW_TOP_MENU;
           this.listView=true;
-          this.gridView=false;
-
+          this.gridView=true;
+          this.$refs.editGrid.cancelLayoutEdit();
+          this.$refs.editGrid.hideGrid();
+        }
+        if(msg[0]=='error'){
+          this.$refs.gridInput.setError(msg[1]);
         }
 
       }

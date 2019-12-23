@@ -16,6 +16,7 @@
             <MyButton @myButtonClicked="cancelClicked" buttonLabel="Cancel"></MyButton>
         </span>
         <span v-if="this.gridInputStatus==this.GRID_TYPE_ENTERED">Save this card ? <MyButton @myButtonClicked="saveButtonClicked" buttonLabel="Submit"></MyButton><MyButton @myButtonClicked="cancelClicked" buttonLabel="Cancel"></MyButton></span>
+        <span v-if="errorCondition" class="errorMsg">{{this.errorMessage}}</span>
 
     </span>
 </template>
@@ -60,7 +61,8 @@
           {
             value:''
           },
-        newCardType: ''
+        newCardType: '',
+        errorCondition:false
       }
     },
     methods:{
@@ -90,6 +92,7 @@
 
         },
         cancelExitClicked(){
+          this.gridInputStatus=this.GRID_WAITINGFORCLICK;
           this.$emit('storeValue', ['cardEntryCanceled', 0,0 ]);
         },
         cancelClicked(){
@@ -100,6 +103,14 @@
             this.newCardType = evt.target.value;
             this.gridInputStatus = this.GRID_TYPE_ENTERED;
          },
+         setError(errMsg){
+             this.errorMessage=errMsg;
+             this.errorCondition=true;
+         },
+         clearError(){
+           this.errorMessage='';
+           this.errorCondition=false;
+         }
 
     }
   };
@@ -111,6 +122,11 @@
         color: blue;
         margin-bottom: 5px;
         text-align: left;
+    }
+    .errorMsg {
+        text-align: right;
+        margin-right: 10px;
+        color: red;
     }
 
 
