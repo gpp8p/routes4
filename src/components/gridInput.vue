@@ -80,13 +80,25 @@
           this.gridInputStatus=this.GRID_SELECTAREAOK;
         },
         nameEntered(){
-          this.gridInputStatus=this.GRID_NAME_ENTERED;
+          if(this.nameField != ''){
+            this.gridInputStatus=this.GRID_NAME_ENTERED;
+            this.clearError();
+          }else{
+            this.setError('A card name must be enteered')
+          }
+
         },
         typeEntered(){
           this.gridInputStatus=this.GRID_NAME_ENTERED;
         },
         nameHasBeenEntered(){
-          this.$emit('storeValue', ['nameEntered', this.nameField.value,0 ]);
+          if(this.nameField.value != ''){
+            this.clearError();
+            this.$emit('storeValue', ['nameEntered', this.nameField.value,0 ]);
+          }else{
+            this.setError('A card name must be enteered')
+          }
+
         },
         saveButtonClicked(){
 
@@ -97,6 +109,7 @@
         },
         cancelClicked(){
           this.gridInputStatus=this.GRID_WAITINGFORCLICK;
+          this.$emit('storeValue', ['cardEntryReset', 0,0 ]);
         },
         cardSelectionMade(evt){
             console.log('Card type selection made:'+evt.target.value);

@@ -55,7 +55,7 @@ export default {
       bottomRightRow:0,
       bottomRightCol:0,
       selectedColor: '#66bb6a',
-      unSelectedColor: '#ffcd90',
+      unSelectedColor: 'rgb(219, 170, 110)',
       newCardType: '',
       scolor: '',
 

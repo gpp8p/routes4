@@ -2,7 +2,7 @@
     <span class="layoutScreen">
     <section  class="navbar">
         <div v-if="this.viewStatus==this.VIEW_CREATE_LAYOUT">
-            <focusTest @layoutInputCanceled="this.showLayoutMenu"></focusTest>
+            <focusTest @layoutInputComplete="submitNewLayout" @layoutInputCanceled="this.showLayoutMenu"></focusTest>
         </div>
         <div v-if="this.viewStatus==this.VIEW_TOP_MENU">
             <span class="layoutMenu"><span class="layoutMenuItem" @click="createLayout">New Layout</span><span class="layoutMenuItem">User Administration</span></span>
@@ -85,6 +85,23 @@
         this.viewStatus = this.VIEW_GRID_MENU;
         this.$refs.editGrid.reloadLayout(msg);
       },
+      submitNewLayout(msg) {
+        console.log(msg);
+        axios.post('http://localhost:8000/createLayout', {
+          name: msg[0],
+          description: msg[1],
+          height: msg[2],
+          width: msg[3]
+        }).then(function(response) {
+          console.log(response);
+        }).catch(function(error) {
+          console.log(error);
+        });
+      },
+
+
+
+
       cellClicked(msg){
         console.log(msg);
         if(msg[0]=='topLeft'){
@@ -106,6 +123,9 @@
           this.gridView=true;
           this.$refs.editGrid.cancelLayoutEdit();
           this.$refs.editGrid.hideGrid();
+        }
+        if(msg[0]=='cardEntryReset'){
+          this.$refs.editGrid.cancelLayoutEdit();
         }
         if(msg[0]=='error'){
           this.$refs.gridInput.setError(msg[1]);
