@@ -87,14 +87,18 @@
       },
       submitNewLayout(msg) {
         console.log(msg);
-        axios.post('http://localhost:8000/createLayout', {
+        axios.post('http://localhost:8000/createLayout?XDEBUG_SESSION_START=18938', {
           name: msg[0],
           description: msg[1],
           height: msg[2],
           width: msg[3]
-        }).then(function(response) {
-          console.log(response);
+        }).then(response=>
+            {this.layoutSelected(response.data)
         }).catch(function(error) {
+//        }).then(function(response) {
+//          console.log(response);
+//          this.layoutSelected(response.data);
+//        }).catch(function(error) {
           console.log(error);
         });
       },
@@ -123,6 +127,15 @@
           this.gridView=true;
           this.$refs.editGrid.cancelLayoutEdit();
           this.$refs.editGrid.hideGrid();
+          axios.get('http://localhost:8000//layoutList')
+            .then(response => {
+// eslint-disable-next-line no-debugger
+              // JSON responses are automatically parsed.
+              this.allLayouts = response.data;
+            })
+            .catch(e => {
+              this.errors.push(e);
+            });
         }
         if(msg[0]=='cardEntryReset'){
           this.$refs.editGrid.cancelLayoutEdit();
