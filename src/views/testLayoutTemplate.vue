@@ -33,7 +33,7 @@
 </template>
 
 <script>
-  /* eslint-disable no-console */
+  /* eslint-disable no-console,no-debugger */
 
   import focusTest from "../views/focusTest.vue";
   import LayoutListLine from '../components/LayoutListLine.vue';
@@ -67,7 +67,13 @@
         gridView: true,
         listView: true,
         selectedLayoutId: '',
-        gridKey: ''
+        gridKey: '',
+        topLeftRow:0,
+        topLeftCol: 0,
+        bottomRightRow: 0,
+        bottomRightCol: 0,
+        layoutId :0
+
       }
     },
     methods:{
@@ -83,6 +89,7 @@
         this.showLayoutMenu = false;
         this.$refs.editGrid.showGrid();
         this.viewStatus = this.VIEW_GRID_MENU;
+        this.layoutId = msg[0];
         this.$refs.editGrid.reloadLayout(msg);
       },
       submitNewLayout(msg) {
@@ -110,13 +117,20 @@
         console.log(msg);
         if(msg[0]=='topLeft'){
           this.$refs.gridInput.topLeftClicked();
+          this.topLeftRow = msg[1];
+          this.topLeftCol = msg[2];
+//          debugger;
         }
         if(msg[0]=='bottomRight'){
           this.$refs.gridInput.bottomRightClicked();
+          this.bottomRightRow = msg[1];
+          this.bottomRightCol = msg[2];
+//          debugger;
         }
         if(msg[0]=='selectAreaOk'){
           this.$refs.gridInput.clearError();
           this.$refs.gridInput.selectAreaOk();
+          debugger;
         }
         if(msg[0]=='nameEntered'){
           this.$refs.gridInput.nameEntered();
@@ -142,6 +156,22 @@
         }
         if(msg[0]=='error'){
           this.$refs.gridInput.setError(msg[1]);
+        }
+        if(msg[0]=='saveCard'){
+            console.log(msg);
+          axios.post('http://localhost:8000/saveCard?XDEBUG_SESSION_START=10690', {
+            layoutId: this.layoutId,
+            cardTitle: msg[0],
+            topLeftRow: this.topLeftRow,
+            topLeftCol: this.topLeftCol,
+            bottomRightRow: this.bottomRightRow,
+            bottomRightCol: this.bottomRightCol
+          }).then(response=>
+          {this.layoutSelected(response.data)
+          }).catch(function(error) {
+            console.log(error);
+          });
+
         }
 
       }

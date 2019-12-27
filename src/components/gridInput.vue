@@ -101,7 +101,8 @@
 
         },
         saveButtonClicked(){
-
+          this.gridInputStatus=this.GRID_WAITINGFORCLICK;
+          this.$emit('storeValue', ['saveCard', this.nameField.value,0 ]);
         },
         cancelExitClicked(){
           this.gridInputStatus=this.GRID_WAITINGFORCLICK;
