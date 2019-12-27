@@ -115,6 +115,7 @@
         cardSelectionMade(evt){
             console.log('Card type selection made:'+evt.target.value);
             this.newCardType = evt.target.value;
+            this.$emit('storeValue', ['cardTypeEntered', this.newCardType,0 ]);
             this.gridInputStatus = this.GRID_TYPE_ENTERED;
          },
          setError(errMsg){

@@ -72,7 +72,8 @@
         topLeftCol: 0,
         bottomRightRow: 0,
         bottomRightCol: 0,
-        layoutId :0
+        layoutId :0,
+        newCardType: ''
 
       }
     },
@@ -127,6 +128,9 @@
           this.bottomRightCol = msg[2];
 //          debugger;
         }
+        if(msg[0]=='cardTypeEntered'){
+            this.newCardType = msg[1];
+        }
         if(msg[0]=='selectAreaOk'){
           this.$refs.gridInput.clearError();
           this.$refs.gridInput.selectAreaOk();
@@ -162,6 +166,7 @@
           axios.post('http://localhost:8000/saveCard?XDEBUG_SESSION_START=10690', {
             layoutId: this.layoutId,
             cardTitle: msg[0],
+            cardType: this.newCardType,
             topLeftRow: this.topLeftRow,
             topLeftCol: this.topLeftCol,
             bottomRightRow: this.bottomRightRow,
