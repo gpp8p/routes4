@@ -1,5 +1,5 @@
 <template>
-            <blank-component v-if="cardType=='simpleCard'" class="genericCardStyle"
+            <blank-component v-if="cardType=='simpleCard'||cardType=='blankComponent'" class="genericCardStyle"
                     :card-style=cardStyle
                     :card-id=cardId
                     :card-key=cardKey
