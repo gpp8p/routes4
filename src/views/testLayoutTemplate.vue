@@ -85,6 +85,7 @@
         this.viewStatus = this.VIEW_TOP_MENU;
       },
       layoutSelected(msg){
+//        debugger;
         this.listView=false;
         this.gridView=true;
         this.showLayoutMenu = false;
@@ -134,7 +135,7 @@
         if(msg[0]=='selectAreaOk'){
           this.$refs.gridInput.clearError();
           this.$refs.gridInput.selectAreaOk();
-          debugger;
+//          debugger;
         }
         if(msg[0]=='nameEntered'){
           this.$refs.gridInput.nameEntered();
@@ -162,6 +163,7 @@
           this.$refs.gridInput.setError(msg[1]);
         }
         if(msg[0]=='saveCard'){
+//          debugger;
             console.log(msg);
           axios.post('http://localhost:8000/saveCard?XDEBUG_SESSION_START=10690', {
             layoutId: this.layoutId,
