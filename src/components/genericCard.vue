@@ -52,12 +52,24 @@
     },
     methods: {
       processClick(msg){
-        console.log('generic card recieved a click:'+msg);
-        this.$emit('storeValue', [this.cardId])
+//        debugger;
+        if(this.hasChildern(this.$refs)){
+          console.log('hasChildern is true');
+        }else{
+          console.log('no childern');
+          console.log('generic card recieved a click:'+msg);
+          this.$emit('storeValue', [this.cardId])
+        }
       },
       processCardClick(msg){
         console.log('blankComponent card recieved a click:'+msg);
         this.$emit('cardClick', [msg])
+      },
+      hasChildern(refs){
+        for(var o in refs ){
+          return true;
+        }
+        return false;
       }
     }
   };
