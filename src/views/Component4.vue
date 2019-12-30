@@ -19,7 +19,7 @@
 
 <script>
   import store from "@/store";
-  import simpleCard from '../components/simpleCard.vue';
+  import simpleCard from '../components/simpleCardOld.vue';
   import BlankComponent from "../components/blankComponent";
   export default {
     name: "Component4",

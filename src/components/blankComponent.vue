@@ -1,7 +1,5 @@
 <template>
-    <div v-bind:style='cardStyle'
-         v-on:click="cellClicked"
-    >
+    <div v-on:click="cellClicked" style="background-color: blue">
 
     </div>
 </template>
@@ -32,7 +30,7 @@
     methods: {
       cellClicked: function() {
 //        console.log(' blank-component clicked');
-        this.$emit('storeValue', [this.cardKey])
+        this.$emit('cardClick', [this.cardKey])
       },
       refId: function(){
         return "card"+this.cardId;

@@ -8,10 +8,12 @@
       :card-id="instance.id"
       :card-key="index"
       :card-position="instance.card_position"
+      :gridCss="gridParamDefinition"
       @storeValue="processClick"
+      @cardClick="processCardClick"
       ref="key"
-      ></generic-card
-    >
+      ></generic-card>
+
   </div>
 </template>
 
@@ -21,6 +23,7 @@
   import axios from "axios";
 import EventBus from '../main.js';
 import genericCard from '../components/genericCard.vue';
+
 
 export default {
   name: "editGrid2",
@@ -46,6 +49,7 @@ export default {
       cardInstances: [],
       gridParamDefinition: "",
       displayGrid: false,
+      showCards: true,
       evmsg:'',
       topLeftClicked: 0,
       bottomRightClicked: 0,
@@ -90,6 +94,7 @@ export default {
     },
     hideGrid(){
       this.displayGrid=false;
+      this.showCards=false;
     },
     showGrid(){
       this.displayGrid=true;
@@ -119,6 +124,7 @@ export default {
       this.cardInstances.forEach(this.fillInCell);
     },
     fillInCell(item, index, arr){
+      debugger;
       var thisCardCol = arr[index].card_position[1];
       var thisCardRow = arr[index].card_position[0];
       var topLeftCol = arr[this.topLeftClicked].card_position[1];
@@ -144,29 +150,57 @@ export default {
 
 
     },
+    fillSelectedCells(arr,tlCol,tlRow,brCol,brRow, colorToFill){
+      var topLeftCol = tlCol;
+      var topLeftRow = tlRow;
+      var bottomRightCol = brCol;
+      var bottomRightRow = brRow;
+      for(var i = 0; i<arr.length; i++){
+        var thisCardCol = arr[i].card_position[1];
+        var thisCardRow = arr[i].card_position[0];
+        console.log('thisCardCol:'+thisCardCol+'topLeftCol:'+topLeftCol+'thisCardRow:'+thisCardRow+'topLeftRow:'+topLeftRow);
+        console.log('thisCardCol:'+thisCardCol+'bottomRightCol:'+bottomRightCol+'thisCardRow:'+thisCardRow+'bottomRightRow:'+bottomRightRow);
+        console.log(arr[i].id);
+        console.log('-----------------------------')
+        if(thisCardCol >= topLeftCol && thisCardRow >= topLeftRow && thisCardCol <= bottomRightCol && thisCardRow <= bottomRightRow){
+          console.log('card matched');
+          this.$refs.key[i].$el.style.backgroundColor=colorToFill;
+        }
+
+      }
+      console.log('done');
+    },
+    processCardClick(msg){
+      console.log("Card Click - "+msg);
+//      debugger;
+    },
     processClick(msg){
 //      console.log('editGrid2 gets storeValue-'+msg);
 //      debugger;
+      var cardThatWasClicked = this.findCard(msg[0]);
+      console.log('cardThatWasClicked:'+cardThatWasClicked);
       switch(this.cstatus){
         case this.WAITINGFORCLICK:
           this.topLeftClicked=msg[0];
-          this.topLeftRow = this.cardInstances[this.topLeftClicked].card_position[0];
-          this.topLeftCol = this.cardInstances[this.topLeftClicked].card_position[1];
+          this.topLeftRow = this.cardInstances[cardThatWasClicked].card_position[0];
+          this.topLeftCol = this.cardInstances[cardThatWasClicked].card_position[1];
+//          debugger;
           this.cstatus=this.TOPLEFTCLICKED;
-          this.$refs.key[msg].$el.style.backgroundColor='#66bb6a';
+          this.$refs.key[cardThatWasClicked].$el.style.backgroundColor='#66bb6a';
           this.$emit('storeValue', ['topLeft', this.topLeftRow,this.topLeftCol ]);
           break;
         case this.TOPLEFTCLICKED:
           this.bottomRightClicked = msg[0];
-          var brClickRow = this.cardInstances[this.bottomRightClicked].card_position[0];
-          var brClickCol = this.cardInstances[this.bottomRightClicked].card_position[1];
+          var brClickRow = this.cardInstances[cardThatWasClicked].card_position[0];
+          var brClickCol = this.cardInstances[cardThatWasClicked].card_position[1];
           if(this.checkClickPos(brClickRow, brClickCol, this.topLeftRow, this.topLeftCol)){
-            this.bottomRightRow = this.cardInstances[this.bottomRightClicked].card_position[0];
-            this.bottomRightCol = this.cardInstances[this.bottomRightClicked].card_position[1];
+            this.bottomRightRow = this.cardInstances[cardThatWasClicked].card_position[0];
+            this.bottomRightCol = this.cardInstances[cardThatWasClicked].card_position[1];
             this.cstatus=this.BOTTOMRIGHTCLICKED;
-            this.$refs.key[msg].$el.style.backgroundColor='#66bb6a';
+            this.$refs.key[cardThatWasClicked].$el.style.backgroundColor='#66bb6a';
             this.scolor = this.selectedColor;
-            this.cardInstances.forEach(this.fillInCell);
+//            this.cardInstances.forEach(this.fillInCell);
+            this.fillSelectedCells(this.cardInstances,this.topLeftCol,this.topLeftRow,this.bottomRightCol,this.bottomRightRow, '#66bb6a');
             this.$emit('storeValue', ['bottomRight', this.bottomRightRow,this.bottomRightCol ]);
           }else{
             this.$emit('storeValue', ['error', 'You must click and to the right',0 ]);
@@ -178,6 +212,13 @@ export default {
         case this.WAITINGFORNAME:
           this.cstatus = this.WAITINGFORTYPE;
           break;
+      }
+    },
+    findCard(cardId){
+      for(var i=0;i<this.cardInstances.length;i++){
+        if(this.cardInstances[i].id == cardId){
+          return i;
+        }
       }
     },
 

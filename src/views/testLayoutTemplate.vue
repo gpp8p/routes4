@@ -26,7 +26,7 @@
                 </LayoutListLine>
         </div>
         <div v-if="gridView">
-            <editGrid2 :layoutId="selectedLayoutId"  ref="editGrid" @storeValue="cellClicked"></editGrid2>
+            <editGrid2  :layoutId="selectedLayoutId"  ref="editGrid" @storeValue="cellClicked"></editGrid2>
         </div>
     </section>
     </span>
@@ -141,16 +141,19 @@
           this.$refs.gridInput.nameEntered();
         }
         if(msg[0]=='cardEntryCanceled'){
+//          debugger;
           this.viewStatus = this.VIEW_TOP_MENU;
           this.listView=true;
           this.gridView=true;
-          this.$refs.editGrid.cancelLayoutEdit();
+ //         this.$refs.editGrid.cancelLayoutEdit();
           this.$refs.editGrid.hideGrid();
+          this.$refs.editGrid.showCards=false;
           axios.get('http://localhost:8000//layoutList')
             .then(response => {
 // eslint-disable-next-line no-debugger
               // JSON responses are automatically parsed.
               this.allLayouts = response.data;
+//              debugger;
             })
             .catch(e => {
               this.errors.push(e);
