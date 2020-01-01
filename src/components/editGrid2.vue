@@ -121,7 +121,7 @@ export default {
 //      console.log('noButton clicked');
       this.cstatus = this.WAITINGFORCLICK;
       this.scolor = this.unSelectedColor;
-      this.cardInstances.forEach(this.fillInCell);
+      this.fillSelectedCells(this.cardInstances,this.topLeftCol,this.topLeftRow,this.bottomRightCol,this.bottomRightRow, this.unSelectedColor);
     },
     fillInCell(item, index, arr){
       debugger;
@@ -158,12 +158,12 @@ export default {
       for(var i = 0; i<arr.length; i++){
         var thisCardCol = arr[i].card_position[1];
         var thisCardRow = arr[i].card_position[0];
-        console.log('thisCardCol:'+thisCardCol+'topLeftCol:'+topLeftCol+'thisCardRow:'+thisCardRow+'topLeftRow:'+topLeftRow);
-        console.log('thisCardCol:'+thisCardCol+'bottomRightCol:'+bottomRightCol+'thisCardRow:'+thisCardRow+'bottomRightRow:'+bottomRightRow);
-        console.log(arr[i].id);
-        console.log('-----------------------------')
+//        console.log('thisCardCol:'+thisCardCol+'topLeftCol:'+topLeftCol+'thisCardRow:'+thisCardRow+'topLeftRow:'+topLeftRow);
+//        console.log('thisCardCol:'+thisCardCol+'bottomRightCol:'+bottomRightCol+'thisCardRow:'+thisCardRow+'bottomRightRow:'+bottomRightRow);
+//        console.log(arr[i].id);
+//        console.log('-----------------------------')
         if(thisCardCol >= topLeftCol && thisCardRow >= topLeftRow && thisCardCol <= bottomRightCol && thisCardRow <= bottomRightRow){
-          console.log('card matched');
+//          console.log('card matched');
           this.$refs.key[i].$el.style.backgroundColor=colorToFill;
         }
 

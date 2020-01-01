@@ -17,6 +17,7 @@
         </span>
         <span v-if="this.gridInputStatus==this.GRID_TYPE_ENTERED">Save this card ? <MyButton @myButtonClicked="saveButtonClicked" buttonLabel="Submit"></MyButton><MyButton @myButtonClicked="cancelClicked" buttonLabel="Cancel"></MyButton></span>
         <span v-if="errorCondition" class="errorMsg">{{this.errorMessage}}</span>
+        <span v-if="waitCondition" class="prompt">Please wait...</span>
 
     </span>
 </template>
@@ -62,7 +63,8 @@
             value:''
           },
         newCardType: '',
-        errorCondition:false
+        errorCondition:false,
+        waitCondition: false
       }
     },
     methods:{
@@ -125,6 +127,12 @@
          clearError(){
            this.errorMessage='';
            this.errorCondition=false;
+         },
+         setWait(){
+          this.waitCondition=true;
+         },
+         clearWait(){
+          this.waitCondition=false;
          }
 
     }

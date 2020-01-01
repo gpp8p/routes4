@@ -177,8 +177,10 @@
             bottomRightRow: this.bottomRightRow,
             bottomRightCol: this.bottomRightCol
           }).then(response=>
-          {this.layoutSelected(response.data);
-          this.$refs.editGrid.cancelLayoutEdit();
+          {
+            this.$refs.gridInput.
+            this.layoutSelected(response.data);
+            this.$refs.editGrid.cancelLayoutEdit();
           }).catch(function(error) {
             console.log(error);
           });
