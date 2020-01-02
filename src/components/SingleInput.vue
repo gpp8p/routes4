@@ -59,4 +59,8 @@
 
 <style scoped>
 
+    .dummyStyle{
+        background-color: aqua;
+    }
+
 </style>

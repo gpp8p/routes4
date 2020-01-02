@@ -102,7 +102,7 @@
           height: msg[2],
           width: msg[3]
         }).then(response=>
-            {this.layoutSelected(response.data)
+            {this.layoutSelected(response.data);
         }).catch(function(error) {
 //        }).then(function(response) {
 //          console.log(response);
