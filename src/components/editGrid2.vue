@@ -107,6 +107,7 @@ export default {
         .get("http://localhost:8000/getLayout?layoutId=" + this.layoutId)
         .then(response => {
           // JSON responses are automatically parsed.
+//          debugger;
           this.cardInstances = response.data.cards;
           this.gridParamDefinition = this.layoutGridParameters(
             response.data.layout.height,
@@ -220,7 +221,7 @@ export default {
           return i;
         }
       }
-    },
+    }
 
 
   }

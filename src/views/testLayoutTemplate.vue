@@ -64,6 +64,7 @@
         VIEW_GRID_MENU:2,
         viewStatus: this.VIEW_TOP_MENU,
         allLayouts: [],
+        newLayout: [],
         gridView: true,
         listView: true,
         selectedLayoutId: '',
@@ -112,6 +113,50 @@
         });
       },
 
+      showBlankLayout(msg){
+        var blankLayout = this.createBlankLayout(msg[2],msg[3],msg[1],msg[0]);
+        debugger;
+        this.layoutSelected(blankLayout)
+      },
+
+      createBlankLayout(height,width, description, menu_label){
+        console.log('createBlankLayout:'+height+' '+width);
+        var newCards = [];
+        for(var h=0;h<height;h++){
+          for(var w = 0; w<width; w++){
+            var c=this.createBlankCardInstance(h,w,1,1);
+            newCards.push(c);
+          }
+        }
+        var newLayout = {cards: newCards, layout: {description:description, menu_label: menu_label, height: height, width:width}};
+        return newLayout;
+      },
+
+      computeGridCss(row, col, height, width){
+        var startRow = row;
+        var startColumn = col;
+        var endRow=0;
+        var endCol=0;
+        if(height==1){
+          endRow = row;
+        }else{
+          endRow = row+height;
+        }
+        endCol=startColumn+width;
+        var thisCss = "grid-area:"+startRow+"/"+startColumn+"/"+endRow+"/"+endCol;
+        return thisCss;
+
+      },
+
+
+      createBlankCardInstance(row, col, height, width, id){
+        console.log('createBlankCardInstance:'+row+' '+col+' '+height+' '+width+ ' '+id);
+        var thisGridCss = this.computeGridCss(row, row, height, width);
+        var thisCardStyle = thisGridCss+";"+"background-color:#DBAA6E;color:blue;";
+        var thisInstance = {card_component: 'simpleCard', cardPosition: [row,col,height,width], id:id, card_parameters: {style: thisCardStyle}};
+        return thisInstance;
+
+      },
 
 
 
