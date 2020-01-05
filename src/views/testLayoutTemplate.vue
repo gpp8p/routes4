@@ -64,7 +64,8 @@
         VIEW_GRID_MENU:2,
         viewStatus: this.VIEW_TOP_MENU,
         allLayouts: [],
-        newLayout: [],
+        newLayout: {},
+        newLayoutPending: false,
         gridView: true,
         listView: true,
         selectedLayoutId: '',
@@ -81,6 +82,7 @@
     methods:{
       createLayout(){
         this.viewStatus=this.VIEW_CREATE_LAYOUT;
+        this.newLayoutPending = true;
       },
       showLayoutMenu(){
         this.viewStatus = this.VIEW_TOP_MENU;
@@ -114,8 +116,9 @@
       },
 
       showBlankLayout(msg){
-        debugger;
+//        debugger;
         var blankLayout = this.createBlankLayout(msg[2],msg[3],msg[1],msg[0]);
+        this.newLayout=blankLayout;
         this.listView=false;
         this.gridView=true;
         this.showLayoutMenu = false;
@@ -229,6 +232,20 @@
         if(msg[0]=='saveCard'){
 //          debugger;
             console.log(msg);
+          if(this.newLayoutPending){
+            axios.post('http://localhost:8000/createLayoutNoBlanks?XDEBUG_SESSION_START=18938', {
+              name: this.newLayout.layout.name,
+              description: this.newLayout.layout.description,
+              height: this.newLayout.layout.height,
+              width:this.newLayout.layout.width
+            }).then(response=>
+            {
+              this.layoutId=response.data;
+            }).catch(function(error) {
+              console.log(error);
+            });
+
+          }
           axios.post('http://localhost:8000/saveCard?XDEBUG_SESSION_START=10690', {
             layoutId: this.layoutId,
             cardTitle: msg[0],
