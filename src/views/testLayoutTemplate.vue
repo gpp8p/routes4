@@ -2,7 +2,7 @@
     <span class="layoutScreen">
     <section  class="navbar">
         <div v-if="this.viewStatus==this.VIEW_CREATE_LAYOUT">
-            <focusTest @layoutInputComplete="submitNewLayout" @layoutInputCanceled="this.showLayoutMenu"></focusTest>
+            <focusTest @layoutInputComplete="showBlankLayout" @layoutInputCanceled="this.showLayoutMenu"></focusTest>
         </div>
         <div v-if="this.viewStatus==this.VIEW_TOP_MENU">
             <span class="layoutMenu"><span class="layoutMenuItem" @click="createLayout">New Layout</span><span class="layoutMenuItem">User Administration</span></span>
@@ -86,7 +86,7 @@
         this.viewStatus = this.VIEW_TOP_MENU;
       },
       layoutSelected(msg){
-//        debugger;
+        debugger;
         this.listView=false;
         this.gridView=true;
         this.showLayoutMenu = false;
@@ -114,25 +114,40 @@
       },
 
       showBlankLayout(msg){
-        var blankLayout = this.createBlankLayout(msg[2],msg[3],msg[1],msg[0]);
         debugger;
-        this.layoutSelected(blankLayout)
+        var blankLayout = this.createBlankLayout(msg[2],msg[3],msg[1],msg[0]);
+        this.listView=false;
+        this.gridView=true;
+        this.showLayoutMenu = false;
+        this.$refs.editGrid.showGrid();
+        this.viewStatus = this.VIEW_GRID_MENU;
+        this.layoutId = msg[0];
+        var gridHeight = parseInt(msg[2]);
+        var gridWidth = parseInt(msg[3]);
+        this.gridParamDefinition = this.$refs.editGrid.layoutGridParameters(gridHeight, gridWidth);
+        this.$refs.editGrid.reloadBlankLayout(blankLayout);
+
       },
 
       createBlankLayout(height,width, description, menu_label){
         console.log('createBlankLayout:'+height+' '+width);
         var newCards = [];
-        for(var h=0;h<height;h++){
-          for(var w = 0; w<width; w++){
-            var c=this.createBlankCardInstance(h,w,1,1);
+        var newCardId=1;
+        height++;
+        width++;
+        for(var h=1;h<height;h++){
+          for(var w = 1; w<width; w++){
+            var c=this.createBlankCardInstance(h,w,1,1,newCardId);
             newCards.push(c);
+            newCardId++;
           }
         }
-        var newLayout = {cards: newCards, layout: {description:description, menu_label: menu_label, height: height, width:width}};
+        var newLayout = {cards: newCards, layout: {description:description, menu_label: menu_label, height: (height-1), width:(width-1)}};
         return newLayout;
       },
 
       computeGridCss(row, col, height, width){
+//        debugger;
         var startRow = row;
         var startColumn = col;
         var endRow=0;
@@ -151,9 +166,9 @@
 
       createBlankCardInstance(row, col, height, width, id){
         console.log('createBlankCardInstance:'+row+' '+col+' '+height+' '+width+ ' '+id);
-        var thisGridCss = this.computeGridCss(row, row, height, width);
+        var thisGridCss = this.computeGridCss(row, col, height, width);
         var thisCardStyle = thisGridCss+";"+"background-color:#DBAA6E;color:blue;";
-        var thisInstance = {card_component: 'simpleCard', cardPosition: [row,col,height,width], id:id, card_parameters: {style: thisCardStyle}};
+        var thisInstance = {card_component: 'simpleCard', card_position: [row,col,height,width], id:id, card_parameters: {style: thisCardStyle}};
         return thisInstance;
 
       },
@@ -162,6 +177,7 @@
 
       cellClicked(msg){
         console.log(msg);
+//        debugger;
         if(msg[0]=='topLeft'){
           this.$refs.gridInput.topLeftClicked();
           this.topLeftRow = msg[1];

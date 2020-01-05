@@ -74,7 +74,7 @@ export default {
   methods: {
     layoutGridParameters(height, width) {
       var heightSize = (95 / height).toFixed(2);
-      var widthSize = (98 / width.toFixed(2));
+      var widthSize = (98 / width).toFixed(2);
       var gridHeightCss = "grid-template-rows: ";
       var gridWidthCss = "grid-template-columns: ";
       var x = 0;
@@ -118,6 +118,17 @@ export default {
           this.errors.push(e);
         });
     },
+    reloadBlankLayout(blankCardInstances){
+      console.log('reloadBlankLayout');
+      this.displayGrid=true;
+      this.cardInstances = blankCardInstances.cards;
+      this.gridParamDefinition = this.layoutGridParameters(
+        blankCardInstances.layout.height,
+        blankCardInstances.layout.width
+      );
+      console.log('gridParams:'+this.gridParamDefinition);
+
+    },
     cancelLayoutEdit(){
 //      console.log('noButton clicked');
       this.cstatus = this.WAITINGFORCLICK;
@@ -125,7 +136,7 @@ export default {
       this.fillSelectedCells(this.cardInstances,this.topLeftCol,this.topLeftRow,this.bottomRightCol,this.bottomRightRow, this.unSelectedColor);
     },
     fillInCell(item, index, arr){
-      debugger;
+//      debugger;
       var thisCardCol = arr[index].card_position[1];
       var thisCardRow = arr[index].card_position[0];
       var topLeftCol = arr[this.topLeftClicked].card_position[1];
@@ -176,7 +187,7 @@ export default {
 //      debugger;
     },
     processClick(msg){
-//      console.log('editGrid2 gets storeValue-'+msg);
+      console.log('editGrid2 gets storeValue-'+msg);
 //      debugger;
       var cardThatWasClicked = this.findCard(msg[0]);
       console.log('cardThatWasClicked:'+cardThatWasClicked);
