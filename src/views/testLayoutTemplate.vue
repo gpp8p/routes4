@@ -2,7 +2,7 @@
     <span class="layoutScreen">
     <section  class="navbar">
         <div v-if="this.viewStatus==this.VIEW_CREATE_LAYOUT">
-            <focusTest @layoutInputComplete="showBlankLayout" @layoutInputCanceled="this.showLayoutMenu"></focusTest>
+            <focusTest @layoutInputComplete="saveBlankLayout_new" @layoutInputCanceled="this.showLayoutMenu"></focusTest>
         </div>
         <div v-if="this.viewStatus==this.VIEW_TOP_MENU">
             <span class="layoutMenu"><span class="layoutMenuItem" @click="createLayout">New Layout</span><span class="layoutMenuItem">User Administration</span></span>
@@ -65,7 +65,7 @@
         viewStatus: this.VIEW_TOP_MENU,
         allLayouts: [],
         newLayout: {},
-        newLayoutPending: false,
+        layoutGrid: [],
         gridView: true,
         listView: true,
         selectedLayoutId: '',
@@ -82,13 +82,12 @@
     methods:{
       createLayout(){
         this.viewStatus=this.VIEW_CREATE_LAYOUT;
-        this.newLayoutPending = true;
       },
       showLayoutMenu(){
         this.viewStatus = this.VIEW_TOP_MENU;
       },
       layoutSelected(msg){
-        debugger;
+//        debugger;
         this.listView=false;
         this.gridView=true;
         this.showLayoutMenu = false;
@@ -114,36 +113,69 @@
           console.log(error);
         });
       },
-
-      showBlankLayout(msg){
+/*
+      saveBlankLayout(msg){
 //        debugger;
-        var blankLayout = this.createBlankLayout(msg[2],msg[3],msg[1],msg[0]);
-        this.newLayout=blankLayout;
-        this.listView=false;
-        this.gridView=true;
-        this.showLayoutMenu = false;
-        this.$refs.editGrid.showGrid();
-        this.viewStatus = this.VIEW_GRID_MENU;
-        this.layoutId = msg[0];
-        var gridHeight = parseInt(msg[2]);
-        var gridWidth = parseInt(msg[3]);
-        this.gridParamDefinition = this.$refs.editGrid.layoutGridParameters(gridHeight, gridWidth);
-        this.$refs.editGrid.reloadBlankLayout(blankLayout);
 
+
+          axios.post('http://localhost:8000/createLayoutNoBlanks', {
+            name: msg[0],
+            description: msg[1],
+            height: msg[2],
+            width:msg[3]
+          }).then(response=>
+          {
+//            debugger;
+            this.layoutId=response.data;
+            var blankLayout = this.createBlankLayout(msg[2],msg[3],msg[1],msg[0]);
+            this.newLayout=blankLayout;
+            this.listView=false;
+            this.gridView=true;
+            this.showLayoutMenu = false;
+            this.$refs.editGrid.showGrid();
+            this.viewStatus = this.VIEW_GRID_MENU;
+            this.layoutId = msg[0];
+            var gridHeight = parseInt(msg[2]);
+            var gridWidth = parseInt(msg[3]);
+            this.gridParamDefinition = this.$refs.editGrid.layoutGridParameters(gridHeight, gridWidth);
+            this.$refs.editGrid.reloadBlankLayout(blankLayout);
+          }).catch(function(error) {
+            console.log(error);
+          });
       },
-
+*/
+      saveBlankLayout_new(msg){
+        axios.post('http://localhost:8000/createLayoutNoBlanks', {
+          name: msg[0],
+          description: msg[1],
+          height: msg[2],
+          width:msg[3]
+        }).then(response=>
+        {
+//            debugger;
+          this.layoutId=response.data;
+          this.$refs.editGrid.createBlankLayout(msg[2],msg[3],msg[1],msg[0]);
+        }).catch(function(error) {
+          console.log(error);
+        });
+      },
+/*
       createBlankLayout(height,width, description, menu_label){
         console.log('createBlankLayout:'+height+' '+width);
+        this.layoutGrid = [];
         var newCards = [];
         var newCardId=1;
         height++;
         width++;
         for(var h=1;h<height;h++){
+          var gridRow = [];
           for(var w = 1; w<width; w++){
             var c=this.createBlankCardInstance(h,w,1,1,newCardId);
             newCards.push(c);
+            gridRow.push(newCardId);
             newCardId++;
           }
+          this.layoutGrid.push(gridRow);
         }
         var newLayout = {cards: newCards, layout: {description:description, menu_label: menu_label, height: (height-1), width:(width-1)}};
         return newLayout;
@@ -176,7 +208,7 @@
 
       },
 
-
+*/
 
       cellClicked(msg){
         console.log(msg);
@@ -232,21 +264,7 @@
         if(msg[0]=='saveCard'){
 //          debugger;
             console.log(msg);
-          if(this.newLayoutPending){
-            axios.post('http://localhost:8000/createLayoutNoBlanks?XDEBUG_SESSION_START=18938', {
-              name: this.newLayout.layout.name,
-              description: this.newLayout.layout.description,
-              height: this.newLayout.layout.height,
-              width:this.newLayout.layout.width
-            }).then(response=>
-            {
-              this.layoutId=response.data;
-            }).catch(function(error) {
-              console.log(error);
-            });
-
-          }
-          axios.post('http://localhost:8000/saveCard?XDEBUG_SESSION_START=10690', {
+          axios.post('http://localhost:8000/saveCard?XDEBUG_SESSION_START=14763', {
             layoutId: this.layoutId,
             cardTitle: msg[0],
             cardType: this.newCardType,
@@ -262,6 +280,41 @@
           }).catch(function(error) {
             console.log(error);
           });
+
+        }
+        if(msg[0]=='insertCard'){
+          console.log(msg);
+          axios.post('http://localhost:8000/saveCardOnly?XDEBUG_SESSION_START=14763', {
+            layoutId: this.layoutId,
+            cardTitle: msg[0],
+            cardType: this.newCardType,
+            topLeftRow: this.topLeftRow,
+            topLeftCol: this.topLeftCol,
+            bottomRightRow: this.bottomRightRow,
+            bottomRightCol: this.bottomRightCol
+          }).then(response=>
+          {
+
+
+
+            this.$refs.gridInput.
+            this.layoutSelected(response.data);
+            this.$refs.editGrid.cancelLayoutEdit();
+          }).catch(function(error) {
+            console.log(error);
+          });
+
+        }
+        if(msg[0]=='newBlankGrid'){
+//          debugger;
+          this.newLayout=msg[1];
+          this.gridParamDefinition = msg[2]
+          this.$refs.editGrid.reloadBlankLayout(msg[1]);
+          this.listView=false;
+          this.gridView=true;
+          this.showLayoutMenu = false;
+          this.$refs.editGrid.showGrid();
+          this.viewStatus = this.VIEW_GRID_MENU;
 
         }
 

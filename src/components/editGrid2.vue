@@ -107,7 +107,7 @@ export default {
         .get("http://localhost:8000/getLayout?layoutId=" + this.layoutId)
         .then(response => {
           // JSON responses are automatically parsed.
-//          debugger;
+          debugger;
           this.cardInstances = response.data.cards;
           this.gridParamDefinition = this.layoutGridParameters(
             response.data.layout.height,
@@ -232,7 +232,70 @@ export default {
           return i;
         }
       }
-    }
+    },
+
+//    insertCardsIntoBlankGrid(layoutCards){
+//     var newBlankLayout = this.makeBlankLayout(layoutCards.layout.height, layoutCards.layout.width, layoutCards.layout.description, layoutCards.layout.menu_label);
+//     var removalList = [];
+//      for(var card = 0;card<layoutCards.cards.length;card++){
+
+//      }
+//    },
+
+    createBlankLayout(height,width, description, menu_label){
+      console.log('createBlankLayout:'+height+' '+width);
+      this.$emit('storeValue', this.makeBlankLayout(height,width, description, menu_label));
+    },
+
+    makeBlankLayout(height,width, description, menu_label){
+      this.layoutGrid = [];
+      var newCards = [];
+      var newCardId=1;
+      height++;
+      width++;
+      for(var h=1;h<height;h++){
+        var gridRow = [];
+        for(var w = 1; w<width; w++){
+          var c=this.createBlankCardInstance(h,w,1,1,newCardId);
+          newCards.push(c);
+          gridRow.push(newCardId);
+          newCardId++;
+        }
+        this.layoutGrid.push(gridRow);
+      }
+      var newLayout = {cards: newCards, layout: {description:description, menu_label: menu_label, height: (height-1), width:(width-1)}};
+      var newGridParameters = this.layoutGridParameters(height, width);
+      return ['newBlankGrid', newLayout, newGridParameters ];
+    },
+
+    computeGridCss(row, col, height, width){
+//        debugger;
+      var startRow = row;
+      var startColumn = col;
+      var endRow=0;
+      var endCol=0;
+      if(height==1){
+        endRow = row;
+      }else{
+        endRow = row+height;
+      }
+      endCol=startColumn+width;
+      var thisCss = "grid-area:"+startRow+"/"+startColumn+"/"+endRow+"/"+endCol;
+      return thisCss;
+
+    },
+
+
+    createBlankCardInstance(row, col, height, width, id){
+      console.log('createBlankCardInstance:'+row+' '+col+' '+height+' '+width+ ' '+id);
+      var thisGridCss = this.computeGridCss(row, col, height, width);
+      var thisCardStyle = thisGridCss+";"+"background-color:#DBAA6E;color:blue;";
+      var thisInstance = {card_component: 'simpleCard', card_position: [row,col,height,width], id:id, toDelete: false, card_parameters: {style: thisCardStyle}};
+      return thisInstance;
+
+    },
+
+
 
 
   }
