@@ -284,7 +284,7 @@
         }
         if(msg[0]=='insertCard'){
           console.log(msg);
-          axios.post('http://localhost:8000/saveCardOnly?XDEBUG_SESSION_START=14763', {
+          axios.post('http://localhost:8000/saveCardOnly?XDEBUG_SESSION_START=16349', {
             layoutId: this.layoutId,
             cardTitle: msg[0],
             cardType: this.newCardType,
@@ -294,12 +294,13 @@
             bottomRightCol: this.bottomRightCol
           }).then(response=>
           {
+            console.log('card saved:'+response);
+            debugger;
+            this.$refs.editGrid.reloadLayout(this.layoutId);
 
-
-
-            this.$refs.gridInput.
-            this.layoutSelected(response.data);
-            this.$refs.editGrid.cancelLayoutEdit();
+//            this.$refs.gridInput.
+//            this.layoutSelected(response.data);
+//            this.$refs.editGrid.cancelLayoutEdit();
           }).catch(function(error) {
             console.log(error);
           });

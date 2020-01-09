@@ -58,6 +58,7 @@ export default {
       topLeftCol:0,
       bottomRightRow:0,
       bottomRightCol:0,
+      layoutGrid:[],
       selectedColor: '#66bb6a',
       unSelectedColor: 'rgb(219, 170, 110)',
       newCardType: '',
@@ -102,9 +103,9 @@ export default {
     reloadLayout: function(msg) {
       this.displayGrid=true;
       this.layoutId = msg;
-//      console.log("reloading" + msg);
+      console.log("reloading" + msg);
       axios
-        .get("http://localhost:8000/getLayout?layoutId=" + this.layoutId)
+        .get("http://localhost:8000/getLayout?layoutId=" + this.layoutId+"&&XDEBUG_SESSION_START=16349")
         .then(response => {
           // JSON responses are automatically parsed.
           debugger;
@@ -113,6 +114,45 @@ export default {
             response.data.layout.height,
             response.data.layout.width
           );
+// build a blank layout using the dimensions of the layout loaded
+          var newBlankLayout = this.makeBlankLayout(response.data.layout.height,response.data.layout.width, response.data.layout.description, response.data.layout.menu_label)
+          console.log(newBlankLayout);
+          var layoutGrid = newBlankLayout[3];
+          var cardsToDelete = [];
+          for(var thisCardIndex=0; thisCardIndex<this.cardInstances.length;thisCardIndex++){
+            var thisCard = this.cardInstances[thisCardIndex];
+            var cardTopLeftRow = thisCard.card_position[0];
+            var cardTopLeftColumn = thisCard.card_position[1];
+            var cardBottomRightRow = thisCard.card_position[0]+thisCard.card_position[2];
+            var cardBottomRightColumn = thisCard.card_position[1]+thisCard.card_position[3];
+// build cardsToDelete by taking it from indexes in layoutGrid within the dimensions of the card to show
+            for(var r = cardTopLeftRow; r<cardBottomRightRow; r++){
+              for(var c = cardTopLeftColumn; c<cardBottomRightColumn; c++){
+                cardsToDelete.push(layoutGrid[r-1][c-2]);
+              }
+            }
+            console.log(thisCard);
+            debugger;
+          }
+// set the toDelete flag in the blank cards for everything in the cardsToDelete list
+          var blankLayout = newBlankLayout[1].cards;
+          for(var d=0;d<cardsToDelete.length;d++){
+            blankLayout[cardsToDelete[d]].toDelete=true;
+          }
+// copy all the cards in blankLayout that are not to be deleted
+          var newCardInstances = [];
+          for(c = 0;c<blankLayout.length;c++){
+            if(!blankLayout[c].toDelete){
+              newCardInstances.push(blankLayout[c]);
+            }
+          }
+// add the cards coming from the db
+          for(thisCardIndex=0; thisCardIndex<this.cardInstances.length;thisCardIndex++){
+            newCardInstances.push(this.cardInstances[thisCardIndex]);
+          }
+// make cardInstances equal to newCardInstances
+          this.cardInstances=newCardInstances;
+
         })
         .catch(e => {
           this.errors.push(e);
@@ -265,7 +305,7 @@ export default {
       }
       var newLayout = {cards: newCards, layout: {description:description, menu_label: menu_label, height: (height-1), width:(width-1)}};
       var newGridParameters = this.layoutGridParameters(height, width);
-      return ['newBlankGrid', newLayout, newGridParameters ];
+      return ['newBlankGrid', newLayout, newGridParameters, this.layoutGrid ];
     },
 
     computeGridCss(row, col, height, width){
