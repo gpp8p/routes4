@@ -11,7 +11,8 @@
             What kind of card are you adding ?
             <select ref="cardComponentSelect" @change="cardSelectionMade($event)">
                 <option value="select">Select Card Type</option>
-                <option  value="blankComponent">Blank Card</option>
+                <option  value="blankComponent">Blue Card</option>
+                <option  value="greenComponent">Green Card</option>
             </select>
             <MyButton @myButtonClicked="cancelClicked" buttonLabel="Cancel"></MyButton>
         </span>

@@ -8,6 +8,15 @@
                           @cardClick="processCardClick"
                           ref="cardKey"
         ></blank-component>
+        <green-component  v-if="cardType=='greenComponent'" class="genericCardStyle"
+                          :card-style=cardStyle
+                          :card-id=cardId
+                          :card-key=cardKey
+                          :card-position=cardPosition
+                          @cardClick="processCardClick"
+                          ref="cardKey"
+        ></green-component>
+
 </span>
 
 
@@ -20,10 +29,11 @@
   /* eslint-disable no-console,no-debugger */
 
   import BlankComponent from "./blankComponent";
+  import GreenComponent from "./greenComponent";
 //  import BlankComponent2 from "./simpleCard";
   export default {
     name: "genericCard",
-    components: { BlankComponent},
+    components: { BlankComponent, GreenComponent},
     props: {
       cardType: {
         type: String,

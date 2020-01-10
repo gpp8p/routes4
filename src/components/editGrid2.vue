@@ -101,12 +101,13 @@ export default {
       this.displayGrid=true;
     },
     reloadLayout: function(msg) {
+      this.cardInstances = [];
       this.displayGrid=true;
       this.layoutId = msg;
       this.cancelLayoutEdit();
 //      console.log("reloading" + msg);
       axios
-        .get("http://localhost:8000/getLayout?layoutId=" + this.layoutId+"&&XDEBUG_SESSION_START=16349")
+        .get("http://localhost:8000/getLayout?layoutId=" + this.layoutId+"&&XDEBUG_SESSION_START=11426")
         .then(response => {
           // JSON responses are automatically parsed.
 //          debugger;
