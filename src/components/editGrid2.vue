@@ -69,7 +69,7 @@ export default {
   },
   mounted () {
     EventBus.$on('load-layout', function () {
-    console.log('event bus recieved event');
+//    console.log('event bus recieved event');
     });
   },
   methods: {
@@ -103,12 +103,13 @@ export default {
     reloadLayout: function(msg) {
       this.displayGrid=true;
       this.layoutId = msg;
-      console.log("reloading" + msg);
+      this.cancelLayoutEdit();
+//      console.log("reloading" + msg);
       axios
         .get("http://localhost:8000/getLayout?layoutId=" + this.layoutId+"&&XDEBUG_SESSION_START=16349")
         .then(response => {
           // JSON responses are automatically parsed.
-          debugger;
+//          debugger;
           this.cardInstances = response.data.cards;
           this.gridParamDefinition = this.layoutGridParameters(
             response.data.layout.height,
@@ -116,28 +117,34 @@ export default {
           );
 // build a blank layout using the dimensions of the layout loaded
           var newBlankLayout = this.makeBlankLayout(response.data.layout.height,response.data.layout.width, response.data.layout.description, response.data.layout.menu_label)
-          console.log(newBlankLayout);
+//          console.log(newBlankLayout);
           var layoutGrid = newBlankLayout[3];
           var cardsToDelete = [];
           for(var thisCardIndex=0; thisCardIndex<this.cardInstances.length;thisCardIndex++){
             var thisCard = this.cardInstances[thisCardIndex];
-            var cardTopLeftRow = thisCard.card_position[0];
-            var cardTopLeftColumn = thisCard.card_position[1];
-            var cardBottomRightRow = thisCard.card_position[0]+thisCard.card_position[2];
-            var cardBottomRightColumn = thisCard.card_position[1]+thisCard.card_position[3];
+            var cardTopLeftRow = thisCard.card_position[0]-1;
+            var cardTopLeftColumn = thisCard.card_position[1]-1;
+            var cardBottomRightRow = (cardTopLeftRow+thisCard.card_position[2]);
+            var cardBottomRightColumn = (cardTopLeftColumn+thisCard.card_position[3]);
+            console.log('cardId:'+thisCard.id+' cardTopLeftRow:'+cardTopLeftRow+' cardTopLeftColumn:'+cardTopLeftColumn+' cardBottomRightRow:'+cardBottomRightRow+' cardBottomRightColumn:'+cardBottomRightColumn)
 // build cardsToDelete by taking it from indexes in layoutGrid within the dimensions of the card to show
             for(var r = cardTopLeftRow; r<cardBottomRightRow; r++){
               for(var c = cardTopLeftColumn; c<cardBottomRightColumn; c++){
-                cardsToDelete.push(layoutGrid[r-1][c-2]);
+                cardsToDelete.push(layoutGrid[r][c]);
               }
             }
-            console.log(thisCard);
-            debugger;
+//            console.log(thisCard);
+//            debugger;
           }
+//          debugger;
+
 // set the toDelete flag in the blank cards for everything in the cardsToDelete list
           var blankLayout = newBlankLayout[1].cards;
+//          debugger;
           for(var d=0;d<cardsToDelete.length;d++){
-            blankLayout[cardsToDelete[d]].toDelete=true;
+            var indexOfCardToDelete = cardsToDelete[d];
+            console.log(indexOfCardToDelete);
+            blankLayout[indexOfCardToDelete].toDelete=true;
           }
 // copy all the cards in blankLayout that are not to be deleted
           var newCardInstances = [];
@@ -155,18 +162,20 @@ export default {
 
         })
         .catch(e => {
+          console.log(e);
           this.errors.push(e);
         });
+
     },
     reloadBlankLayout(blankCardInstances){
-      console.log('reloadBlankLayout');
+//      console.log('reloadBlankLayout');
       this.displayGrid=true;
       this.cardInstances = blankCardInstances.cards;
       this.gridParamDefinition = this.layoutGridParameters(
         blankCardInstances.layout.height,
         blankCardInstances.layout.width
       );
-      console.log('gridParams:'+this.gridParamDefinition);
+//      console.log('gridParams:'+this.gridParamDefinition);
 
     },
     cancelLayoutEdit(){
@@ -220,7 +229,7 @@ export default {
         }
 
       }
-      console.log('done');
+//      console.log('done');
     },
     processCardClick(msg){
       console.log("Card Click - "+msg);
@@ -230,7 +239,7 @@ export default {
       console.log('editGrid2 gets storeValue-'+msg);
 //      debugger;
       var cardThatWasClicked = this.findCard(msg[0]);
-      console.log('cardThatWasClicked:'+cardThatWasClicked);
+//      console.log('cardThatWasClicked:'+cardThatWasClicked);
       switch(this.cstatus){
         case this.WAITINGFORCLICK:
           this.topLeftClicked=msg[0];
@@ -283,14 +292,16 @@ export default {
 //    },
 
     createBlankLayout(height,width, description, menu_label){
-      console.log('createBlankLayout:'+height+' '+width);
+//      console.log('createBlankLayout:'+height+' '+width);
       this.$emit('storeValue', this.makeBlankLayout(height,width, description, menu_label));
     },
 
     makeBlankLayout(height,width, description, menu_label){
+//      debugger;
       this.layoutGrid = [];
       var newCards = [];
-      var newCardId=1;
+//      var newCardId=1;
+      var newCardId=0;
       height++;
       width++;
       for(var h=1;h<height;h++){
@@ -327,7 +338,7 @@ export default {
 
 
     createBlankCardInstance(row, col, height, width, id){
-      console.log('createBlankCardInstance:'+row+' '+col+' '+height+' '+width+ ' '+id);
+//      console.log('createBlankCardInstance:'+row+' '+col+' '+height+' '+width+ ' '+id);
       var thisGridCss = this.computeGridCss(row, col, height, width);
       var thisCardStyle = thisGridCss+";"+"background-color:#DBAA6E;color:blue;";
       var thisInstance = {card_component: 'simpleCard', card_position: [row,col,height,width], id:id, toDelete: false, card_parameters: {style: thisCardStyle}};

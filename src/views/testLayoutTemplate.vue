@@ -97,7 +97,7 @@
         this.$refs.editGrid.reloadLayout(msg);
       },
       submitNewLayout(msg) {
-        console.log(msg);
+//        console.log(msg);
         axios.post('http://localhost:8000/createLayout?XDEBUG_SESSION_START=18938', {
           name: msg[0],
           description: msg[1],
@@ -253,6 +253,7 @@
             })
             .catch(e => {
               this.errors.push(e);
+              console.log(e);
             });
         }
         if(msg[0]=='cardEntryReset'){
@@ -263,7 +264,7 @@
         }
         if(msg[0]=='saveCard'){
 //          debugger;
-            console.log(msg);
+//            console.log(msg);
           axios.post('http://localhost:8000/saveCard?XDEBUG_SESSION_START=14763', {
             layoutId: this.layoutId,
             cardTitle: msg[0],
@@ -283,8 +284,8 @@
 
         }
         if(msg[0]=='insertCard'){
-          console.log(msg);
-          axios.post('http://localhost:8000/saveCardOnly?XDEBUG_SESSION_START=16349', {
+//          console.log(msg);
+          axios.post('http://localhost:8000/saveCardOnly?XDEBUG_SESSION_START=12016', {
             layoutId: this.layoutId,
             cardTitle: msg[0],
             cardType: this.newCardType,
@@ -295,7 +296,7 @@
           }).then(response=>
           {
             console.log('card saved:'+response);
-            debugger;
+//            debugger;
             this.$refs.editGrid.reloadLayout(this.layoutId);
 
 //            this.$refs.gridInput.
