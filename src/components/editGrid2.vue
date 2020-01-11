@@ -9,6 +9,7 @@
       :card-key="index"
       :card-position="instance.card_position"
       :gridCss="gridParamDefinition"
+      :cardProperties="instance.card_parameters.properties"
       @storeValue="processClick"
       @cardClick="processCardClick"
       ref="key"
@@ -97,6 +98,9 @@ export default {
       this.displayGrid=false;
       this.showCards=false;
     },
+    getCardProperties(){
+      console.log('getCardProperties');
+    },
     showGrid(){
       this.displayGrid=true;
     },
@@ -107,10 +111,10 @@ export default {
       this.cancelLayoutEdit();
 //      console.log("reloading" + msg);
       axios
-        .get("http://localhost:8000/getLayout?layoutId=" + this.layoutId+"&&XDEBUG_SESSION_START=11426")
+        .get("http://localhost:8000/getLayout?layoutId=" + this.layoutId+"&&XDEBUG_SESSION_START=14625")
         .then(response => {
           // JSON responses are automatically parsed.
-//          debugger;
+          debugger;
           this.cardInstances = response.data.cards;
           this.gridParamDefinition = this.layoutGridParameters(
             response.data.layout.height,

@@ -58,6 +58,10 @@
       gridCss: {
         type: String,
         required: true
+      },
+      cardProperties: {
+        type: String,
+        required: false
       }
     },
     methods: {

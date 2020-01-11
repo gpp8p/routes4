@@ -1,5 +1,5 @@
 <template>
-    <div v-on:click="cellClicked" style="background-color: green">
+    <div v-on:click="cellClicked" style='background-color: green'>
 
     </div>
 </template>
@@ -27,6 +27,14 @@
         required: true
       }
     },
+    data() {
+      return {
+        keyedProps: []
+      }
+    },
+    mounted () {
+      this.keyedProps['background-color']='green';
+    },
     methods: {
       cellClicked: function() {
 //        console.log(' blank-component clicked');
@@ -34,6 +42,9 @@
       },
       refId: function(){
         return "card"+this.cardId;
+      },
+      getProp(propkey){
+        return this.keyedProps[propkey];
       }
     }
   };
