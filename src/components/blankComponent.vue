@@ -25,7 +25,12 @@
       cardPosition: {
         type: Array,
         required: true
+      },
+      cardProperties: {
+        type: String,
+        required: false
       }
+
     },
     methods: {
       cellClicked: function() {

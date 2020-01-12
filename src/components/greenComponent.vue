@@ -1,6 +1,6 @@
 <template>
     <div v-on:click="cellClicked" style='background-color: green'>
-
+        {{this.cardProperties}}
     </div>
 </template>
 
@@ -25,15 +25,17 @@
       cardPosition: {
         type: Array,
         required: true
+      },
+      cardProperties: {
+        type: String,
+        required: false
       }
+
     },
     data() {
       return {
         keyedProps: []
       }
-    },
-    mounted () {
-      this.keyedProps['background-color']='green';
     },
     methods: {
       cellClicked: function() {
@@ -42,9 +44,6 @@
       },
       refId: function(){
         return "card"+this.cardId;
-      },
-      getProp(propkey){
-        return this.keyedProps[propkey];
       }
     }
   };

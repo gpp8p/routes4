@@ -5,6 +5,7 @@
                           :card-id=cardId
                           :card-key=cardKey
                           :card-position=cardPosition
+                          :cardProperties = cardMessage
                           @cardClick="processCardClick"
                           ref="cardKey"
         ></blank-component>
@@ -13,6 +14,7 @@
                           :card-id=cardId
                           :card-key=cardKey
                           :card-position=cardPosition
+                          :cardProperties = cardMessage
                           @cardClick="processCardClick"
                           ref="cardKey"
         ></green-component>
@@ -64,6 +66,11 @@
         required: false
       }
     },
+    data() {
+      return {
+        cardMessage: this.getCardProps()
+      }
+    },
     methods: {
       processClick(msg){
 //        debugger;
@@ -84,6 +91,15 @@
           return true;
         }
         return false;
+      },
+      getCardProps(){
+//        debugger;
+        if (typeof this.cardProperties === 'undefined') {
+          return "";
+        }else{
+          var thisProp = this.cardProperties.split(':');
+          return thisProp[1];
+        }
       }
     }
   };
