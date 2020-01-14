@@ -32,6 +32,11 @@
       }
 
     },
+    data() {
+      return {
+        cardMessage: this.getCardProps()
+      }
+    },
     methods: {
       cellClicked: function() {
 //        console.log(' blank-component clicked');
@@ -39,6 +44,15 @@
       },
       refId: function(){
         return "card"+this.cardId;
+      },
+      getCardProps(){
+//        debugger;
+        if (typeof this.cardProperties === 'undefined') {
+          return "Click on this card to set it up";
+        }else{
+          var thisProp = this.cardProperties.split(':');
+          return thisProp[1];
+        }
       }
     }
   };

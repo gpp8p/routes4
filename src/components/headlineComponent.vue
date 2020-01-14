@@ -8,7 +8,7 @@
   /* eslint-disable no-console,no-debugger */
 
   export default {
-    name: "greenComponent",
+    name: "headlineComponent",
     props: {
       cardStyle: {
         type: String,
@@ -41,15 +41,15 @@
     methods: {
       cellClicked: function() {
 //        console.log(' blank-component clicked');
-        this.$emit('cardClick', [this.cardKey, 'greenComponent'])
+        this.$emit('cardClick', [this.cardKey])
       },
       refId: function(){
         return "card"+this.cardId;
       },
       getCardProps(){
         debugger;
-        if (typeof this.cardProperties === 'undefined' | this.cardProperties=="") {
-          return  "Click on this card to set it up";
+        if (typeof this.cardProperties === 'undefined') {
+          return "Click on this card to set it up";
         }else{
           var thisProp = this.cardProperties.split(':');
           return thisProp[1];

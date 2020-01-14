@@ -114,7 +114,7 @@ export default {
         .get("http://localhost:8000/getLayout?layoutId=" + this.layoutId+"&&XDEBUG_SESSION_START=14625")
         .then(response => {
           // JSON responses are automatically parsed.
-          debugger;
+//          debugger;
           this.cardInstances = response.data.cards;
           this.gridParamDefinition = this.layoutGridParameters(
             response.data.layout.height,
@@ -238,6 +238,8 @@ export default {
     },
     processCardClick(msg){
       console.log("Card Click - "+msg);
+//      debugger;
+      this.$emit('cardClick', msg[0])
 //      debugger;
     },
     processClick(msg){
