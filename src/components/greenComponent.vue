@@ -41,7 +41,7 @@
     methods: {
       cellClicked: function() {
 //        console.log(' blank-component clicked');
-        this.$emit('cardClick', [this.cardKey, 'greenComponent'])
+        this.$emit('cardClick', ['cardClicked',this.cardKey, 'greenComponent'])
       },
       refId: function(){
         return "card"+this.cardId;

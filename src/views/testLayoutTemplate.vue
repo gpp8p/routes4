@@ -25,7 +25,8 @@
                 >
                 </LayoutListLine>
         </div>
-        <div v-if="gridView">
+        <div v-if="gridView" style = "position: relative;">
+            <div v-if="configCard" v-draggable>This is a panel float</div>
             <editGrid2  :layoutId="selectedLayoutId"  ref="editGrid" @storeValue="cellClicked"></editGrid2>
         </div>
     </section>
@@ -41,10 +42,14 @@
   import axios from 'axios';
   import editGrid2 from '../components/editGrid2';
   import gridInput from '../components/gridInput.vue';
+  import { Draggable } from 'draggable-vue-directive'
 
   export default {
     name: "testLayoutTemplate",
     components: {LayoutListLine, layoutListHeader, focusTest, editGrid2, gridInput},
+    directives: {
+      Draggable,
+    },
     mounted: function() {
       this.viewStatus = this.VIEW_TOP_MENU;
       axios.get('http://localhost:8000//layoutList')
@@ -75,7 +80,9 @@
         bottomRightRow: 0,
         bottomRightCol: 0,
         layoutId :0,
-        newCardType: ''
+        newCardType: '',
+        configCard: false
+
 
       }
     },
@@ -212,7 +219,7 @@
 
       cellClicked(msg){
         console.log(msg);
-//        debugger;
+        debugger;
         if(msg[0]=='topLeft'){
           this.$refs.gridInput.topLeftClicked();
           this.topLeftRow = msg[1];
@@ -319,6 +326,10 @@
           this.viewStatus = this.VIEW_GRID_MENU;
 
         }
+        if(msg[0]=='cardClicked'){
+          debugger;
+          this.configCard = true;
+        }
 
       }
 
@@ -381,5 +392,18 @@
     .layoutMenuItem:hover {
         background-color: #fff722;
         color:red;
+    }
+    .PanelFloat {
+        position: fixed;
+        overflow: hidden;
+        z-index: 2400;
+        opacity: 0.70;
+        right: 30px;
+        top: 20px !important;
+        -webkit-transition: all 0.5s ease-in-out;
+        -moz-transition: all 0.5s ease-in-out;
+        -ms-transition: all 0.5s ease-in-out;
+        -o-transition: all 0.5s ease-in-out;
+        transition: all 0.5s ease-in-out;
     }
 </style>

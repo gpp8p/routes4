@@ -239,7 +239,7 @@ export default {
     processCardClick(msg){
       console.log("Card Click - "+msg);
 //      debugger;
-      this.$emit('cardClick', msg[0])
+      this.$emit('storeValue', msg[0])
 //      debugger;
     },
     processClick(msg){
