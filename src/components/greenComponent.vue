@@ -47,7 +47,7 @@
         return "card"+this.cardId;
       },
       getCardProps(){
-        debugger;
+//        debugger;
         if (typeof this.cardProperties === 'undefined' | this.cardProperties=="") {
           return  "Click on this card to set it up";
         }else{

@@ -26,7 +26,7 @@
                 </LayoutListLine>
         </div>
         <div v-if="gridView" style = "position: relative;">
-            <div v-if="configCard" v-draggable>This is a panel float</div>
+            <div v-if="configCard" v-draggable="draggableValue">This is a panel float</div>
             <editGrid2  :layoutId="selectedLayoutId"  ref="editGrid" @storeValue="cellClicked"></editGrid2>
         </div>
     </section>
@@ -81,7 +81,16 @@
         bottomRightCol: 0,
         layoutId :0,
         newCardType: '',
-        configCard: false
+        configCard: false,
+        draggableValue: {
+          onDragStart: this.onPosStart,
+          onDragEnd: this.onPosEnd,
+          initialPosition: {
+            left: 10,
+            top: 100
+          },
+          resetInitialPos: true
+        }
 
 
       }
@@ -90,6 +99,22 @@
       createLayout(){
         this.viewStatus=this.VIEW_CREATE_LAYOUT;
       },
+      onPosStart: function(positionDiff, absolutePosition, event) {
+        console.log('drag start');
+        console.log(positionDiff);
+        console.log(absolutePosition);
+        console.log(event);
+        this.$refs.editGrid.freezeCellSelection();
+      },
+      onPosEnd: function(positionDiff, absolutePosition, event) {
+        console.log('drag end');
+        console.log(positionDiff);
+        console.log(absolutePosition);
+        console.log(event);
+        this.$refs.editGrid.unfreezeCellSelection();
+      },
+
+
       showLayoutMenu(){
         this.viewStatus = this.VIEW_TOP_MENU;
       },
@@ -219,7 +244,7 @@
 
       cellClicked(msg){
         console.log(msg);
-        debugger;
+//        debugger;
         if(msg[0]=='topLeft'){
           this.$refs.gridInput.topLeftClicked();
           this.topLeftRow = msg[1];
@@ -327,7 +352,7 @@
 
         }
         if(msg[0]=='cardClicked'){
-          debugger;
+//          debugger;
           this.configCard = true;
         }
 

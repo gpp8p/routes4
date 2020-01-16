@@ -46,6 +46,7 @@ export default {
       WAITINGFORSUBMIT:6,
       WAITINGTOSAVE:8,
       CANCELLAYOUTUPDATE:7,
+      CARDBEINGCONFIGED:8,
       csrf_token: "",
       cardInstances: [],
       gridParamDefinition: "",
@@ -248,6 +249,8 @@ export default {
       var cardThatWasClicked = this.findCard(msg[0]);
 //      console.log('cardThatWasClicked:'+cardThatWasClicked);
       switch(this.cstatus){
+        case this.CARDBEINGCONFIGED:
+          break;
         case this.WAITINGFORCLICK:
           this.topLeftClicked=msg[0];
           this.topLeftRow = this.cardInstances[cardThatWasClicked].card_position[0];
@@ -352,6 +355,15 @@ export default {
       return thisInstance;
 
     },
+
+    freezeCellSelection(){
+      this.cstatus=this.CARDBEINGCONFIGED;
+    },
+    unfreezeCellSelection(){
+      this.cstatus = this.WAITINGFORCLICK;
+      this.scolor = this.unSelectedColor;
+      this.fillSelectedCells(this.cardInstances,this.topLeftCol,this.topLeftRow,this.bottomRightCol,this.bottomRightRow, this.unSelectedColor);
+    }
 
 
 
