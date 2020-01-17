@@ -26,7 +26,6 @@
                 </LayoutListLine>
         </div>
         <div v-if="gridView" style = "position: relative;">
-            <div v-if="configCard" v-draggable="draggableValue">This is a panel float</div>
             <editGrid2  :layoutId="selectedLayoutId"  ref="editGrid" @storeValue="cellClicked"></editGrid2>
         </div>
     </section>
@@ -42,14 +41,17 @@
   import axios from 'axios';
   import editGrid2 from '../components/editGrid2';
   import gridInput from '../components/gridInput.vue';
-  import { Draggable } from 'draggable-vue-directive'
+//  import { Draggable } from 'draggable-vue-directive'
+//  import MoveablePanel from '../components/MoveablePanel.vue'
 
   export default {
     name: "testLayoutTemplate",
     components: {LayoutListLine, layoutListHeader, focusTest, editGrid2, gridInput},
+ /*
     directives: {
       Draggable,
     },
+*/
     mounted: function() {
       this.viewStatus = this.VIEW_TOP_MENU;
       axios.get('http://localhost:8000//layoutList')
@@ -67,6 +69,7 @@
         VIEW_TOP_MENU: 0,
         VIEW_CREATE_LAYOUT:1,
         VIEW_GRID_MENU:2,
+        VIEW_CARD_MENU:3,
         viewStatus: this.VIEW_TOP_MENU,
         allLayouts: [],
         newLayout: {},
@@ -82,15 +85,18 @@
         layoutId :0,
         newCardType: '',
         configCard: false,
+/*
         draggableValue: {
           onDragStart: this.onPosStart,
           onDragEnd: this.onPosEnd,
+          onPositionChange: this.onPosChg,
           initialPosition: {
-            left: 10,
+            left: 40,
             top: 100
           },
           resetInitialPos: true
         }
+*/
 
 
       }
@@ -99,6 +105,7 @@
       createLayout(){
         this.viewStatus=this.VIEW_CREATE_LAYOUT;
       },
+/*
       onPosStart: function(positionDiff, absolutePosition, event) {
         console.log('drag start');
         console.log(positionDiff);
@@ -112,6 +119,16 @@
         console.log(absolutePosition);
         console.log(event);
         this.$refs.editGrid.unfreezeCellSelection();
+      },
+      onPosChg: function(positionDiff, absolutePosition, event) {
+        console.log('draging');
+        console.log(positionDiff);
+        console.log(absolutePosition);
+        console.log(event);
+      },
+*/
+      mouseUpEvt(event){
+        console.log(event);
       },
 
 
@@ -379,7 +396,7 @@
         margin-left: 2px;
         margin-top: 2px;
         background-color: #dbddd0;
-        height:86vh;
+        height:85vh;
         width:97vw;
         border-radius: 4px;
         border-width: 2px;
@@ -391,7 +408,7 @@
     .navbar {
         margin-left: 2px;
         background-color: #ffcd90;
-        height:4vh;
+        height:5vh;
         width:97vw;
         border-radius: 4px;
         border-width: 2px;
@@ -430,5 +447,12 @@
         -ms-transition: all 0.5s ease-in-out;
         -o-transition: all 0.5s ease-in-out;
         transition: all 0.5s ease-in-out;
+    }
+    .dragDiv {
+        position: absolute;
+        z-index: 9;
+        background-color: #f1f1f1;
+        border: 1px solid #d3d3d3;
+        text-align: center;
     }
 </style>
