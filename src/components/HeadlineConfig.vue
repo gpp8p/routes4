@@ -43,7 +43,7 @@
                 <MyButton v-if="this.fontInputStatus==this.FONT_CONFIG_UNKNOWN" @myButtonClicked="showColorPicker" buttonLabel="Pick Font Color"></MyButton>
                 <MyButton v-if="this.fontInputStatus==this.FONT_CONFIG_COLOR" @myButtonClicked="hideColorPicker" buttonLabel="Finished Picking A Color"></MyButton>
                 <span v-if="this.fontInputStatus==this.FONT_CONFIG_COLOR" class="prompt">Font Color:
-                    <color-picker
+                    <colorPicker
                                 :color="color"
                                 :sucker-hide="false"
                                 :sucker-canvas="suckerCanvas"
@@ -72,6 +72,8 @@
 </template>
 
 <script>
+  /* eslint-disable no-console */
+
   import MyButton from "../components/MyButton.vue";
   import SingleFile from "../components/SingleFile.vue";
   import Vue from 'vue';
@@ -82,7 +84,7 @@
 
   export default {
     name: "HeadlineConfig",
-    components: { MyButton, SingleFile },
+    components: { MyButton, SingleFile, colorPicker },
     directives:{
       focus:{
         inserted: function (el) {
@@ -149,7 +151,8 @@
         this.fontInputStatus=this.FONT_CONFIG_UNKNOWN;
       },
       changeColor(color) {
-        const {rgba: {r, g, b, a}} = color
+        const {rgba: {r, g, b, a}} = color;
+        console.log(r+' '+g+' '+b+' '+a);
 //        this.color = `rgba(${r, g, b, a})`
       },
       fontSizeSelectionMade(evt){
@@ -162,6 +165,7 @@
         this.textAlignment = evt.target.value;
       },
       textContentEntered(evt){
+        console.log(evt);
         this.textContent = this.$refs.HeadlineConfig.textContent.value;
         this.bumpStatus();
       }

@@ -10,6 +10,10 @@
         <div v-if="this.viewStatus==this.VIEW_GRID_MENU">
             <gridInput ref="gridInput" @storeValue="cellClicked"></gridInput>
         </div>
+        <div v-if="this.viewStatus==this.VIEW_HEADLINE_CONFIG">
+            <HeadlineConfig></HeadlineConfig>
+        </div>
+
     </section>
     <section class="content">
         <div v-if="listView">
@@ -41,12 +45,14 @@
   import axios from 'axios';
   import editGrid2 from '../components/editGrid2';
   import gridInput from '../components/gridInput.vue';
+//  import headlineComponent from '../components/headlineComponent.vue';
+  import HeadlineConfig from '../components/ConfigureHeadline.vue';
 //  import { Draggable } from 'draggable-vue-directive'
 //  import MoveablePanel from '../components/MoveablePanel.vue'
 
   export default {
     name: "testLayoutTemplate",
-    components: {LayoutListLine, layoutListHeader, focusTest, editGrid2, gridInput},
+    components: {LayoutListLine, layoutListHeader, focusTest, editGrid2, gridInput, HeadlineConfig},
  /*
     directives: {
       Draggable,
@@ -70,6 +76,7 @@
         VIEW_CREATE_LAYOUT:1,
         VIEW_GRID_MENU:2,
         VIEW_CARD_MENU:3,
+        VIEW_HEADLINE_CONFIG:4,
         viewStatus: this.VIEW_TOP_MENU,
         allLayouts: [],
         newLayout: {},
@@ -370,7 +377,7 @@
         }
         if(msg[0]=='cardClicked'){
 //          debugger;
-          this.configCard = true;
+          this.viewStatus = this.VIEW_HEADLINE_CONFIG;
         }
 
       }

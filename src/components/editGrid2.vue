@@ -21,7 +21,7 @@
 <script>
   /* eslint-disable no-debugger,no-console */
 
-  import axios from "axios";
+import axios from "axios";
 import EventBus from '../main.js';
 import genericCard from '../components/genericCard.vue';
 
