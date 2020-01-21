@@ -2,14 +2,16 @@
     <span v-if="this.alignmentHz">
         {{this.label}}
         <span v-for="(choice, index) in this.choices" :key="index">
-            <input type="radio" name=this.fieldName @onclick="this.choiceSelected(index)"  />{{choice}}
+            <input type="radio" name=this.fieldName @click="choiceSelected(index)"  />{{choice}}
         </span>
-        <nextCancelButtons></nextCancelButtons>
+        <nextCancelButtons :err="this.errorMsgs" @buttonClick="buttonClickedHandler" ></nextCancelButtons>
     </span>
 </template>
 
 <script>
-    import nextCancelButtons from '../components/nextCancelButtons.vue';
+  /* eslint-disable no-debugger */
+
+  import nextCancelButtons from '../components/nextCancelButtons.vue';
   export default {
     name: "RadioChoice",
     components: {nextCancelButtons},
@@ -40,15 +42,21 @@
         choices: this.radioChoices,
         fName: this.fieldName,
         selectedIndes: 0,
-        errorMsgs: ''
+        errorMsgs: '',
+        chosen: false
       }
     },
     methods:{
       choiceSelected(idx){
+//        debugger;
         this.selectedIndex = idx;
+        this.chosen=true;
+        this.errorMsgs = '';
+// eslint-disable-next-line no-debugger
       },
       buttonClickedHandler(msg){
-        if(msg=='next' && this.choiceRequired){
+//        debugger;
+        if(msg=='next' && this.choiceRequired && !this.chosen){
           this.errorMsgs = 'You must choose';
         }else{
           this.$emit('buttonClick', [msg]);
