@@ -1,8 +1,8 @@
 <template>
     <span>
         <MyButton @myButtonClicked="nextClicked" buttonLabel="Next"></MyButton>
+        <MyButton @myButtonClicked="prevClicked" buttonLabel="Previous"></MyButton>
         <MyButton @myButtonClicked="cancelClicked" buttonLabel="Cancel"></MyButton>
-        {{this.err}}
     </span>
 </template>
 
@@ -10,21 +10,13 @@
   import MyButton from "../components/MyButton.vue";
   export default {
     name: "nextCancelButtons",
-    props: {
-      err:{
-        type: String,
-        required: false
-      }
-    },
-    data() {
-      return {
-        errorMessage: this.err
-      }
-    },
     components: {MyButton},
     methods:{
       nextClicked(){
         this.$emit('buttonClick', ['next'])
+      },
+      prevClicked(){
+        this.$emit('buttonClick', ['previous'])
       },
       cancelClicked(){
         this.$emit('buttonClick', ['cancel'])

@@ -4,7 +4,8 @@
         <span v-for="(choice, index) in this.choices" :key="index">
             <input type="radio" name=this.fieldName @click="choiceSelected(index)"  />{{choice}}
         </span>
-        <nextCancelButtons :err="this.errorMsgs" @buttonClick="buttonClickedHandler" ></nextCancelButtons>
+        <span class="errorMsg"> {{this.errorMsgs}} </span>
+        <nextCancelButtons @buttonClick="buttonClickedHandler" ></nextCancelButtons>
     </span>
 </template>
 
@@ -48,16 +49,17 @@
     },
     methods:{
       choiceSelected(idx){
-//        debugger;
+        debugger;
         this.selectedIndex = idx;
         this.chosen=true;
         this.errorMsgs = '';
+        this.$emit('radioChoiceMade', this.radioChoices[idx]);
 // eslint-disable-next-line no-debugger
       },
       buttonClickedHandler(msg){
 //        debugger;
         if(msg=='next' && this.choiceRequired && !this.chosen){
-          this.errorMsgs = 'You must choose';
+          this.errorMsgs = '(You must choose)';
         }else{
           this.$emit('buttonClick', [msg]);
         }
@@ -71,5 +73,10 @@
 </script>
 
 <style scoped>
+    .errorMsg {
+        text-align: right;
+        margin-right: 10px;
+        color: red;
+    }
 
 </style>
