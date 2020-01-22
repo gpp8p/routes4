@@ -49,7 +49,7 @@
     },
     methods:{
       choiceSelected(idx){
-        debugger;
+//        debugger;
         this.selectedIndex = idx;
         this.chosen=true;
         this.errorMsgs = '';

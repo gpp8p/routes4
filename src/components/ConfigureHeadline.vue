@@ -2,7 +2,7 @@
     <span>
     <RadioChoice :alignmentHz="true" :radioChoices="this.choices" :fieldName=this.fName :label=this.labelText :choiceRequired="this.choiceIsRequired" @radioChoiceMade="backgroundChosen" ></RadioChoice>
     <SingleFile v-if="this.doFileUpload"  SingleFile></SingleFile>
-    <cpick v-if="this.doColorPick"></cpick>
+    <cpick v-if="this.doColorPick" @colorSelected="colorIsSelected"></cpick>
     </span>
 </template>
 
@@ -20,7 +20,8 @@
         choiceIsRequired: true,
         fName: 'backGroundType',
         doFileUpload: false,
-        doColorPick: false
+        doColorPick: false,
+        selectedBackgroundColor:''
       }
     },
     methods: {
@@ -31,6 +32,10 @@
         if(msg=='color'){
           this.doColorPick=true;
         }
+      },
+      colorIsSelected(msg){
+        this.doColorPick=false;
+        this.selectedBackgroundColor = msg;
       }
     }
   };
