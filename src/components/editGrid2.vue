@@ -238,8 +238,12 @@ export default {
 //      console.log('done');
     },
     processCardClick(msg){
+      debugger;
       console.log("Card Click - "+msg);
-//      debugger;
+//      debugger
+      var instanceNum = msg[0][1];
+      msg[0].push(this.$refs.key[instanceNum].$el);
+      msg[0].push(this.cardInstances[instanceNum]);
       this.$emit('storeValue', msg[0])
 //      debugger;
     },
@@ -293,6 +297,7 @@ export default {
       }
     },
 
+
 //    insertCardsIntoBlankGrid(layoutCards){
 //     var newBlankLayout = this.makeBlankLayout(layoutCards.layout.height, layoutCards.layout.width, layoutCards.layout.description, layoutCards.layout.menu_label);
 //     var removalList = [];
@@ -300,6 +305,12 @@ export default {
 
 //      }
 //    },
+    setElementStyle(instanceNumber, styleType, newStyle){
+      debugger;
+      if(styleType == 'backgroundColor'){
+        this.$refs.key[instanceNumber].$el.style.backgroundColor=newStyle;
+      }
+    },
 
     createBlankLayout(height,width, description, menu_label){
 //      console.log('createBlankLayout:'+height+' '+width);

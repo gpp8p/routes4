@@ -7,12 +7,20 @@
 </template>
 
 <script>
-    import RadioChoice from "../components/RadioChoice.vue";
+  /* eslint-disable no-debugger */
+
+  import RadioChoice from "../components/RadioChoice.vue";
     import SingleFile from "../components/SingleFile.vue";
     import cpick from "../components/cpick.vue";
   export default {
     name: "ConfigureHeadline",
     components: {RadioChoice, SingleFile, cpick},
+    props:{
+        InstanceNumberBeingConfigured: {
+            type: Number,
+            required: true
+        },
+    },
     data() {
       return {
         choices: ['color', 'images'],
@@ -21,7 +29,8 @@
         fName: 'backGroundType',
         doFileUpload: false,
         doColorPick: false,
-        selectedBackgroundColor:''
+        selectedBackgroundColor:'',
+        instanceBeingConfigured:this.InstanceNumberBeingConfigured
       }
     },
     methods: {
@@ -32,10 +41,13 @@
         if(msg=='color'){
           this.doColorPick=true;
         }
+// eslint-disable-next-line no-debugger
       },
       colorIsSelected(msg){
+        debugger;
         this.doColorPick=false;
-        this.selectedBackgroundColor = msg;
+        this.selectedBackgroundColor = msg[0];
+        this.$emit('configurationSelectionMade',[this.selectedBackgroundColor, this.instanceBeingConfigured, 'backgroundColor']);
       }
     }
   };

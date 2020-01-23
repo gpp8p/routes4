@@ -11,7 +11,7 @@
             <gridInput ref="gridInput" @storeValue="cellClicked"></gridInput>
         </div>
         <div v-if="this.viewStatus==this.VIEW_HEADLINE_CONFIG">
-            <HeadlineConfig></HeadlineConfig>
+            <HeadlineConfig :InstanceNumberBeingConfigured="this.instancePositionBeingConfigured" @configurationSelectionMade="configurationSelectionEvent"></HeadlineConfig>
         </div>
 
     </section>
@@ -92,48 +92,15 @@
         layoutId :0,
         newCardType: '',
         configCard: false,
-/*
-        draggableValue: {
-          onDragStart: this.onPosStart,
-          onDragEnd: this.onPosEnd,
-          onPositionChange: this.onPosChg,
-          initialPosition: {
-            left: 40,
-            top: 100
-          },
-          resetInitialPos: true
-        }
-*/
-
-
+        cardTypeBeingConfigured: '',
+        instancePositionBeingConfigured:0,
+        screenElementBeingConfigured: {}
       }
     },
     methods:{
       createLayout(){
         this.viewStatus=this.VIEW_CREATE_LAYOUT;
       },
-/*
-      onPosStart: function(positionDiff, absolutePosition, event) {
-        console.log('drag start');
-        console.log(positionDiff);
-        console.log(absolutePosition);
-        console.log(event);
-        this.$refs.editGrid.freezeCellSelection();
-      },
-      onPosEnd: function(positionDiff, absolutePosition, event) {
-        console.log('drag end');
-        console.log(positionDiff);
-        console.log(absolutePosition);
-        console.log(event);
-        this.$refs.editGrid.unfreezeCellSelection();
-      },
-      onPosChg: function(positionDiff, absolutePosition, event) {
-        console.log('draging');
-        console.log(positionDiff);
-        console.log(absolutePosition);
-        console.log(event);
-      },
-*/
       mouseUpEvt(event){
         console.log(event);
       },
@@ -169,37 +136,7 @@
           console.log(error);
         });
       },
-/*
-      saveBlankLayout(msg){
-//        debugger;
 
-
-          axios.post('http://localhost:8000/createLayoutNoBlanks', {
-            name: msg[0],
-            description: msg[1],
-            height: msg[2],
-            width:msg[3]
-          }).then(response=>
-          {
-//            debugger;
-            this.layoutId=response.data;
-            var blankLayout = this.createBlankLayout(msg[2],msg[3],msg[1],msg[0]);
-            this.newLayout=blankLayout;
-            this.listView=false;
-            this.gridView=true;
-            this.showLayoutMenu = false;
-            this.$refs.editGrid.showGrid();
-            this.viewStatus = this.VIEW_GRID_MENU;
-            this.layoutId = msg[0];
-            var gridHeight = parseInt(msg[2]);
-            var gridWidth = parseInt(msg[3]);
-            this.gridParamDefinition = this.$refs.editGrid.layoutGridParameters(gridHeight, gridWidth);
-            this.$refs.editGrid.reloadBlankLayout(blankLayout);
-          }).catch(function(error) {
-            console.log(error);
-          });
-      },
-*/
       saveBlankLayout_new(msg){
         axios.post('http://localhost:8000/createLayoutNoBlanks', {
           name: msg[0],
@@ -215,57 +152,12 @@
           console.log(error);
         });
       },
-/*
-      createBlankLayout(height,width, description, menu_label){
-        console.log('createBlankLayout:'+height+' '+width);
-        this.layoutGrid = [];
-        var newCards = [];
-        var newCardId=1;
-        height++;
-        width++;
-        for(var h=1;h<height;h++){
-          var gridRow = [];
-          for(var w = 1; w<width; w++){
-            var c=this.createBlankCardInstance(h,w,1,1,newCardId);
-            newCards.push(c);
-            gridRow.push(newCardId);
-            newCardId++;
-          }
-          this.layoutGrid.push(gridRow);
-        }
-        var newLayout = {cards: newCards, layout: {description:description, menu_label: menu_label, height: (height-1), width:(width-1)}};
-        return newLayout;
-      },
 
-      computeGridCss(row, col, height, width){
+      configurationSelectionEvent(msg){
+        console.log(msg);
 //        debugger;
-        var startRow = row;
-        var startColumn = col;
-        var endRow=0;
-        var endCol=0;
-        if(height==1){
-          endRow = row;
-        }else{
-          endRow = row+height;
-        }
-        endCol=startColumn+width;
-        var thisCss = "grid-area:"+startRow+"/"+startColumn+"/"+endRow+"/"+endCol;
-        return thisCss;
-
+        this.$refs.editGrid. setElementStyle(msg[1], 'backgroundColor', msg[0])
       },
-
-
-      createBlankCardInstance(row, col, height, width, id){
-        console.log('createBlankCardInstance:'+row+' '+col+' '+height+' '+width+ ' '+id);
-        var thisGridCss = this.computeGridCss(row, col, height, width);
-        var thisCardStyle = thisGridCss+";"+"background-color:#DBAA6E;color:blue;";
-        var thisInstance = {card_component: 'simpleCard', card_position: [row,col,height,width], id:id, card_parameters: {style: thisCardStyle}};
-        return thisInstance;
-
-      },
-
-*/
-
       cellClicked(msg){
         console.log(msg);
 //        debugger;
@@ -377,7 +269,14 @@
         }
         if(msg[0]=='cardClicked'){
 //          debugger;
-          this.viewStatus = this.VIEW_HEADLINE_CONFIG;
+          this.configCard=true;
+          this.cardTypeBeingConfigured = msg[2]
+          this.instancePositionBeingConfigured = msg[1];
+          this.screenElementBeingConfigured = msg[3];
+          this.cardInstanceBeingConfigured = msg[4];
+          if(msg[2]=='greenComponent'| msg[2]=='blankComponent'|msg[2]=='headlineComponent'){
+            this.viewStatus = this.VIEW_HEADLINE_CONFIG;
+          }
         }
 
       }
