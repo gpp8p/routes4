@@ -1,5 +1,5 @@
 <template>
-    <div v-on:click="cellClicked" style=cardStyle>
+    <div v-on:click="cellClicked" style=this.cstyle>
         {{this.cardMessage}}
     </div>
 </template>
@@ -35,13 +35,16 @@
     data() {
       return {
         cardMessage: this.getCardProps(),
-        cardHasBeenSetup: false
+        cardHasBeenSetup: false,
+        cstyle: this.cardStyle
       }
     },
     methods: {
       cellClicked: function() {
 //        console.log(' blank-component clicked');
-        this.$emit('cardClick', ['cardClicked',this.cardKey, 'greenComponent'])
+        this.cstyle='background-color: #ffffff;';
+        this.$emit('cardClick', ['cardClicked',this.cardKey, 'greenComponent']);
+        this.cardMessage = '';
       },
       refId: function(){
         return "card"+this.cardId;

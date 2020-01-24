@@ -238,7 +238,7 @@ export default {
 //      console.log('done');
     },
     processCardClick(msg){
-      debugger;
+//      debugger;
       console.log("Card Click - "+msg);
 //      debugger
       var instanceNum = msg[0][1];
