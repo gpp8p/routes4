@@ -306,13 +306,14 @@ export default {
 //      }
 //    },
     setElementStyle(instanceNumber, styleType, newStyle){
-      debugger;
+//      debugger;
       if(styleType == 'backgroundColor'){
         this.$refs.key[instanceNumber].$el.style.backgroundColor=newStyle;
       }
       if(styleType == 'backgroundImage'){
         var backGroundImageReference = "url('"+newStyle+"')";
         this.$refs.key[instanceNumber].$el.style.backgroundImage=backGroundImageReference;
+        this.$refs.key[instanceNumber].$el.style.backgroundSize="100% 100%";
       }
     },
 
