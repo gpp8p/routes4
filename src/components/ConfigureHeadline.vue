@@ -45,7 +45,8 @@
 // eslint-disable-next-line no-debugger
       },
       fileUploaded(msg){
-        debugger;
+//        debugger;
+        this.doFileUpload = false;
         var uploadedFilePath = this.filePrefix+msg[0];
         this.$emit('configurationSelectionMade',[uploadedFilePath, this.instanceBeingConfigured, 'backgroundImage']);
       },

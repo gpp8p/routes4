@@ -17,7 +17,8 @@
     data(){
       return {
         file: '',
-        user: 'dev'
+        user: 'dev',
+        returnedData:''
       }
     },
 
@@ -49,12 +50,11 @@
               'Content-Type': 'multipart/form-data'
             }
           }
-        ).then(function(response){
-          debugger;
-          console.log('SUCCESS!!'+response.data);
+        ).then(response=>{
+          this.returnedData = response.data;
           this.$emit('filePath', [response.data]);
-        }).bind(this)
-          .catch(function(error){
+          console.log('SUCCESS!!'+response.data);
+        }).catch(function(error){
             debugger;
             console.log('FAILURE!!'+error);
           });

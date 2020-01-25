@@ -155,8 +155,8 @@
 
       configurationSelectionEvent(msg){
         console.log(msg);
-//        debugger;
-        this.$refs.editGrid.setElementStyle(msg[1], 'backgroundColor', msg[0])
+        debugger;
+        this.$refs.editGrid.setElementStyle(msg[1], msg[2], msg[0])
       },
       cellClicked(msg){
         console.log(msg);
