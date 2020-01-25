@@ -306,9 +306,12 @@ export default {
 //      }
 //    },
     setElementStyle(instanceNumber, styleType, newStyle){
-      debugger;
+//      debugger;
       if(styleType == 'backgroundColor'){
         this.$refs.key[instanceNumber].$el.style.backgroundColor=newStyle;
+      }
+      if(styleType == 'backgroundImage'){
+        this.$refs.key[instanceNumber].$el.style.backgroundImage=newStyle;
       }
     },
 

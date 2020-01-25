@@ -11,7 +11,7 @@
             <gridInput ref="gridInput" @storeValue="cellClicked"></gridInput>
         </div>
         <div v-if="this.viewStatus==this.VIEW_HEADLINE_CONFIG">
-            <HeadlineConfig :InstanceNumberBeingConfigured="this.instancePositionBeingConfigured" @configurationSelectionMade="configurationSelectionEvent"></HeadlineConfig>
+            <HeadlineConfig :InstanceNumberBeingConfigured="this.instancePositionBeingConfigured" @configurationSelectionMade="configurationSelectionEvent" ></HeadlineConfig>
         </div>
 
     </section>
@@ -156,7 +156,7 @@
       configurationSelectionEvent(msg){
         console.log(msg);
 //        debugger;
-        this.$refs.editGrid. setElementStyle(msg[1], 'backgroundColor', msg[0])
+        this.$refs.editGrid.setElementStyle(msg[1], 'backgroundColor', msg[0])
       },
       cellClicked(msg){
         console.log(msg);

@@ -1,7 +1,7 @@
 <template>
     <span>
     <RadioChoice :alignmentHz="true" :radioChoices="this.choices" :fieldName=this.fName :label=this.labelText :choiceRequired="this.choiceIsRequired" @radioChoiceMade="backgroundChosen" ></RadioChoice>
-    <SingleFile v-if="this.doFileUpload"  SingleFile></SingleFile>
+    <SingleFile v-if="this.doFileUpload"  @filePath="fileUploaded"></SingleFile>
     <cpick v-if="this.doColorPick" @colorSelected="colorIsSelected"></cpick>
     </span>
 </template>
@@ -30,7 +30,8 @@
         doFileUpload: false,
         doColorPick: false,
         selectedBackgroundColor:'',
-        instanceBeingConfigured:this.InstanceNumberBeingConfigured
+        instanceBeingConfigured:this.InstanceNumberBeingConfigured,
+        filePrefix: 'http://localhost:8000/storage/'
       }
     },
     methods: {
@@ -42,6 +43,11 @@
           this.doColorPick=true;
         }
 // eslint-disable-next-line no-debugger
+      },
+      fileUploaded(msg){
+        debugger;
+        var uploadedFilePath = this.filePrefix+msg[0];
+        this.$emit('configurationSelectionMade',[uploadedFilePath, this.instanceBeingConfigured, 'backgroundImage']);
       },
       colorIsSelected(msg){
         debugger;
