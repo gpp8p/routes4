@@ -63,7 +63,6 @@
         }else{
           this.$emit('buttonClick', [msg]);
         }
-
       }
 
     }

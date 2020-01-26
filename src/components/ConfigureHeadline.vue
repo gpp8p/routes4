@@ -1,17 +1,18 @@
 <template>
     <span>
-    <RadioChoice :alignmentHz="true" :radioChoices="this.choices" :fieldName=this.fName :label=this.labelText :choiceRequired="this.choiceIsRequired" @radioChoiceMade="backgroundChosen" ></RadioChoice>
+    <RadioChoice :alignmentHz="true" :radioChoices="this.choices" :fieldName=this.fName :label=this.labelText :choiceRequired="this.choiceIsRequired" @radioChoiceMade="backgroundChosen" @buttonClick="buttonClicked" ></RadioChoice>
     <SingleFile v-if="this.doFileUpload"  @filePath="fileUploaded"></SingleFile>
     <cpick v-if="this.doColorPick" @colorSelected="colorIsSelected"></cpick>
     </span>
 </template>
 
 <script>
-  /* eslint-disable no-debugger */
+  /* eslint-disable no-debugger,no-console */
 
   import RadioChoice from "../components/RadioChoice.vue";
     import SingleFile from "../components/SingleFile.vue";
     import cpick from "../components/cpick.vue";
+//    import fpick from "../components/fpick.vue";
   export default {
     name: "ConfigureHeadline",
     components: {RadioChoice, SingleFile, cpick},
@@ -43,6 +44,17 @@
           this.doColorPick=true;
         }
 // eslint-disable-next-line no-debugger
+      },
+      buttonClicked(msg){
+        console.log(msg);
+        switch (msg[0]){
+          case 'next':
+            break;
+          case 'prev':
+            break;
+          case 'cancel':
+            break;
+        }
       },
       fileUploaded(msg){
 //        debugger;
