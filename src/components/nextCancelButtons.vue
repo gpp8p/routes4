@@ -1,7 +1,7 @@
 <template>
     <span>
         <MyButton @myButtonClicked="nextClicked" buttonLabel="Next"></MyButton>
-        <MyButton @myButtonClicked="prevClicked" buttonLabel="Previous"></MyButton>
+        <MyButton v-if="this.currentStatus>0"   @myButtonClicked="prevClicked" buttonLabel="Previous"></MyButton>
         <MyButton @myButtonClicked="cancelClicked" buttonLabel="Cancel"></MyButton>
     </span>
 </template>
@@ -11,6 +11,12 @@
   export default {
     name: "nextCancelButtons",
     components: {MyButton},
+    props: {
+      currentStatus:{
+        type: Number,
+        required: true
+      }
+    },
     methods:{
       nextClicked(){
         this.$emit('buttonClick', ['next'])

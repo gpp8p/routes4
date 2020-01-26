@@ -5,7 +5,7 @@
             <input type="radio" name=this.fieldName @click="choiceSelected(index)"  />{{choice}}
         </span>
         <span class="errorMsg"> {{this.errorMsgs}} </span>
-        <nextCancelButtons @buttonClick="buttonClickedHandler" ></nextCancelButtons>
+        <nextCancelButtons :currentStatus="this.currentStatus" @buttonClick="buttonClickedHandler" ></nextCancelButtons>
     </span>
 </template>
 
@@ -35,6 +35,10 @@
       },
       choiceRequired: {
         type: Boolean,
+        required:true
+      },
+      currentStatus:{
+        type: Number,
         required:true
       }
     },
