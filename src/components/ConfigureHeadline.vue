@@ -14,7 +14,7 @@
         <cpick v-if="this.doColorPick" @colorSelected="colorIsSelected"></cpick>
     </span>
     <span v-if="this.cstatus==this.CONFIGURING_FONT">
-        <fpick></fpick>
+        <fpick :currentStatus="this.cstatus" :InstanceNumberBeingConfigured="this.instanceBeingConfigured" @fontConfigured="fontConfigured"></fpick>
     </span>
 
     </span>
@@ -55,7 +55,11 @@
         selectedBackgroundColor:'',
         instanceBeingConfigured:this.InstanceNumberBeingConfigured,
         filePrefix: 'http://localhost:8000/storage/',
-        cstatus:this.CONFIGURING_BACKGROUND
+        cstatus:this.CONFIGURING_BACKGROUND,
+        fontFamily: '',
+        fontSize:'',
+        fontWeight: '',
+        fontStyle: ''
       }
     },
     methods: {
@@ -70,7 +74,7 @@
       },
       buttonClicked(msg){
         console.log(msg);
-        debugger;
+//        debugger;
         var buttonPressed = msg[0][0];
         switch (buttonPressed){
           case 'next':
@@ -94,6 +98,12 @@
         this.doColorPick=false;
         this.selectedBackgroundColor = msg[0];
         this.$emit('configurationSelectionMade',[this.selectedBackgroundColor, this.instanceBeingConfigured, 'backgroundColor']);
+      },
+      fontConfigured(msg){
+        this.fontFamily = msg[0];
+        this.fontSize = [msg[1]];
+        this.fontWeight= msg[2];
+        this.fontStyle=msg[3];
       }
     }
   };

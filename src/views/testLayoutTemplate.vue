@@ -155,7 +155,7 @@
 
       configurationSelectionEvent(msg){
         console.log(msg);
-        debugger;
+//        debugger;
         this.$refs.editGrid.setElementStyle(msg[1], msg[2], msg[0])
       },
       cellClicked(msg){
