@@ -59,7 +59,8 @@
         fontFamily: '',
         fontSize:'',
         fontWeight: '',
-        fontStyle: ''
+        fontStyle: '',
+        fontColor:''
       }
     },
     methods: {
@@ -100,10 +101,12 @@
         this.$emit('configurationSelectionMade',[this.selectedBackgroundColor, this.instanceBeingConfigured, 'backgroundColor']);
       },
       fontConfigured(msg){
+//        debugger;
         this.fontFamily = msg[0];
-        this.fontSize = [msg[1]];
+        this.fontSize = msg[1];
         this.fontWeight= msg[2];
         this.fontStyle=msg[3];
+        this.fontColor=msg[4];
       }
     }
   };

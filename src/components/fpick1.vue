@@ -1,22 +1,26 @@
 <template>
     <span>
-        <span :style="{fontFamily : focused_font}">Pick the font you want to use:</span>
-        <select v-model="focused_font">
-            <option value="" disabled selected>Font</option>
-            <option v-for="(font, index) in available_fonts" :key="index" v-bind:value="font" v-bind:style="{fontFamily : font}" >{{ font }}</option>
-        </select>
-        <span>Font Sizes:<MySelect :sName="size" v-bind:selectionOptions="this.availableFontSizes" @selectMade="this.selection"></MySelect></span>
-        <span>Font Weight:<MySelect :sName="weight" v-bind:selectionOptions="this.availableFontWeight" @selectMade="this.selection"></MySelect></span>
-        <span>Font Style:<MySelect :sName="style" v-bind:selectionOptions="this.availableFontWeight" @selectMade="this.selection"></MySelect></span>
+        <span>
+            <span :style="{fontFamily : focused_font}">Font to use: </span>
+            <select v-model="focused_font" class="selectStyle" ref="fontSelect" @change="fontSelected(event)">
+                <option value="" disabled selected class="optionStyle">Font</option>
+                <option v-for="(font, index) in available_fonts" :key="index" v-bind:value="font" v-bind:style="{fontFamily : font}" class="optionStyle" >{{ font }}</option>
+            </select>
+        </span>
+        <span class="fpickSelectors">Font Sizes: <MySelect v-bind:sName="this.sizeName" v-bind:selectionOptions="this.availableFontSizes" @selectMade="this.selection"></MySelect></span>
+        <span class="fpickSelectors">Font Weight: <MySelect v-bind:sName="this.weightName" v-bind:selectionOptions="this.availableFontWeight" @selectMade="this.selection"></MySelect></span>
+        <span class="fpickSelectors">Font Style: <MySelect v-bind:sName="this.styleName" v-bind:selectionOptions="this.availableFontStyles" @selectMade="this.selection"></MySelect></span>
         <MyButton @myButtonClicked="fontColor" buttonLabel="Select Font Color"></MyButton>
-        <nextCancelButtons :currentStatus="this.currentStatus" @buttonClick="buttonClickedHandler" ></nextCancelButtons>
+       <nextCancelButtons :currentStatus="this.currentStatus" @buttonClick="buttonClickedHandler" ></nextCancelButtons>
         <cpick v-if="this.selectingColor" @colorSelected="fontColorIsSelected"></cpick>
     </span>
 
 </template>
 
 <script>
-    import MySelect from "../components/MySelect.vue";
+  /* eslint-disable no-debugger */
+
+  import MySelect from "../components/MySelect.vue";
     import nextCancelButtons from '../components/nextCancelButtons.vue';
     import MyButton from "../components/MyButton.vue";
     import cpick from "../components/cpick.vue";
@@ -44,6 +48,7 @@
         availableFontSizes: ['10pt','12pt','15pt','18pt','24pt','36pt','48pt','72pt'],
         availableFontWeight: ['normal','bold','bolder','lighter'],
         availableFontStyles: ['normal', 'italic', 'oblique'],
+        selectedFont:'',
         selectedSize:'',
         selectedWeight:'',
         selectedStyle:'',
@@ -51,10 +56,16 @@
         selectingColor: false,
         selectedFontColor: '',
         instanceBeingConfigured:this.InstanceNumberBeingConfigured,
+        sizeName:'size',
+        weightName:'weight',
+        styleName:'style'
 
       }
     },
     methods: {
+      fontSelected(){
+        this.selectedFont = this.$refs.fontSelect.value;
+      },
       selection(msg){
         switch(msg[0]){
           case 'size':
@@ -74,11 +85,12 @@
       fontColorIsSelected(msg) {
         this.selectingColor=false;
         this.selectedFontColor = msg[0];
-        this.$emit('configurationSelectionMade',[this.selectedFontColor, this.instanceBeingConfigured, 'fontColor']);
+//        this.$emit('configurationSelectionMade',[this.selectedFontColor, this.instanceBeingConfigured, 'fontColor']);
       },
       buttonClickedHandler(msg){
+ //       debugger;
         if(msg=='next'){
-          this.$emit('fontConfigured', [this.focused_font, this.selectedSize, this.selectedWeight, this.selectedStyle ]);
+          this.$emit('fontConfigured', [this.focused_font, this.selectedSize, this.selectedWeight, this.selectedStyle, this.selectedFontColor ]);
           this.$emit('buttonClick', [msg]);
         }
         if(msg=='previous'){
@@ -93,5 +105,19 @@
 </script>
 
 <style scoped>
+    .fpickSelectors {
+        padding-left: 1vw;
+    }
+    .selectStyle {
+        background: #DBAA6E;
+        color:blue;
+        font-weight: bold;
+        font-size: 12px;
+    }
+    .optionStyle {
+        background: #DBAA6E;
+        color:blue;
+    }
+
 
 </style>
