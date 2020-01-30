@@ -55,7 +55,7 @@
           this.$emit('filePath', [response.data]);
           console.log('SUCCESS!!'+response.data);
         }).catch(function(error){
-            debugger;
+//            debugger;
             console.log('FAILURE!!'+error);
           });
       },

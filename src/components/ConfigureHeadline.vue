@@ -49,6 +49,7 @@
         CONFIGURING_FONT:1,
         CONFIGURING_CARD_BORDERS:2,
         CONFIGURING_TEXT:3,
+        cstatusLimit:this.CONFIGURING_TEXT,
         choices: ['color', 'images'],
         labelText: 'Background is:',
         choiceIsRequired: true,
@@ -99,13 +100,13 @@
 //        debugger;
         this.doFileUpload = false;
         var uploadedFilePath = this.filePrefix+msg[0];
-        this.$emit('configurationSelectionMade',[uploadedFilePath, this.instanceBeingConfigured, 'backgroundImage']);
+        this.$emit('configurationSelectionMade',['backgroundImage', uploadedFilePath, this.instanceBeingConfigured]);
       },
       colorIsSelected(msg){
 //        debugger;
         this.doColorPick=false;
         this.selectedBackgroundColor = msg[0];
-        this.$emit('configurationSelectionMade',[this.selectedBackgroundColor, this.instanceBeingConfigured, 'backgroundColor']);
+        this.$emit('configurationSelectionMade',['backgroundColor', this.selectedBackgroundColor, this.instanceBeingConfigured]);
       },
       fontConfigured(msg){
 //        debugger;
@@ -114,6 +115,14 @@
         this.fontWeight= msg[2];
         this.fontStyle=msg[3];
         this.fontColor=msg[4];
+        this.$emit('configurationSelectionMade',[this.fontFamily, this.fontSize, this.fontWeight, this.fontColor, 'font']);
+      },
+      bumpStatus(){
+        if(this.cstatus==this.cstatusLimit){
+          console.log('headlineConfigured');
+        }else{
+          this.cstatus++;
+        }
       }
     }
   };

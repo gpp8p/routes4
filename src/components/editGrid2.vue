@@ -315,6 +315,24 @@ export default {
         this.$refs.key[instanceNumber].$el.style.backgroundImage=backGroundImageReference;
         this.$refs.key[instanceNumber].$el.style.backgroundSize="100% 100%";
       }
+      if(styleType == 'fontFamily'){
+        this.$refs.key[instanceNumber].$el.style.fontFamily=newStyle;
+      }
+      if(styleType=='fontSize'){
+        this.$refs.key[instanceNumber].$el.style.fontSize=newStyle;
+      }
+      if(styleType=='fontWeight'){
+        this.$refs.key[instanceNumber].$el.style.fontWeight=newStyle;
+      }
+      if(styleType=='fontStyle'){
+        this.$refs.key[instanceNumber].$el.style.fontStyle=newStyle;
+      }
+      if(styleType=='color'){
+        this.$refs.key[instanceNumber].$el.style.color=newStyle;
+      }
+      if(styleType=='textAlign'){
+        this.$refs.key[instanceNumber].$el.style.textAlign=newStyle;
+      }
     },
 
     createBlankLayout(height,width, description, menu_label){
