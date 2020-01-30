@@ -10,8 +10,9 @@
         <span class="fpickSelectors">Font Sizes: <MySelect v-bind:sName="this.sizeName" v-bind:selectionOptions="this.availableFontSizes" @selectMade="this.selection"></MySelect></span>
         <span class="fpickSelectors">Font Weight: <MySelect v-bind:sName="this.weightName" v-bind:selectionOptions="this.availableFontWeight" @selectMade="this.selection"></MySelect></span>
         <span class="fpickSelectors">Font Style: <MySelect v-bind:sName="this.styleName" v-bind:selectionOptions="this.availableFontStyles" @selectMade="this.selection"></MySelect></span>
+        <span class="fpickSelectors">Text Alignment: <MySelect v-bind:sName="this.alignName" v-bind:selectionOptions="this.availableAlignStyles" @selectMade="this.selection"></MySelect></span>
         <MyButton @myButtonClicked="fontColor" buttonLabel="Select Font Color"></MyButton>
-       <nextCancelButtons :currentStatus="this.currentStatus" @buttonClick="buttonClickedHandler" ></nextCancelButtons>
+        <nextCancelButtons :currentStatus="this.currentStatus" @buttonClick="buttonClickedHandler" ></nextCancelButtons>
         <cpick v-if="this.selectingColor" @colorSelected="fontColorIsSelected"></cpick>
     </span>
 
@@ -48,6 +49,7 @@
         availableFontSizes: ['10pt','12pt','15pt','18pt','24pt','36pt','48pt','72pt'],
         availableFontWeight: ['normal','bold','bolder','lighter'],
         availableFontStyles: ['normal', 'italic', 'oblique'],
+        availableAlignStyles: ['left','center','right'],
         selectedFont:'',
         selectedSize:'',
         selectedWeight:'',
@@ -55,10 +57,12 @@
         statusNow:this.currentStatus,
         selectingColor: false,
         selectedFontColor: '',
+        alignmentStyling:'',
         instanceBeingConfigured:this.InstanceNumberBeingConfigured,
         sizeName:'size',
         weightName:'weight',
-        styleName:'style'
+        styleName:'style',
+        alignName:'align'
 
       }
     },
@@ -77,6 +81,9 @@
           case 'style':
             this.selectedStyle = msg[1];
             break;
+          case 'align':
+            this.alignmentStyling = msg[1];
+            break;
             }
         },
       fontColor(){
@@ -90,7 +97,7 @@
       buttonClickedHandler(msg){
  //       debugger;
         if(msg=='next'){
-          this.$emit('fontConfigured', [this.focused_font, this.selectedSize, this.selectedWeight, this.selectedStyle, this.selectedFontColor ]);
+          this.$emit('fontConfigured', [this.focused_font, this.selectedSize, this.selectedWeight, this.selectedStyle, this.selectedFontColor, this.alignmentStyling ]);
           this.$emit('buttonClick', [msg]);
         }
         if(msg=='previous'){

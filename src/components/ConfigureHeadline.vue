@@ -16,6 +16,9 @@
     <span v-if="this.cstatus==this.CONFIGURING_FONT">
         <fpick :currentStatus="this.cstatus" :InstanceNumberBeingConfigured="this.instanceBeingConfigured" @fontConfigured="fontConfigured"></fpick>
     </span>
+    <span v-if="this.cstatus==this.CONFIGURING_TEXT">
+        <SingleInput :prompt="this.TextPrompt" :fieldSize="this.textFieldSize" :placeholderText="this.placeholder"></SingleInput>
+    </span>
 
     </span>
 </template>
@@ -27,9 +30,10 @@
     import SingleFile from "../components/SingleFile.vue";
     import cpick from "../components/cpick.vue";
     import fpick from "../components/fpick1.vue";
+    import SingleInput from "../components/SingleInput.vue";
   export default {
     name: "ConfigureHeadline",
-    components: {RadioChoice, SingleFile, cpick, fpick},
+    components: {RadioChoice, SingleFile, cpick, fpick, SingleInput},
     mounted () {
       this.cstatus=this.CONFIGURING_BACKGROUND;
     },
@@ -43,9 +47,8 @@
       return {
         CONFIGURING_BACKGROUND:0,
         CONFIGURING_FONT:1,
-        CONFIGURING_ALIGNMENT:2,
-        CONFIGURING_CARD_BORDERS:3,
-        CONFIGURING_TEXT:4,
+        CONFIGURING_CARD_BORDERS:2,
+        CONFIGURING_TEXT:3,
         choices: ['color', 'images'],
         labelText: 'Background is:',
         choiceIsRequired: true,
@@ -60,7 +63,11 @@
         fontSize:'',
         fontWeight: '',
         fontStyle: '',
-        fontColor:''
+        fontColor:'',
+        textPrompt:'Please enter headline text:',
+        textFieldSize: 80,
+        placeholder:'Headline content'
+
       }
     },
     methods: {
