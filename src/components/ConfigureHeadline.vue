@@ -10,7 +10,7 @@
                      @radioChoiceMade="backgroundChosen">
         </RadioChoice>
         <SingleFile v-if="this.doFileUpload"  @filePath="fileUploaded"></SingleFile>
-        <cpick v-if="this.doColorPick" @colorSelected="colorIsSelected"></cpick>
+
         <RadioChoice :alignmentHz="true"
                      :radioChoices="this.borderChoice"
                      :fieldName=this.borderFieldName
@@ -22,7 +22,7 @@
          <span v-if="this.borderIncluded">
             <span class="fpickSelectors">Border Size: <MySelect v-bind:sName="this.borderSizeName" v-bind:selectionOptions="this.availableBorderSizes" @selectMade="this.borderSizeSelected"></MySelect></span>
             <MyButton @myButtonClicked="borderColor" buttonLabel="Select Border Color"></MyButton>
-             <cpick v-if="this.selectingBorderColor" @colorSelected="borderColorIsSelected"></cpick>
+
          </span>
         <nextCancelButtons :currentStatus="this.cstatus" @buttonClick="buttonClickedHandler" ></nextCancelButtons>
     </span>
@@ -32,7 +32,8 @@
     <span v-if="this.cstatus==this.CONFIGURING_TEXT">
         <SingleInput :prompt="this.TextPrompt" :fieldSize="this.textFieldSize" :placeholderText="this.placeholder"></SingleInput>
     </span>
-
+        <cpick v-if="this.selectingBorderColor" @colorSelected="borderColorIsSelected"></cpick>
+        <cpick v-if="this.doColorPick" @colorSelected="colorIsSelected"></cpick>
     </span>
 </template>
 
