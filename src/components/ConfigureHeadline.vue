@@ -21,16 +21,33 @@
         </RadioChoice>
          <span v-if="this.borderIncluded">
             <span class="fpickSelectors">Border Size: <MySelect v-bind:sName="this.borderSizeName" v-bind:selectionOptions="this.availableBorderSizes" @selectMade="this.borderSizeSelected"></MySelect></span>
-            <MyButton @myButtonClicked="borderColor" buttonLabel="Select Border Color"></MyButton>
-
+             <MyButton @myButtonClicked="borderColor" buttonLabel="Select Border Color"></MyButton>
          </span>
+        <RadioChoice :alignmentHz="true"
+                          :radioChoices="this.shadowChoice"
+                          :fieldName=this.shadowFieldName
+                          :label=this.shadowChoiceLabel
+                          :choiceRequired="false"
+                          :isCheckBox="true"
+                          @radioChoiceMade="shadowChosen">
+        </RadioChoice>
+        <RadioChoice :alignmentHz="true"
+                     :radioChoices="this.roundChoice"
+                     :fieldName=this.roundFieldName
+                     :label=this.roundChoiceLabel
+                     :choiceRequired="false"
+                     :isCheckBox="true"
+                     @radioChoiceMade="roundChosen">
+        </RadioChoice>
+
+
         <nextCancelButtons :currentStatus="this.cstatus" @buttonClick="buttonClickedHandler" ></nextCancelButtons>
     </span>
     <span v-if="this.cstatus==this.CONFIGURING_FONT">
-        <fpick :currentStatus="this.cstatus" :InstanceNumberBeingConfigured="this.instanceBeingConfigured" @fontConfigured="fontConfigured" @fontSelectionMade="this.fontSelectionMade"></fpick>
+        <fpick :currentStatus="this.cstatus" :InstanceNumberBeingConfigured="this.instanceBeingConfigured" @fontConfigured="fontConfigured" @fontSelectionMade="this.fontSelectionMade" @buttonClick="this.buttonClickedHandler"></fpick>
     </span>
     <span v-if="this.cstatus==this.CONFIGURING_TEXT">
-        <SingleInput :prompt="this.TextPrompt" :fieldSize="this.textFieldSize" :placeholderText="this.placeholder"></SingleInput>
+        <SingleInput :prompt="this.textPrompt" :fieldSize="this.textFieldSize" :placeholderText="this.placeholder" :status="this.cstatus" @textEntered="this.textContentEntered" @configurationSelectionMade="buttonClickedHandler"></SingleInput>
     </span>
         <cpick v-if="this.selectingBorderColor" @colorSelected="borderColorIsSelected"></cpick>
         <cpick v-if="this.doColorPick" @colorSelected="colorIsSelected"></cpick>
@@ -63,9 +80,8 @@
     data() {
       return {
         CONFIGURING_BACKGROUND:0,
-        CONFIGURING_FONT:1,
-        CONFIGURING_CARD_BORDERS:2,
-        CONFIGURING_TEXT:3,
+        CONFIGURING_FONT:2,
+        CONFIGURING_TEXT:1,
         cstatusLimit:this.CONFIGURING_TEXT,
         choices: ['color', 'images'],
         labelText: 'Background is:',
@@ -78,6 +94,8 @@
         filePrefix: 'http://localhost:8000/storage/',
         cstatus:this.CONFIGURING_BACKGROUND,
 
+        textContent:'',
+
         borderChoice: [''],
         borderChoiceLabel: 'Border ?',
         borderFieldName:'includeBorder',
@@ -87,6 +105,17 @@
         borderSizeName:'borderSize',
         selectingBorderColor:false,
         selectedBorderColor:'',
+
+
+        shadowChoice: [''],
+        shadowChoiceLabel: 'Shadow ?',
+        shadowFieldName:'includeshadow',
+        shadowIncluded:false,
+
+        roundChoice: [''],
+        roundChoiceLabel: 'Round Corners ?',
+        roundFieldName:'includeround',
+        roundIncluded:false,
 
 
 
@@ -162,6 +191,24 @@
         }
 
       },
+      shadowChosen(msg){
+//        debugger;
+        if(msg=='checked'){
+          this.shadowIncluded=true;
+        }else{
+          this.shadowIncluded=false;
+        }
+      },
+      roundChosen(msg){
+//        debugger;
+        if(msg=='checked'){
+          this.roundIncluded=true;
+        }else{
+          this.roundIncluded=false;
+        }
+      },
+
+
       borderSizeSelected(msg){
 //        debugger;
         this.borderSize = msg[1];
@@ -173,13 +220,37 @@
         this.selectingBorderColor=false;
         this.selectedBorderColor = msg[0];
       },
+      buttonClickedHandler(msg){
+        console.log(msg);
+        if(msg[0]=='next'){
+          this.bumpStatus();
+        }
+        if(msg[0]=='cancel'){
+          this.$emit('configurationSelectionMade',['cancel']);
+        }
+        if(msg[0]=='previous'){
+          this.bumpBackStatus();
+        }
+      },
+      textContentEntered(msg){
+        this.textContent = msg[0];
+        this.bumpStatus();
+      },
       bumpStatus(){
         if(this.cstatus==this.cstatusLimit){
           console.log('headlineConfigured');
         }else{
           this.cstatus++;
         }
+      },
+      bumpBackStatus(){
+        if(this.cstatus==0){
+          console.log('headlineConfigured');
+        }else{
+          this.cstatus--;
+        }
       }
+
     }
   };
 </script>

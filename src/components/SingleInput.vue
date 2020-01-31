@@ -1,15 +1,18 @@
 <template>
-            <span class="layoutMenuItem">
-                {{prompt}}
+            <span>
+                <span>{{this.prompt}}</span>
                 <input ref="menuLabelInput" v-model="fieldValue.value" type="text" v-bind:size="fieldSize" @keydown.tab="gotoNext" v-focus="true" v-bind:placeholder="placeholderText"  />
-                <MyButton @myButtonClicked="gotoNext" buttonLabel="Next"></MyButton>
-                <MyButton @myButtonClicked="this.cancel" buttonLabel="Cancel"></MyButton>
-            </span>
+                <nextCancelButtons :currentStatus="this.status" @buttonClick="buttonClickedHandler" ></nextCancelButtons>            </span>
 </template>
 
 <script>
+  /* eslint-disable no-debugger */
+
+  import Vue from "vue";
+  import nextCancelButtons from "../components/nextCancelButtons.vue";
   export default {
     name: "SingleInput",
+    components: {nextCancelButtons},
     props:{
       prompt: {
         type: String,
@@ -22,6 +25,10 @@
       placeholderText : {
         type: String,
         required: true
+      },
+      status: {
+        type: Number,
+        required: true
       }
 
     },
@@ -29,17 +36,23 @@
       return {
         fieldValue:
           {
-            value: ''
+            value: '',
           },
       }
     },
     methods:{
-      gotoNext(){
-        this.$emit('gotoNextField', [this.fieldValue.value])
-      },
-      gotoPrevious(){
-        this.$emit('gotoPreviousField', [this.fieldValue.value])
-      }
+        buttonClickedHandler(msg){
+  //        debugger;
+          if(msg[0]=='next'){
+            this.$emit('textEntered', [this.value]);
+          }
+          if(msg[0]=='cancel'){
+            this.$emit('configurationSelectionMade',['cancel']);
+          }
+          if(msg[0]=='previous'){
+            this.$emit('configurationSelectionMade',['previous']);
+          }
+        }
     },
     directives:{
       focus:{

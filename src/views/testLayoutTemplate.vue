@@ -5,7 +5,7 @@
             <focusTest @layoutInputComplete="saveBlankLayout_new" @layoutInputCanceled="this.showLayoutMenu"></focusTest>
         </div>
         <div v-if="this.viewStatus==this.VIEW_TOP_MENU">
-            <span class="layoutMenu"><span class="layoutMenuItem" @click="createLayout">New Layout</span><span class="layoutMenuItem">User Administration</span></span>
+            <span class="layoutMenu"><span class="layoutMenuItem" @click="createLayout">New Layout</span><span class="layoutMenuItem">Edit Layout</span><span class="layoutMenuItem">User Administration</span></span>
         </div>
         <div v-if="this.viewStatus==this.VIEW_GRID_MENU">
             <gridInput ref="gridInput" @storeValue="cellClicked"></gridInput>
@@ -157,6 +157,9 @@
       },
       configurationSelectionEvent(msg){
         console.log(msg);
+        if(msg[0]=='cancel'){
+          this.viewStatus=this.VIEW_TOP_MENU;
+        }
   //      debugger;
         if(msg[0]=='backgroundColor'|| msg[0]=='backgroundImage'){
           this.$refs.editGrid.setElementStyle(msg[2], msg[0], msg[1]);
@@ -348,25 +351,5 @@
     .layoutMenuItem:hover {
         background-color: #fff722;
         color:red;
-    }
-    .PanelFloat {
-        position: fixed;
-        overflow: hidden;
-        z-index: 2400;
-        opacity: 0.70;
-        right: 30px;
-        top: 20px !important;
-        -webkit-transition: all 0.5s ease-in-out;
-        -moz-transition: all 0.5s ease-in-out;
-        -ms-transition: all 0.5s ease-in-out;
-        -o-transition: all 0.5s ease-in-out;
-        transition: all 0.5s ease-in-out;
-    }
-    .dragDiv {
-        position: absolute;
-        z-index: 9;
-        background-color: #f1f1f1;
-        border: 1px solid #d3d3d3;
-        text-align: center;
     }
 </style>
