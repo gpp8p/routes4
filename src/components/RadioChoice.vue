@@ -1,21 +1,26 @@
 <template>
     <span v-if="this.alignmentHz">
         {{this.label}}
-        <span v-for="(choice, index) in this.choices" :key="index">
-            <input type="radio" name=this.fieldName @click="choiceSelected(index)"  />{{choice}}
+        <span v-if="this.isCheckBox==false">
+            <span v-for="(choice, index) in this.choices" :key="index">
+                <input type="radio" name=this.fieldName @click="choiceSelected(index)"  />{{choice}}
+            </span>
+        </span>
+        <span v-if="this.isCheckBox==true">
+            <span v-for="(choice, index) in this.choices" :key="index">
+                <input type="checkbox" name=this.fieldName @click="checkboxClicked($event)"  />{{choice}}
+            </span>
         </span>
         <span class="errorMsg"> {{this.errorMsgs}} </span>
-        <nextCancelButtons :currentStatus="this.currentStatus" @buttonClick="buttonClickedHandler" ></nextCancelButtons>
+
     </span>
 </template>
 
 <script>
-  /* eslint-disable no-debugger */
+  /* eslint-disable no-debugger,no-console */
 
-  import nextCancelButtons from '../components/nextCancelButtons.vue';
   export default {
     name: "RadioChoice",
-    components: {nextCancelButtons},
     props: {
       alignmentHz: {
         type: Boolean,
@@ -37,8 +42,8 @@
         type: Boolean,
         required:true
       },
-      currentStatus:{
-        type: Number,
+      isCheckBox:{
+        type: Boolean,
         required:true
       }
     },
@@ -59,6 +64,15 @@
         this.errorMsgs = '';
         this.$emit('radioChoiceMade', this.radioChoices[idx]);
 // eslint-disable-next-line no-debugger
+      },
+      checkboxClicked(event){
+//        debugger;
+//        console.log(event);
+            if (event.target.checked){
+              this.$emit('radioChoiceMade', 'checked');
+            }else{
+              this.$emit('radioChoiceMade', 'unchecked');
+            }
       },
       buttonClickedHandler(msg){
 //        debugger;

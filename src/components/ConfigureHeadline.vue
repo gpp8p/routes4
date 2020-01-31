@@ -6,12 +6,25 @@
                      :fieldName=this.fName
                      :label=this.labelText
                      :choiceRequired="this.choiceIsRequired"
-                     :currentStatus="this.cstatus"
-                     @radioChoiceMade="backgroundChosen"
-                     @buttonClick="buttonClicked" >
+                     :isCheckBox="false"
+                     @radioChoiceMade="backgroundChosen">
         </RadioChoice>
         <SingleFile v-if="this.doFileUpload"  @filePath="fileUploaded"></SingleFile>
         <cpick v-if="this.doColorPick" @colorSelected="colorIsSelected"></cpick>
+        <RadioChoice :alignmentHz="true"
+                     :radioChoices="this.borderChoice"
+                     :fieldName=this.borderFieldName
+                     :label=this.borderChoiceLabel
+                     :choiceRequired="false"
+                     :isCheckBox="true"
+                     @radioChoiceMade="borderChosen">
+        </RadioChoice>
+         <span v-if="this.borderIncluded">
+            <span class="fpickSelectors">Border Size: <MySelect v-bind:sName="this.borderSizeName" v-bind:selectionOptions="this.availableBorderSizes" @selectMade="this.borderSizeSelected"></MySelect></span>
+            <MyButton @myButtonClicked="borderColor" buttonLabel="Select Border Color"></MyButton>
+             <cpick v-if="this.selectingBorderColor" @colorSelected="borderColorIsSelected"></cpick>
+         </span>
+        <nextCancelButtons :currentStatus="this.cstatus" @buttonClick="buttonClickedHandler" ></nextCancelButtons>
     </span>
     <span v-if="this.cstatus==this.CONFIGURING_FONT">
         <fpick :currentStatus="this.cstatus" :InstanceNumberBeingConfigured="this.instanceBeingConfigured" @fontConfigured="fontConfigured" @fontSelectionMade="this.fontSelectionMade"></fpick>
@@ -31,9 +44,12 @@
     import cpick from "../components/cpick.vue";
     import fpick from "../components/fpick1.vue";
     import SingleInput from "../components/SingleInput.vue";
+    import nextCancelButtons from "../components/nextCancelButtons.vue";
+    import MySelect from "../components/MySelect.vue";
+    import MyButton from "../components/MyButton.vue";
   export default {
     name: "ConfigureHeadline",
-    components: {RadioChoice, SingleFile, cpick, fpick, SingleInput},
+    components: {RadioChoice, SingleFile, cpick, fpick, SingleInput, nextCancelButtons, MySelect, MyButton},
     mounted () {
       this.cstatus=this.CONFIGURING_BACKGROUND;
     },
@@ -60,6 +76,19 @@
         instanceBeingConfigured:this.InstanceNumberBeingConfigured,
         filePrefix: 'http://localhost:8000/storage/',
         cstatus:this.CONFIGURING_BACKGROUND,
+
+        borderChoice: [''],
+        borderChoiceLabel: 'Border ?',
+        borderFieldName:'includeBorder',
+        borderIncluded:false,
+        availableBorderSizes: ['1px','2px','3px','4px','5px','6px','7px','8px'],
+        borderSize:'',
+        borderSizeName:'borderSize',
+        selectingBorderColor:false,
+        selectedBorderColor:'',
+
+
+
         fontFamily: '',
         fontSize:'',
         fontWeight: '',
@@ -122,6 +151,27 @@
         this.fontColor=msg[4];
         this.$emit('configurationSelectionMade',[this.fontFamily, this.fontSize, this.fontWeight, this.fontColor, 'font']);
       },
+      borderChosen(msg){
+//        debugger;
+        if(msg=='checked'){
+          this.borderIncluded=true;
+        }else{
+          this.borderIncluded=false;
+          this.borderSize='';
+        }
+
+      },
+      borderSizeSelected(msg){
+//        debugger;
+        this.borderSize = msg[1];
+      },
+      borderColor(){
+        this.selectingBorderColor=true;
+      },
+      borderColorIsSelected(msg){
+        this.selectingBorderColor=false;
+        this.selectedBorderColor = msg[0];
+      },
       bumpStatus(){
         if(this.cstatus==this.cstatusLimit){
           console.log('headlineConfigured');
@@ -139,5 +189,18 @@
         color: blue;
         margin-bottom: 5px;
         text-align: left;
+    }
+    .fpickSelectors {
+        padding-left: 1vw;
+    }
+    .selectStyle {
+        background: #DBAA6E;
+        color:blue;
+        font-weight: bold;
+        font-size: 12px;
+    }
+    .optionStyle {
+        background: #DBAA6E;
+        color:blue;
     }
 </style>
