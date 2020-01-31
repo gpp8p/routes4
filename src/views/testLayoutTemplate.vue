@@ -11,7 +11,7 @@
             <gridInput ref="gridInput" @storeValue="cellClicked"></gridInput>
         </div>
         <div v-if="this.viewStatus==this.VIEW_HEADLINE_CONFIG">
-            <HeadlineConfig :InstanceNumberBeingConfigured="this.instancePositionBeingConfigured" @configurationSelectionMade="configurationSelectionEvent" ></HeadlineConfig>
+            <HeadlineConfig :InstanceNumberBeingConfigured="this.instancePositionBeingConfigured" @configurationSelectionMade="configurationSelectionEvent" @fontSelectionMade="this.fontSelectionMade" ></HeadlineConfig>
         </div>
 
     </section>
@@ -152,15 +152,17 @@
           console.log(error);
         });
       },
-
+      fontSelectionMade(msg){
+        this.$refs.editGrid.setElementStyle(msg[2], msg[0], msg[1]);
+      },
       configurationSelectionEvent(msg){
         console.log(msg);
   //      debugger;
         if(msg[0]=='backgroundColor'|| msg[0]=='backgroundImage'){
-          this.$refs.editGrid.setElementStyle(msg[2], msg[0], msg[1])
+          this.$refs.editGrid.setElementStyle(msg[2], msg[0], msg[1]);
         }
         if(msg[0]=='font'){
-          this.$refs.editGrid.setElementStyle(msg[2], msg[0], msg[1])
+          this.$refs.editGrid.setElementStyle(msg[2], msg[0], msg[1]);
         }
 
       },

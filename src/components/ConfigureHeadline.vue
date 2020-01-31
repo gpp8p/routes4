@@ -14,7 +14,7 @@
         <cpick v-if="this.doColorPick" @colorSelected="colorIsSelected"></cpick>
     </span>
     <span v-if="this.cstatus==this.CONFIGURING_FONT">
-        <fpick :currentStatus="this.cstatus" :InstanceNumberBeingConfigured="this.instanceBeingConfigured" @fontConfigured="fontConfigured"></fpick>
+        <fpick :currentStatus="this.cstatus" :InstanceNumberBeingConfigured="this.instanceBeingConfigured" @fontConfigured="fontConfigured" @fontSelectionMade="this.fontSelectionMade"></fpick>
     </span>
     <span v-if="this.cstatus==this.CONFIGURING_TEXT">
         <SingleInput :prompt="this.TextPrompt" :fieldSize="this.textFieldSize" :placeholderText="this.placeholder"></SingleInput>
@@ -107,6 +107,11 @@
         this.doColorPick=false;
         this.selectedBackgroundColor = msg[0];
         this.$emit('configurationSelectionMade',['backgroundColor', this.selectedBackgroundColor, this.instanceBeingConfigured]);
+      },
+      fontSelectionMade(msg){
+        console.log(msg[0]);
+//        debugger;
+        this.$emit('fontSelectionMade',[msg[0], msg[1], msg[2]]);
       },
       fontConfigured(msg){
 //        debugger;

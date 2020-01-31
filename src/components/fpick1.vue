@@ -69,20 +69,25 @@
     methods: {
       fontSelected(){
         this.selectedFont = this.$refs.fontSelect.value;
+        this.$emit('fontSelectionMade',['fontFamily',this.selectedFont,this.instanceBeingConfigured]);
       },
       selection(msg){
         switch(msg[0]){
           case 'size':
             this.selectedSize = msg[1];
+            this.$emit('fontSelectionMade',['fontSize',this.selectedSize,this.instanceBeingConfigured]);
             break;
           case 'weight':
               this.selectedWeight = msg[1];
+              this.$emit('fontSelectionMade',['fontWeight',this.selectedWeight,this.instanceBeingConfigured]);
               break;
           case 'style':
             this.selectedStyle = msg[1];
+            this.$emit('fontSelectionMade',['fontStyle',this.selectedStyle,this.instanceBeingConfigured]);
             break;
           case 'align':
             this.alignmentStyling = msg[1];
+            this.$emit('fontSelectionMade',['textAlign',this.selectedStyle,this.alignmentStyling]);
             break;
             }
         },
@@ -92,6 +97,7 @@
       fontColorIsSelected(msg) {
         this.selectingColor=false;
         this.selectedFontColor = msg[0];
+        this.$emit('fontSelectionMade',['color',this.selectedStyle,this.selectedFontColor]);
 //        this.$emit('configurationSelectionMade',[this.selectedFontColor, this.instanceBeingConfigured, 'fontColor']);
       },
       buttonClickedHandler(msg){
