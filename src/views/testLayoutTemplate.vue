@@ -5,10 +5,10 @@
             <focusTest @layoutInputComplete="saveBlankLayout_new" @layoutInputCanceled="this.showLayoutMenu"></focusTest>
         </div>
         <div v-if="this.viewStatus==this.VIEW_TOP_MENU">
-            <span class="layoutMenu"><span class="layoutMenuItem" @click="createLayout">New Layout</span><span class="layoutMenuItem">Edit Layout</span><span class="layoutMenuItem">User Administration</span></span>
+            <span class="layoutMenu"><span class="layoutMenuItem" @click="createLayout">New Layout</span><span class="layoutMenuItem">User Administration</span></span>
         </div>
         <div v-if="this.viewStatus==this.VIEW_GRID_MENU">
-            <gridInput ref="gridInput" @storeValue="cellClicked"></gridInput>
+            <gridInput ref="gridInput" @editLayout="editLayout" @storeValue="cellClicked"></gridInput>
         </div>
         <div v-if="this.viewStatus==this.VIEW_HEADLINE_CONFIG">
             <HeadlineConfig :InstanceNumberBeingConfigured="this.instancePositionBeingConfigured" @configurationSelectionMade="configurationSelectionEvent" @fontSelectionMade="this.fontSelectionMade" ></HeadlineConfig>
@@ -118,6 +118,7 @@
         this.viewStatus = this.VIEW_GRID_MENU;
         this.layoutId = msg[0];
         this.$refs.editGrid.reloadLayout(msg);
+        this.$refs.editGrid.freezeCellSelection();
       },
       submitNewLayout(msg) {
 //        console.log(msg);
@@ -169,6 +170,10 @@
         }
 
       },
+      editLayout(){
+        this.$refs.editGrid.unlockCellSelection();
+        this.$refs.gridInput.editMode();
+      },
       cellClicked(msg){
         console.log(msg);
 //        debugger;
@@ -195,7 +200,7 @@
         if(msg[0]=='nameEntered'){
           this.$refs.gridInput.nameEntered();
         }
-        if(msg[0]=='cardEntryCanceled'){
+        if(msg[0]=='returnToList'){
 //          debugger;
           this.viewStatus = this.VIEW_TOP_MENU;
           this.listView=true;

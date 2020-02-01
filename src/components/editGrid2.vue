@@ -112,7 +112,7 @@ export default {
       this.cancelLayoutEdit();
 //      console.log("reloading" + msg);
       axios
-        .get("http://localhost:8000/getLayout?layoutId=" + this.layoutId+"&&XDEBUG_SESSION_START=14625")
+        .get("http://localhost:8000/getLayout?layoutId=" + this.layoutId+"&&XDEBUG_SESSION_START=15710")
         .then(response => {
           // JSON responses are automatically parsed.
 //          debugger;
@@ -188,7 +188,13 @@ export default {
 //      console.log('noButton clicked');
       this.cstatus = this.WAITINGFORCLICK;
       this.scolor = this.unSelectedColor;
-      this.fillSelectedCells(this.cardInstances,this.topLeftCol,this.topLeftRow,this.bottomRightCol,this.bottomRightRow, this.unSelectedColor);
+//      debugger;
+      if(this.bottomRightCol==0 && this.bottomRightRow==0){
+        this.fillInOneCell(this.cardInstances, this.topLeftRow, this.topLeftCol, this.unSelectedColor);
+      }else{
+        this.fillSelectedCells(this.cardInstances,this.topLeftCol,this.topLeftRow,this.bottomRightCol,this.bottomRightRow, this.unSelectedColor);
+      }
+
     },
     fillInCell(item, index, arr){
 //      debugger;
@@ -216,6 +222,17 @@ export default {
       }
 
 
+    },
+    fillInOneCell(arr, cellRow, cellColumn, colorToFill){
+      for(var i = 0; i<arr.length; i++){
+        var thisCardCol = arr[i].card_position[1];
+        var thisCardRow = arr[i].card_position[0];
+        if(thisCardCol==cellColumn && thisCardRow == cellRow){
+//          console.log('card matched');
+          this.$refs.key[i].$el.style.backgroundColor=colorToFill;
+        }
+
+      }
     },
     fillSelectedCells(arr,tlCol,tlRow,brCol,brRow, colorToFill){
       var topLeftCol = tlCol;
@@ -392,6 +409,9 @@ export default {
 
     freezeCellSelection(){
       this.cstatus=this.CARDBEINGCONFIGED;
+    },
+    unlockCellSelection(){
+      this.cstatus = this.WAITINGFORCLICK;
     },
     unfreezeCellSelection(){
       this.cstatus = this.WAITINGFORCLICK;
