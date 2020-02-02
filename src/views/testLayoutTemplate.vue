@@ -155,7 +155,7 @@
         });
       },
       fontSelectionMade(msg){
-        debugger;
+//        debugger;
         this.$refs.editGrid.setElementStyle(msg[2], msg[0], msg[1]);
       },
       configurationSelectionEvent(msg){
@@ -165,7 +165,8 @@
         }
   //      debugger;
         if(msg[0]=='backgroundColor'|| msg[0]=='backgroundImage'){
-          this.$refs.editGrid.setElementStyle(msg[2], msg[0], msg[1]);
+//          this.$refs.editGrid.setElementStyle(msg[2], msg[0], msg[1]);
+          this.cardDataFunction(msg[1],'backgroundColor');
         }
         if(msg[0]=='font'){
           this.$refs.editGrid.setElementStyle(msg[2], msg[0], msg[1]);
@@ -174,7 +175,7 @@
       },
       textEntered(msg){
         console.log(msg);
-        this.cardDataFunction(msg[0]);
+        this.cardDataFunction(msg[0],'title');
       },
       editLayout(){
         this.$refs.editGrid.unlockCellSelection();

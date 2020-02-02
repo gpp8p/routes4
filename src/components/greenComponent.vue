@@ -43,12 +43,18 @@
     methods: {
       cellClicked: function() {
 //        console.log(' blank-component clicked');
-        this.cstyle='background-color: #ffffff;';
-        this.$emit('cardClick', ['cardClicked',this.cardKey, 'greenComponent', this.setMessage]);
+//        this.cstyle='background-color: #ffffff;';
+        this.$emit('cardClick', ['cardClicked',this.cardKey, 'greenComponent', this.setCardData]);
         this.cardMessage = '';
       },
-      setMessage(cMsg){
-        this.cardTitle = cMsg;
+      setCardData(cardData, cardDataElement ){
+        if(cardDataElement=='title'){
+          this.cardTitle = cardData;
+        }
+        if(cardDataElement=='backgroundColor'){
+          this.$el.style.backgroundColor=cardData;
+        }
+
         return this.cardKey;
       },
       refId: function(){

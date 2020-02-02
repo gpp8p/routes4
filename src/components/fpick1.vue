@@ -95,7 +95,7 @@
         this.selectingColor=true;
       },
       fontColorIsSelected(msg) {
-        debugger;
+//        debugger;
         this.selectingColor=false;
         this.selectedFontColor = msg[0];
         this.$emit('fontSelectionMade',['color',this.selectedFontColor,this.instanceBeingConfigured]);
