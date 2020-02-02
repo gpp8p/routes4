@@ -7,6 +7,7 @@
             :sucker-area="suckerArea"
             @changeColor="changeColor"
             @openSucker="openSucker"
+            @selectColor="selectColor"
             ref="colorpick"
     />
         <MyButton @myButtonClicked="colorSelected" buttonLabel="Use This Color"></MyButton>
@@ -43,6 +44,10 @@
       colorSelected(){
 //        debugger;
         this.$emit('colorSelected', [this.$refs.colorpick._data.modelHex]);
+      },
+      selectColor(msg){
+        debugger;
+        console.log(msg);
       }
     }
   };

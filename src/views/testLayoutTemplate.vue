@@ -11,7 +11,7 @@
             <gridInput ref="gridInput" @editLayout="editLayout" @storeValue="cellClicked"></gridInput>
         </div>
         <div v-if="this.viewStatus==this.VIEW_HEADLINE_CONFIG">
-            <HeadlineConfig :InstanceNumberBeingConfigured="this.instancePositionBeingConfigured" @configurationSelectionMade="configurationSelectionEvent" @fontSelectionMade="this.fontSelectionMade" ></HeadlineConfig>
+            <HeadlineConfig :InstanceNumberBeingConfigured="this.instancePositionBeingConfigured" @configurationSelectionMade="configurationSelectionEvent" @fontSelectionMade="this.fontSelectionMade" @textEntered="this.textEntered" ></HeadlineConfig>
         </div>
 
     </section>
@@ -94,7 +94,8 @@
         configCard: false,
         cardTypeBeingConfigured: '',
         instancePositionBeingConfigured:0,
-        screenElementBeingConfigured: {}
+        screenElementBeingConfigured: {},
+        cardDataFunction:null
       }
     },
     methods:{
@@ -154,6 +155,7 @@
         });
       },
       fontSelectionMade(msg){
+        debugger;
         this.$refs.editGrid.setElementStyle(msg[2], msg[0], msg[1]);
       },
       configurationSelectionEvent(msg){
@@ -169,6 +171,10 @@
           this.$refs.editGrid.setElementStyle(msg[2], msg[0], msg[1]);
         }
 
+      },
+      textEntered(msg){
+        console.log(msg);
+        this.cardDataFunction(msg[0]);
       },
       editLayout(){
         this.$refs.editGrid.unlockCellSelection();
@@ -288,8 +294,8 @@
           this.configCard=true;
           this.cardTypeBeingConfigured = msg[2]
           this.instancePositionBeingConfigured = msg[1];
-          this.screenElementBeingConfigured = msg[3];
-          this.cardInstanceBeingConfigured = msg[4];
+          this.screenElementBeingConfigured = msg[4];
+          this.cardDataFunction = msg[3];
           if(msg[2]=='greenComponent'| msg[2]=='blankComponent'|msg[2]=='headlineComponent'){
             this.viewStatus = this.VIEW_HEADLINE_CONFIG;
           }

@@ -1,6 +1,6 @@
 <template>
     <div v-on:click="cellClicked" style=this.cstyle>
-        {{this.cardMessage}}
+        {{this.cardTitle}}
     </div>
 </template>
 
@@ -36,15 +36,20 @@
       return {
         cardMessage: this.getCardProps(),
         cardHasBeenSetup: false,
-        cstyle: this.cardStyle
+        cstyle: this.cardStyle,
+        cardTitle:"Click on this card to set it up"
       }
     },
     methods: {
       cellClicked: function() {
 //        console.log(' blank-component clicked');
         this.cstyle='background-color: #ffffff;';
-        this.$emit('cardClick', ['cardClicked',this.cardKey, 'greenComponent']);
+        this.$emit('cardClick', ['cardClicked',this.cardKey, 'greenComponent', this.setMessage]);
         this.cardMessage = '';
+      },
+      setMessage(cMsg){
+        this.cardTitle = cMsg;
+        return this.cardKey;
       },
       refId: function(){
         return "card"+this.cardId;
@@ -52,7 +57,12 @@
       getCardProps(){
 //        debugger;
         if (typeof this.cardProperties === 'undefined' | this.cardProperties=="") {
-          return  "Click on this card to set it up";
+          if(this.cardTitle==''){
+            return  "Click on this card to set it up";
+          }else{
+            return this.cardTitle;
+          }
+
         }else{
           var thisProp = this.cardProperties.split(':');
           return thisProp[1];

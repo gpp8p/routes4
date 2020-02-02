@@ -162,7 +162,7 @@
         this.$emit('configurationSelectionMade',['backgroundImage', uploadedFilePath, this.instanceBeingConfigured]);
       },
       colorIsSelected(msg){
-//        debugger;
+        debugger;
         this.doColorPick=false;
         this.selectedBackgroundColor = msg[0];
         this.$emit('configurationSelectionMade',['backgroundColor', this.selectedBackgroundColor, this.instanceBeingConfigured]);
@@ -234,6 +234,7 @@
       },
       textContentEntered(msg){
         this.textContent = msg[0];
+        this.$emit('textEntered', [this.textContent]);
         this.bumpStatus();
       },
       bumpStatus(){

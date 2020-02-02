@@ -19,7 +19,7 @@
 </template>
 
 <script>
-  /* eslint-disable no-debugger,no-console */
+  /* eslint-disable no-debugger,no-console,no-undef */
 
 import axios from "axios";
 import EventBus from '../main.js';
@@ -256,7 +256,10 @@ export default {
     },
     processCardClick(msg){
 //      debugger;
-      console.log("Card Click - "+msg);
+//      var setMsg = msg[0][3];
+//      var cKey = setMsg('here is a message');
+//      console.log(cKey);
+//      console.log("Card Click - "+msg);
 //      debugger
       var instanceNum = msg[0][1];
       msg[0].push(this.$refs.key[instanceNum].$el);
@@ -324,6 +327,7 @@ export default {
 //    },
     setElementStyle(instanceNumber, styleType, newStyle){
 //      debugger;
+//      console.log(newStyle);
       if(styleType == 'backgroundColor'){
         this.$refs.key[instanceNumber].$el.style.backgroundColor=newStyle;
       }

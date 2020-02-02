@@ -95,9 +95,10 @@
         this.selectingColor=true;
       },
       fontColorIsSelected(msg) {
+        debugger;
         this.selectingColor=false;
         this.selectedFontColor = msg[0];
-        this.$emit('fontSelectionMade',['color',this.selectedStyle,this.selectedFontColor]);
+        this.$emit('fontSelectionMade',['color',this.selectedFontColor,this.instanceBeingConfigured]);
 //        this.$emit('configurationSelectionMade',[this.selectedFontColor, this.instanceBeingConfigured, 'fontColor']);
       },
       buttonClickedHandler(msg){

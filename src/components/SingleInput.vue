@@ -44,7 +44,8 @@
         buttonClickedHandler(msg){
   //        debugger;
           if(msg[0]=='next'){
-            this.$emit('textEntered', [this.value]);
+            debugger;
+            this.$emit('textEntered', [this.fieldValue.value]);
           }
           if(msg[0]=='cancel'){
             this.$emit('configurationSelectionMade',['cancel']);
