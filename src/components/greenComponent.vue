@@ -1,5 +1,5 @@
 <template>
-  <div v-on:click="cellClicked" style="this.cstyle">
+  <div v-on:click="cellClicked" >
     {{ this.cardTitle }}
   </div>
 </template>

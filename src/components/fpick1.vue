@@ -72,6 +72,7 @@
         this.$emit('fontSelectionMade',['fontFamily',this.selectedFont,this.instanceBeingConfigured]);
       },
       selection(msg){
+        debugger;
         switch(msg[0]){
           case 'size':
             this.selectedSize = msg[1];
@@ -87,7 +88,7 @@
             break;
           case 'align':
             this.alignmentStyling = msg[1];
-            this.$emit('fontSelectionMade',['textAlign',this.selectedStyle,this.alignmentStyling]);
+            this.$emit('fontSelectionMade',['textAlign',this.alignmentStyling, this.selectedStyle,]);
             break;
             }
         },
