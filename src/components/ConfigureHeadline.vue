@@ -159,13 +159,15 @@
 //        debugger;
         this.doFileUpload = false;
         var uploadedFilePath = this.filePrefix+msg[0];
-        this.$emit('configurationSelectionMade',['backgroundImage', uploadedFilePath, this.instanceBeingConfigured]);
+  //      this.$emit('configurationSelectionMade',['backgroundImage', uploadedFilePath, this.instanceBeingConfigured]);
+        this.$emit('configSelected',['backgroundImage', uploadedFilePath, this.instanceBeingConfigured])
       },
       colorIsSelected(msg){
         debugger;
         this.doColorPick=false;
         this.selectedBackgroundColor = msg[0];
-        this.$emit('configurationSelectionMade',['backgroundColor', this.selectedBackgroundColor, this.instanceBeingConfigured]);
+  //      this.$emit('configurationSelectionMade',['backgroundColor', this.selectedBackgroundColor, this.instanceBeingConfigured]);
+        this.$emit('configSelected',['backgroundColor', this.selectedBackgroundColor]);
       },
       fontSelectionMade(msg){
         console.log(msg[0]);
