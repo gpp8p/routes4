@@ -49,12 +49,16 @@ export default {
         "greenComponent",
         this.setCardData
       ]);
-      this.cardMessage = "";
+      this.cardTitle = "";
     },
     setCardData(cardData, cardDataElement) {
+      debugger;
       switch (cardDataElement) {
         case "title":
           this.cardTitle = cardData;
+          break;
+        case "backgroundColor":
+          this.$el.style.backgroundColor=cardData;
           break;
         case "backgroundImage":
           var backGroundImageReference = "url('" + cardData + "')";

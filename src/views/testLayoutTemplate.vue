@@ -11,7 +11,7 @@
             <gridInput ref="gridInput" @editLayout="editLayout" @storeValue="cellClicked"></gridInput>
         </div>
         <div v-if="this.viewStatus==this.VIEW_HEADLINE_CONFIG">
-            <HeadlineConfig :InstanceNumberBeingConfigured="this.instancePositionBeingConfigured" @configurationSelectionMade="configurationSelectionEvent" @fontSelectionMade="this.fontSelectionMade" @textEntered="this.textEntered" ></HeadlineConfig>
+            <ConfigurationComponent :cardType="this.cardTypeBeingConfigured" :instanceNumberBeingConfigured="this.instancePositionBeingConfigured" @configSelected="configSelectionEventHandler" ></ConfigurationComponent>
         </div>
 
     </section>
@@ -46,13 +46,14 @@
   import editGrid2 from '../components/editGrid2';
   import gridInput from '../components/gridInput.vue';
 //  import headlineComponent from '../components/headlineComponent.vue';
-  import HeadlineConfig from '../components/ConfigureHeadline.vue';
+//  import HeadlineConfig from '../components/ConfigureHeadline.vue';
+  import ConfigurationComponent  from '../components/ConfiguationComponent.vue';
 //  import { Draggable } from 'draggable-vue-directive'
 //  import MoveablePanel from '../components/MoveablePanel.vue'
 
   export default {
     name: "testLayoutTemplate",
-    components: {LayoutListLine, layoutListHeader, focusTest, editGrid2, gridInput, HeadlineConfig},
+    components: {LayoutListLine, layoutListHeader, focusTest, editGrid2, gridInput, ConfigurationComponent},
  /*
     directives: {
       Draggable,
@@ -158,19 +159,22 @@
 //        debugger;
         this.$refs.editGrid.setElementStyle(msg[2], msg[0], msg[1]);
       },
-      configurationSelectionEvent(msg){
+      configSelectionEventHandler(msg){
         console.log(msg);
-        if(msg[0]=='cancel'){
+//        debugger;
+        if(msg[0][0]=='cancel'){
           this.viewStatus=this.VIEW_TOP_MENU;
+          this.cardDataFunction=null;
         }
-  //      debugger;
-        if(msg[0]=='backgroundColor'|| msg[0]=='backgroundImage'){
+        this.cardDataFunction(msg[0][1], msg[0][0]);
+//      debugger;
+//        if(msg[0]=='backgroundColor'|| msg[0]=='backgroundImage'){
 //          this.$refs.editGrid.setElementStyle(msg[2], msg[0], msg[1]);
-          this.cardDataFunction(msg[1],'backgroundColor');
-        }
-        if(msg[0]=='font'){
-          this.$refs.editGrid.setElementStyle(msg[2], msg[0], msg[1]);
-        }
+//          this.cardDataFunction(msg[1],'backgroundColor');
+//        }
+//        if(msg[0]=='font'){
+//          this.$refs.editGrid.setElementStyle(msg[2], msg[0], msg[1]);
+//        }
 
       },
       textEntered(msg){

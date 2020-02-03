@@ -44,7 +44,7 @@
         <nextCancelButtons :currentStatus="this.cstatus" @buttonClick="buttonClickedHandler" ></nextCancelButtons>
     </span>
     <span v-if="this.cstatus==this.CONFIGURING_FONT">
-        <fpick :currentStatus="this.cstatus" :InstanceNumberBeingConfigured="this.instanceBeingConfigured" @fontConfigured="fontConfigured" @fontSelectionMade="this.fontSelectionMade" @buttonClick="this.buttonClickedHandler"></fpick>
+        <fpick :currentStatus="this.cstatus" :InstanceNumberBeingConfigured="this.instanceBeingConfigured"  @fontSelectionMade="this.fontSelectionMade" @buttonClick="this.buttonClickedHandler"></fpick>
     </span>
     <span v-if="this.cstatus==this.CONFIGURING_TEXT">
         <SingleInput :prompt="this.textPrompt" :fieldSize="this.textFieldSize" :placeholderText="this.placeholder" :status="this.cstatus" @textEntered="this.textContentEntered" @configurationSelectionMade="buttonClickedHandler"></SingleInput>
@@ -163,7 +163,7 @@
         this.$emit('configSelected',['backgroundImage', uploadedFilePath, this.instanceBeingConfigured])
       },
       colorIsSelected(msg){
-        debugger;
+//        debugger;
         this.doColorPick=false;
         this.selectedBackgroundColor = msg[0];
   //      this.$emit('configurationSelectionMade',['backgroundColor', this.selectedBackgroundColor, this.instanceBeingConfigured]);
@@ -171,8 +171,8 @@
       },
       fontSelectionMade(msg){
         console.log(msg[0]);
-//        debugger;
-        this.$emit('fontSelectionMade',[msg[0], msg[1], msg[2]]);
+        debugger;
+        this.$emit('configSelected',[msg[0], msg[1]]);
       },
       fontConfigured(msg){
 //        debugger;
@@ -181,6 +181,9 @@
         this.fontWeight= msg[2];
         this.fontStyle=msg[3];
         this.fontColor=msg[4];
+        this.$emit('configSelected',['fontSize', this.fontSize]);
+        this.$emit('configSelected',['fontWeight', this.fontWeight]);
+        this.$emit('configSelected',['fontStyle', this.fontStyle]);
         this.$emit('configurationSelectionMade',[this.fontFamily, this.fontSize, this.fontWeight, this.fontColor, 'font']);
       },
       borderChosen(msg){
@@ -236,7 +239,7 @@
       },
       textContentEntered(msg){
         this.textContent = msg[0];
-        this.$emit('textEntered', [this.textContent]);
+        this.$emit('configSelected', ['title',this.textContent]);
         this.bumpStatus();
       },
       bumpStatus(){

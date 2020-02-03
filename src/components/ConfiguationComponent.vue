@@ -1,6 +1,6 @@
 <template>
     <span>
-        <HeadlineConfig v-if="this.cardType=='headlineCard'" :InstanceNumberBeingConfigured="this.instancePositionBeingConfigured" @configSelected="configurationSelectionEvent" ></HeadlineConfig>
+        <HeadlineConfig v-if="this.cardType=='headlineCard'|| this.cardType=='greenComponent' " :InstanceNumberBeingConfigured="this.instanceNumberBeingConfigured" @configSelected="configurationSelectionEvent" ></HeadlineConfig>
     </span>
     
 </template>
@@ -15,14 +15,14 @@
         type: String,
         required: true
       },
-      instancePositionBeingConfigured: {
+      instanceNumberBeingConfigured: {
         type: Number,
         required: true
       }
     },
     methods:{
       configurationSelectionEvent(msg){
-        this.$emit('configurationSelectionMade',[msg])
+        this.$emit('configSelected',[msg]);
       }
     }
   };

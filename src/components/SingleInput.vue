@@ -44,7 +44,7 @@
         buttonClickedHandler(msg){
   //        debugger;
           if(msg[0]=='next'){
-            debugger;
+//            debugger;
             this.$emit('textEntered', [this.fieldValue.value]);
           }
           if(msg[0]=='cancel'){
