@@ -100,7 +100,7 @@
         borderChoiceLabel: 'Border ?',
         borderFieldName:'includeBorder',
         borderIncluded:false,
-        availableBorderSizes: ['1px','2px','3px','4px','5px','6px','7px','8px'],
+        availableBorderSizes: ['thin','medium','thick'],
         borderSize:'',
         borderSizeName:'borderSize',
         selectingBorderColor:false,
@@ -246,6 +246,19 @@
         if(this.cstatus==this.cstatusLimit){
           console.log('headlineConfigured');
         }else{
+          if(this.cstatus==this.CONFIGURING_BACKGROUND){
+            if(this.roundIncluded){
+              this.$emit('configSelected',['roundIncluded', 'true']);
+            }
+            if(this.shadowIncluded){
+              this.$emit('configSelected',['shodowIncluded', 'true']);
+            }
+            if(this.borderIncluded){
+              var borderSpec = this.borderSize+' solid '+ this.selectedBorderColor;
+              this.$emit('configSelected', ['border', borderSpec]);
+            }
+       //     debugger;
+          }
           this.cstatus++;
         }
       },

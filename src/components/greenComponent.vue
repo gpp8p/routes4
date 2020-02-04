@@ -83,6 +83,15 @@ export default {
         case "textAlign":
           this.$el.style.textAlign=cardData;
           break;
+        case "roundIncluded":
+          this.$el.style.borderRadius="6px";
+          break;
+        case "shodowIncluded":
+          this.$el.style.boxShadow="10px 20px 30px black";
+          break;
+        case "border":
+          this.$el.style.border=cardData;
+          break;
       }
       return this.cardKey;
     },
