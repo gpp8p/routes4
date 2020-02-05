@@ -6,9 +6,10 @@
 
 <script>
 /* eslint-disable no-console,no-debugger */
-
+import CardBase from "../components/CardBase.vue";
 export default {
   name: "greenComponent",
+  extends: CardBase,
   props: {
     cardStyle: {
       type: String,
@@ -36,7 +37,9 @@ export default {
       cardMessage: this.getCardProps(),
       cardHasBeenSetup: false,
       cstyle: this.cardStyle,
-      cardTitle: "Click on this card to set it up"
+      cardTitle: "Click on this card to set it up",
+      styling: {},
+      content: {}
     };
   },
   methods: {
@@ -51,51 +54,6 @@ export default {
       ]);
       this.cardTitle = "";
     },
-    setCardData(cardData, cardDataElement) {
-      debugger;
-      switch (cardDataElement) {
-        case "title":
-          this.cardTitle = cardData;
-          break;
-        case "backgroundColor":
-          this.$el.style.backgroundColor=cardData;
-          break;
-        case "backgroundImage":
-          var backGroundImageReference = "url('" + cardData + "')";
-          this.$el.style.backgroundImage = backGroundImageReference;
-          this.$el.style.backgroundSize="100% 100%";
-          break;
-        case "fontFamily":
-          this.$el.style.fontFamily=cardData;
-          break;
-        case "fontSize":
-          this.$el.style.fontSize=cardData;
-          break;
-        case "fontWeight":
-          this.$el.style.fontWeight=cardData;
-          break;
-        case "fontStyle":
-          this.$el.style.fontStyle=cardData;
-          break;
-        case "color":
-          this.$el.style.color=cardData;
-          break;
-        case "textAlign":
-          this.$el.style.textAlign=cardData;
-          break;
-        case "roundIncluded":
-          this.$el.style.borderRadius="6px";
-          break;
-        case "shodowIncluded":
-          this.$el.style.boxShadow="10px 20px 30px black";
-          break;
-        case "border":
-          this.$el.style.border=cardData;
-          break;
-      }
-      return this.cardKey;
-    },
-
     refId: function() {
       return "card" + this.cardId;
     },

@@ -49,6 +49,10 @@
     <span v-if="this.cstatus==this.CONFIGURING_TEXT">
         <SingleInput :prompt="this.textPrompt" :fieldSize="this.textFieldSize" :placeholderText="this.placeholder" :status="this.cstatus" @textEntered="this.textContentEntered" @configurationSelectionMade="buttonClickedHandler"></SingleInput>
     </span>
+    <span v-if="this.cstatus==this.SAVING_CONFIGURATION">
+        <MyButton @myButtonClicked="saveConfiguration" buttonLabel="Save ?"></MyButton>
+        <MyButton @myButtonClicked="cancel" buttonLabel="Cancel"></MyButton>
+    </span>
         <cpick v-if="this.selectingBorderColor" @colorSelected="borderColorIsSelected"></cpick>
         <cpick v-if="this.doColorPick" @colorSelected="colorIsSelected"></cpick>
     </span>
@@ -82,6 +86,7 @@
         CONFIGURING_BACKGROUND:0,
         CONFIGURING_FONT:2,
         CONFIGURING_TEXT:1,
+        SAVING_CONFIGURATION:3,
         cstatusLimit:this.CONFIGURING_TEXT,
         choices: ['color', 'images'],
         labelText: 'Background is:',
@@ -161,6 +166,9 @@
         var uploadedFilePath = this.filePrefix+msg[0];
   //      this.$emit('configurationSelectionMade',['backgroundImage', uploadedFilePath, this.instanceBeingConfigured]);
         this.$emit('configSelected',['backgroundImage', uploadedFilePath, this.instanceBeingConfigured])
+      },
+      saveConfiguration(){
+        this.$emit('configSelected',['saveConfiguration']);
       },
       colorIsSelected(msg){
 //        debugger;
