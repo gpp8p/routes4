@@ -37,7 +37,7 @@ export default {
       cardMessage: this.getCardProps(),
       cardHasBeenSetup: false,
       cstyle: this.cardStyle,
-      cardTitle: "Click on this card to set it up",
+      cardTitle:this.getCardProps(),
       styling: {},
       content: {}
     };
@@ -58,18 +58,11 @@ export default {
       return "card" + this.cardId;
     },
     getCardProps() {
-      //        debugger;
-      if (
-        (typeof this.cardProperties === "undefined") |
-        (this.cardProperties == "")
-      ) {
-        if (this.cardTitle == "") {
-          return "Click on this card to set it up";
-        } else {
-          return this.cardTitle;
-        }
-      } else {
-        var thisProp = this.cardProperties.split(":");
+//      debugger;
+      if ((typeof this.cardProperties === "undefined") | (this.cardProperties == "")) {
+        return "Click on this card to set it up";
+      }else {
+        var thisProp = this.cardProperties.split(String.fromCharCode(30));
         return thisProp[1];
       }
     }

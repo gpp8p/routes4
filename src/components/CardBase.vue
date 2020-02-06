@@ -5,7 +5,7 @@
     name: "CardBase",
     methods: {
       setCardData(cardData, cardDataElement) {
-      debugger;
+//      debugger;
         switch (cardDataElement) {
           case "saveConfiguration":
             this.saveCardConfiguration();
@@ -64,12 +64,22 @@
         }
         return this.cardKey;
       },
+      reloadCardData(cStyle){
+//        console.log(cStyle);
+        var cssPropertyArray = cStyle.split(';');
+        for(var p=0;p<cssPropertyArray.length;c++){
+          switch(cssPropertyArray[c]){
+            case "background-color":
+              break;
+          }
+        }
+      },
       saveCardConfiguration(){
         var cardConfigurationPackage = [this.cardId, this.styling, this.content];
         var jsonCardConfigurationPackage = JSON.stringify(cardConfigurationPackage);
 //      debugger;
-        axios.post('http://localhost:8000/saveCardParameters?XDEBUG_SESSION_START=14763', {
-          cardParams: this.jsonCardConfigurationPackage,
+        axios.post('http://localhost:8000/saveCardParameters?XDEBUG_SESSION_START=15122', {
+          cardParams: jsonCardConfigurationPackage,
         }).then(response=>
         {
             console.log(response);
