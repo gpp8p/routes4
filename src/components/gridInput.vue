@@ -1,6 +1,6 @@
 <template>
     <span>
-        <span class="layoutMenu" v-if="this.gridInputStatus==this.GRID_MENU"><span class="layoutMenuItem" @click="editLayout">Edit Layout</span><span class="layoutMenuItem">Show Layout</span><span class="layoutMenuItem" @click="returnToList" >Return To List</span></span>
+        <span class="layoutMenu" v-if="this.gridInputStatus==this.GRID_MENU"><span class="layoutMenuItem" @click="editLayout">Edit Layout</span><span class="layoutMenuItem" @click="showLayout">Show Layout</span><span class="layoutMenuItem" @click="returnToList" >Return To List</span></span>
         <span v-if="this.gridInputStatus==this.GRID_WAITINGFORCLICK" class="prompt">Click on the top left cell of where you wish to place the card: <MyButton @myButtonClicked="cancelExitClicked" buttonLabel="Cancel"></MyButton></span>
         <span v-if="this.gridInputStatus==this.GRID_TOPLEFTCLICKED" class="prompt">Click on the bottom right cell of where you wish to place the card: <MyButton @myButtonClicked="cancelExitClicked" buttonLabel="Cancel"></MyButton></span>
         <span v-if="this.gridInputStatus==this.GRID_BOTTOMRIGHTCLICKED" class="prompt">Is this area ok for the new card ? <MyButton @myButtonClicked="yesButtonClicked" buttonLabel="Yes"></MyButton><MyButton @myButtonClicked="cancelClicked" buttonLabel="No"></MyButton><MyButton @myButtonClicked="cancelExitClicked" buttonLabel="Cancel"></MyButton></span>
@@ -73,6 +73,9 @@
     methods:{
         editLayout(){
           this.$emit('editLayout');
+        },
+        showLayout(){
+          this.$emit('showLayout');
         },
         editMode(){
           this.gridInputStatus=this.GRID_WAITINGFORCLICK;

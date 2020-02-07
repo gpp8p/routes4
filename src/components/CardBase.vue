@@ -67,8 +67,8 @@
       reloadCardData(cStyle){
 //        console.log(cStyle);
         var cssPropertyArray = cStyle.split(';');
-        for(var p=0;p<cssPropertyArray.length;c++){
-          switch(cssPropertyArray[c]){
+        for(var p=0;p<cssPropertyArray.length;p++){
+          switch(cssPropertyArray[p]){
             case "background-color":
               break;
           }

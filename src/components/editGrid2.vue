@@ -173,6 +173,31 @@ export default {
         });
 
     },
+
+    reloadLayoutForDisplay: function(msg) {
+      this.cardInstances = [];
+      this.displayGrid=true;
+      this.layoutId = msg;
+      this.cancelLayoutEdit();
+//      console.log("reloading" + msg);
+      axios
+        .get("http://localhost:8000/getLayout?layoutId=" + this.layoutId+"&&XDEBUG_SESSION_START=15122")
+        .then(response => {
+          // JSON responses are automatically parsed.
+          debugger;
+          this.cardInstances = response.data.cards;
+          this.gridParamDefinition = this.layoutGridParameters(
+            response.data.layout.height,
+            response.data.layout.width
+          );
+        })
+        .catch(e => {
+          console.log(e);
+          this.errors.push(e);
+        });
+    },
+
+
     reloadBlankLayout(blankCardInstances){
 //      console.log('reloadBlankLayout');
       this.displayGrid=true;

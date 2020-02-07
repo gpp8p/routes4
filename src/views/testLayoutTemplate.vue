@@ -8,7 +8,7 @@
             <span class="layoutMenu"><span class="layoutMenuItem" @click="createLayout">New Layout</span><span class="layoutMenuItem">User Administration</span></span>
         </div>
         <div v-if="this.viewStatus==this.VIEW_GRID_MENU">
-            <gridInput ref="gridInput" @editLayout="editLayout" @storeValue="cellClicked"></gridInput>
+            <gridInput ref="gridInput" @editLayout="editLayout" @showLayout="showLayout" @storeValue="cellClicked"></gridInput>
         </div>
         <div v-if="this.viewStatus==this.VIEW_HEADLINE_CONFIG">
             <ConfigurationComponent :cardType="this.cardTypeBeingConfigured" :instanceNumberBeingConfigured="this.instancePositionBeingConfigured" @configSelected="configSelectionEventHandler" ></ConfigurationComponent>
@@ -184,6 +184,14 @@
       editLayout(){
         this.$refs.editGrid.unlockCellSelection();
         this.$refs.gridInput.editMode();
+      },
+      showLayout(){
+        this.listView=false;
+        this.gridView=true;
+        this.showLayoutMenu = false;
+        this.$refs.editGrid.showGrid();
+        this.viewStatus = this.VIEW_GRID_MENU;
+        this.$refs.editGrid.reloadLayoutForDisplay(this.layoutId);
       },
       cellClicked(msg){
         console.log(msg);
