@@ -30,7 +30,7 @@
                 </LayoutListLine>
         </div>
         <div v-if="gridView" style = "position: relative;">
-            <editGrid2  :layoutId="selectedLayoutId"  ref="editGrid" @storeValue="cellClicked"></editGrid2>
+            <editGrid2  :layoutId="selectedLayoutId"  ref="editGrid" @storeValue="cellClicked" @configurationHasBeenSaved="configurationHasBeenSaved"></editGrid2>
         </div>
     </section>
     </span>
@@ -122,6 +122,13 @@
         this.$refs.editGrid.reloadLayout(msg);
         this.$refs.editGrid.freezeCellSelection();
       },
+      configurationHasBeenSaved(){
+        this.listView=false;
+        this.gridView=true;
+        this.showLayoutMenu = false;
+        this.$refs.editGrid.showGrid();
+        this.viewStatus = this.VIEW_GRID_MENU;
+      },
       submitNewLayout(msg) {
 //        console.log(msg);
         axios.post('http://localhost:8000/createLayout?XDEBUG_SESSION_START=18938', {
@@ -184,14 +191,6 @@
       editLayout(){
         this.$refs.editGrid.unlockCellSelection();
         this.$refs.gridInput.editMode();
-      },
-      showLayout(){
-        this.listView=false;
-        this.gridView=true;
-        this.showLayoutMenu = false;
-        this.$refs.editGrid.showGrid();
-        this.viewStatus = this.VIEW_GRID_MENU;
-        this.$refs.editGrid.reloadLayoutForDisplay(this.layoutId);
       },
       cellClicked(msg){
         console.log(msg);

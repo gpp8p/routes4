@@ -5,7 +5,7 @@
     name: "CardBase",
     methods: {
       setCardData(cardData, cardDataElement) {
-//      debugger;
+      debugger;
         switch (cardDataElement) {
           case "saveConfiguration":
             this.saveCardConfiguration();
@@ -77,12 +77,13 @@
       saveCardConfiguration(){
         var cardConfigurationPackage = [this.cardId, this.styling, this.content];
         var jsonCardConfigurationPackage = JSON.stringify(cardConfigurationPackage);
-//      debugger;
+        debugger;
         axios.post('http://localhost:8000/saveCardParameters?XDEBUG_SESSION_START=15122', {
           cardParams: jsonCardConfigurationPackage,
         }).then(response=>
         {
             console.log(response);
+            this.$emit('configurationHasBeenSaved')
         }).catch(function(error) {
           console.log(error);
         });

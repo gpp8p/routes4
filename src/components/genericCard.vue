@@ -7,6 +7,7 @@
                           :card-position=cardPosition
                           :cardProperties = cardProperties
                           @cardClick="processCardClick"
+                          @configurationHasBeenSaved="configurationHasBeenSaved"
                           ref="cardKey"
         ></blank-component>
         <green-component  v-if="cardType=='greenComponent'" class="genericCardStyle"
@@ -16,6 +17,7 @@
                           :card-position=cardPosition
                           :cardProperties = cardProperties
                           @cardClick="processCardClick"
+                          @configurationHasBeenSaved="configurationHasBeenSaved"
                           ref="cardKey"
         ></green-component>
 
@@ -76,6 +78,9 @@
           console.log('generic card recieved a click:'+msg);
           this.$emit('storeValue', [this.cardId])
         }
+      },
+      configurationHasBeenSaved(){
+        this.$emit('configurationHasBeenSaved');
       },
       processCardClick(msg){
         console.log('blankComponent card recieved a click:'+msg);

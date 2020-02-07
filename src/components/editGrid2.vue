@@ -12,6 +12,7 @@
       :cardProperties="instance.card_parameters.properties"
       @storeValue="processClick"
       @cardClick="processCardClick"
+      @configurationHasBeenSaved="configurationHasBeenSaved"
       ref="key"
       ></generic-card>
 
@@ -446,6 +447,9 @@ export default {
       this.cstatus = this.WAITINGFORCLICK;
       this.scolor = this.unSelectedColor;
       this.fillSelectedCells(this.cardInstances,this.topLeftCol,this.topLeftRow,this.bottomRightCol,this.bottomRightRow, this.unSelectedColor);
+    },
+    configurationHasBeenSaved(){
+      this.$emit('configurationHasBeenSaved');
     }
 
 
