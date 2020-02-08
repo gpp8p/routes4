@@ -15,6 +15,10 @@
       idx: {
         type: Number,
         required: true
+      },
+      configElement: {
+        type: Object,
+        required: true
       }
     }
   };
