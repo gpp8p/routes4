@@ -106,7 +106,14 @@
       mouseUpEvt(event){
         console.log(event);
       },
-
+      showLayout(){
+        this.listView=false;
+        this.gridView=true;
+        this.showLayoutMenu = false;
+        this.$refs.editGrid.showGrid();
+        this.viewStatus = this.VIEW_GRID_MENU;
+        this.$refs.editGrid.reloadLayoutForDisplay(this.layoutId);
+      },
 
       showLayoutMenu(){
         this.viewStatus = this.VIEW_TOP_MENU;
