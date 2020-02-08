@@ -38,6 +38,7 @@ export default {
       cardHasBeenSetup: false,
       cstyle: this.cardStyle,
       cardTitle:this.getCardProps(),
+      cardConfiguration:[],
       styling: {},
       content: {}
     };
@@ -50,7 +51,8 @@ export default {
         "cardClicked",
         this.cardKey,
         "greenComponent",
-        this.setCardData
+        this.setCardData,
+        this.cardConfiguration
       ]);
       this.cardTitle = "";
     },
@@ -60,7 +62,7 @@ export default {
     getCardProps() {
 //      debugger;
       if ((typeof this.cardProperties === "undefined") | (this.cardProperties == "")) {
-        return "Click on this card to set it up";
+        return "Click on this card to set it up (green card)";
       }else {
         var thisProp = this.cardProperties.split(String.fromCharCode(30));
         return thisProp[1];

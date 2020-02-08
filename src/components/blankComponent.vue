@@ -1,14 +1,15 @@
 <template>
-    <div v-on:click="cellClicked" style="background-color: blue">
-
+    <div v-on:click="cellClicked" >
+        {{ this.cardTitle }}
     </div>
 </template>
 
 <script>
   /* eslint-disable no-console,no-debugger */
-
+  import CardBase from "../components/CardBase.vue";
   export default {
     name: "blankComponent",
+    extends: CardBase,
     props: {
       cardStyle: {
         type: String,
@@ -34,26 +35,39 @@
     },
     data() {
       return {
-        cardMessage: this.getCardProps()
+        cardTitle:this.getCardProps(),
+        cardConfiguration: [{"label":"Card Characteristics","configurationElements":[{"type":"color", "element":"backgroundColor","prompt":"Background Color"},
+            {"type":"checkbox", "element":"border","prompt":"Include Border?"},
+            {"type":"select","selectOptions":['thin','medium','thick'],"element":"borderSize","prompt":"Border Size?"}]
+        }],
       }
     },
     methods: {
       cellClicked: function() {
-//        console.log(' blank-component clicked');
-        this.$emit('cardClick', [this.cardKey])
+        this.$emit("cardClick", [
+          "cardClicked",
+          this.cardKey,
+          "blueComponent",
+          this.setCardData,
+          this.cardConfiguration,
+        ]);
+        this.cardTitle = "";
       },
       refId: function(){
         return "card"+this.cardId;
       },
-      getCardProps(){
-//        debugger;
-        if (typeof this.cardProperties === 'undefined') {
-          return "Click on this card to set it up";
-        }else{
-          var thisProp = this.cardProperties.split(':');
+      getCardProps() {
+//      debugger;
+        if ((typeof this.cardProperties === "undefined") | (this.cardProperties == "")) {
+          return "Click on this card to set it up (blue card)";
+        }else {
+          var thisProp = this.cardProperties.split(String.fromCharCode(30));
           return thisProp[1];
         }
       }
+
+
+
     }
   };
 </script>

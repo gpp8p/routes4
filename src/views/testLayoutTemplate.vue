@@ -11,7 +11,7 @@
             <gridInput ref="gridInput" @editLayout="editLayout" @showLayout="showLayout" @storeValue="cellClicked"></gridInput>
         </div>
         <div v-if="this.viewStatus==this.VIEW_HEADLINE_CONFIG">
-            <ConfigurationComponent :cardType="this.cardTypeBeingConfigured" :instanceNumberBeingConfigured="this.instancePositionBeingConfigured" @configSelected="configSelectionEventHandler" ></ConfigurationComponent>
+            <ConfigurationComponent :cardType="this.cardTypeBeingConfigured" :instanceNumberBeingConfigured="this.instancePositionBeingConfigured" @configSelected="configSelectionEventHandler" :configurationElements="this.cardConfigurationElements"></ConfigurationComponent>
         </div>
 
     </section>
@@ -96,7 +96,8 @@
         cardTypeBeingConfigured: '',
         instancePositionBeingConfigured:0,
         screenElementBeingConfigured: {},
-        cardDataFunction:null
+        cardDataFunction:null,
+        cardConfigurationElements:null
       }
     },
     methods:{
@@ -315,9 +316,11 @@
           this.instancePositionBeingConfigured = msg[1];
           this.screenElementBeingConfigured = msg[4];
           this.cardDataFunction = msg[3];
-          if(msg[2]=='greenComponent'| msg[2]=='blankComponent'|msg[2]=='headlineComponent'){
-            this.viewStatus = this.VIEW_HEADLINE_CONFIG;
-          }
+          this.cardConfigurationElements=msg[4];
+          this.viewStatus = this.VIEW_HEADLINE_CONFIG;
+//          if(msg[2]=='greenComponent'| msg[2]=='blankComponent'|msg[2]=='headlineComponent'){
+//            this.viewStatus = this.VIEW_HEADLINE_CONFIG;
+//          }
         }
 
       }
