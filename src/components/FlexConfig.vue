@@ -2,7 +2,7 @@
     <span>
             <span>
                 {{this.cardConfigurationElements[0].label}}
-                <Dummy v-for="(configElement, index) in this.cardConfigurationElements[0].configurationElements" :configElement="configElement" :prompt="configElement.prompt" :idx="index" :key="index"></Dummy>
+                <Dummy v-for="(configElement, index) in this.cardConfigurationElements[0].configurationElements" :configElement="configElement" :prompt="configElement.prompt" :idx="index" :key="index" :visible="true"></Dummy>
             </span>
     </span>
 

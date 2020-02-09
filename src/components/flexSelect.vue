@@ -1,7 +1,7 @@
 <template>
    <span>
         <select class="selectStyle" v-model="this.selectValue" ref="thisSelect" @change="broadcastValue(event)">
-            <option class="optionStyle" value="" disabled selected>Select</option>
+            <option class="optionStyle" value="" disabled selected>{{this.configElement.prompt}}</option>
             <option class="optionStyle" v-for="(val, index) in selectionOptions" :key="index" v-bind:value="val" >{{ val }}</option>
         </select>
     </span>
@@ -15,21 +15,17 @@
       configElement: {
         type: Object,
         required: true
-      },
-      sName: {
-        type: String,
-        required: true
       }
     },
     data(){
       return {
-        selectionOptions: this.configElement.selectionOptions,
+        selectionOptions: this.configElement.selectOptions,
         selectValue: ''
 //        selectOptions: []
       }
     },
     methods: {
-      broadcastValue(evt){
+      broadcastValue(){
 //        console.log(evt);
 //        debugger;
         this.$emit('configSelected', [this.configElement.element, this.$refs.thisSelect.value]);
@@ -39,5 +35,15 @@
 </script>
 
 <style scoped>
+    .selectStyle {
+        background: #DBAA6E;
+        color:blue;
+        font-weight: bold;
+        font-size: 12px;
+    }
+    .optionStyle {
+        background: #DBAA6E;
+        color:blue;
+    }
 
 </style>
