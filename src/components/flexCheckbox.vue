@@ -1,15 +1,15 @@
 <template>
     <span>
         <input type="checkbox" @click="this.clicked" value="on" /> - {{this.configElement.prompt}}
-        <Dummy v-for="(configEl, index) in this.configElement.onClick" :configElement="configEl" :prompt="Size" :idx="index" :key="index" :visible="this.showExpansion"></Dummy>
+        <dummyConfig v-for="(configEl, index) in this.configElement.onClick" :configElement="configEl" :prompt="Size" :idx="index" :key="index" :visible=showExpansion></dummyConfig>
     </span>
 </template>
 
 <script>
-  import Dummy from "../components/dummyConfig.vue";
+  import dummyConfig from "../components/dummyConfig.vue";
   export default {
     name: "flexCheckbox",
-    components: {Dummy},
+    components: {'dummyConfig':dummyConfig},
     props:{
       configElement: {
         type: Object,

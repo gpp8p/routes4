@@ -1,5 +1,5 @@
 <template>
-    <span v-if="visible">
+    <span v-if=visible>
         <flex-checkbox v-if="this.configElement.type=='checkbox'" :config-element="this.configElement"></flex-checkbox>
         <flex-select v-if="this.configElement.type=='select'" :config-element="this.configElement"></flex-select>
         <flex-color v-if="this.configElement.type=='color'" :config-element="this.configElement"></flex-color>
