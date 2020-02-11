@@ -2,17 +2,17 @@
     <span>
             <span>
                 {{this.cardConfigurationElements[0].label}}
-                <dummyConfig v-for="(configElement, index) in this.cardConfigurationElements[0].configurationElements" :configElement="configElement" :prompt="configElement.prompt" :idx="index" :key="index" :visible="true"></dummyConfig>
+                <flexConfigComponent v-for="(configElement, index) in this.cardConfigurationElements[0].configurationElements" :configElement="configElement" :prompt="configElement.prompt" :idx="index" :key="index"></flexConfigComponent>
             </span>
     </span>
 
 </template>
 
 <script>
-    import dummyConfig from "../components/dummyConfig.vue";
+    import flexConfigComponent from "../components/flexConfigComponent.vue";
   export default {
     name: "FlexConfig",
-    components: {'dummyConfig':dummyConfig},
+    components: {'flexConfigComponent':flexConfigComponent},
     props:{
       cardConfigurationElements:{
         type:Object,

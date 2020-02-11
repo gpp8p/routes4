@@ -37,7 +37,7 @@
       return {
         cardTitle:this.getCardProps(),
         cardConfiguration: [{"label":"Card Characteristics","configurationElements":[{"type":"color", "element":"backgroundColor","prompt":"Background Color"},
-            {"type":"checkbox", "element":"border","prompt":"Include Border?", "onClick":[{"type":"select","selectOptions":['thin','medium','thick'],"element":"borderSize","prompt":"Border Size?"}]},
+            {"type":"checkbox", "element":"border","prompt":"Include Border?", "onClick":[{"type":"select","selectOptions":['thin','medium','thick'],"element":"borderSize","prompt":"Border Size?"},{"type":"color", "element":"borderColor","prompt":"Border Color"}]},
             ]
         }],
       }

@@ -1,35 +1,50 @@
 <template>
     <span>
         <input type="checkbox" @click="this.clicked" value="on" /> - {{this.configElement.prompt}}
-        <dummyConfig v-for="(configEl, index) in this.configElement.onClick" :configElement="configEl" :prompt="Size" :idx="index" :key="index" :visible=showExpansion></dummyConfig>
     </span>
 </template>
 
 <script>
-  import dummyConfig from "../components/dummyConfig.vue";
+  /* eslint-disable no-debugger */
+
+  //  import flexConfigComponent from "../components/flexConfigComponent.vue";
+//    import dummyConfigComponent from "../components/dummyConfigComponent.vue";
   export default {
     name: "flexCheckbox",
-    components: {'dummyConfig':dummyConfig},
+//    components: {'flexConfigComponent':flexConfigComponent},
+//      components: {dummyConfigComponent},
     props:{
       configElement: {
         type: Object,
         required: true
       }
+// eslint-disable-next-line no-debugger
+    },
+    mounted(){
+      this.$emit('onClickActivate', [this.configElement.element, this.isClicked]);
     },
     data(){
         return {
-          showExpansion:true
+          showExpansion:null,
+          sizePrompt:'Size',
+          checked: Boolean
         }
     },
     methods:{
       clicked(event){
         if (event.target.checked){
           this.showExpansion=true;
+          this.checked=true;
           this.$emit('configSelected', [this.configElement.element,'checked']);
         }else{
           this.showExpansion=false;
+          this.checked=false;
           this.$emit('configSelected', [this.configElement.element,'unchecked']);
         }
+      },
+      isClicked(){
+//        debugger;
+        return this.checked;
       }
     }
   };
