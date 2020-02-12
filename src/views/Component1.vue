@@ -25,6 +25,7 @@
           [{"label":"Card Characteristics",
             "configurationElements":[{"type":"color", "element":"backgroundColor","prompt":"Background Color"},
               {"type":"fontSelect", "element":"fontFamily","prompt":"Select Font ?"},
+              {"type":"input", "element":"textInput", "fieldSize":"80", "prompt":"Enter Text:"},
               {"type":"checkbox", "element":"border","prompt":"Include Border?",
                 "onClick":[{"type":"select","selectOptions":['thin','medium','thick'],"element":"borderSize","prompt":"Border Size?"},
                   {"type":"color", "element":"borderColor","prompt":"Border Color"}]},
