@@ -35,11 +35,11 @@
         if (event.target.checked){
           this.showExpansion=true;
           this.checked=true;
-          this.$emit('configSelected', [this.configElement.element,'checked']);
+          this.$emit('configSelected', [this.configElement.element,'activated']);
         }else{
           this.showExpansion=false;
           this.checked=false;
-          this.$emit('configSelected', [this.configElement.element,'unchecked']);
+          this.$emit('configSelected', [this.configElement.element,'deactivated']);
         }
       },
       isClicked(){
