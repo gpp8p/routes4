@@ -20,9 +20,6 @@
       }
 // eslint-disable-next-line no-debugger
     },
-    mounted(){
-      this.$emit('onClickActivate', [this.configElement.element, this.isClicked]);
-    },
     data(){
         return {
           showExpansion:null,

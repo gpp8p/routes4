@@ -24,6 +24,7 @@
         cardConfiguration:
           [{"label":"Card Characteristics",
             "configurationElements":[{"type":"color", "element":"backgroundColor","prompt":"Background Color"},
+              {"type":"fontSelect", "element":"fontFamily","prompt":"Select Font ?"},
               {"type":"checkbox", "element":"border","prompt":"Include Border?",
                 "onClick":[{"type":"select","selectOptions":['thin','medium','thick'],"element":"borderSize","prompt":"Border Size?"},
                   {"type":"color", "element":"borderColor","prompt":"Border Color"}]},
@@ -48,6 +49,8 @@
           this.closeExpanderFunction = msg[2];
           msg[1](msg[0]);
 
+        }else{
+          msg[2](msg[0]);
         }
         console.log(msg);
       }
