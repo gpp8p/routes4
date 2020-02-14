@@ -1,7 +1,7 @@
 <template>
-        <span>
-        {{configElement.prompt}}<input type="color" @change="newColor" :value="this.val"/>
-    </span>
+        <span style="margin-top:  3px;">
+        {{configElement.prompt}}<input  type="color" @change="newColor" :value="this.val"/>
+        </span>
 
 </template>
 

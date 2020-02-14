@@ -23,10 +23,10 @@
           cardConfiguration:
           [{"label":"Card Appearance",
           	 "configurationElements":[
-          	 	{
-              		{ "type":"radio", "element":"backgroundType","fieldName":"backgroundType", "prompt":"Background Type ?", "radioOptions":[ 'Color' ],
+
+              	{ "type":"radio", "element":"backgroundType","fieldName":"backgroundType", "prompt":"Background Type ?", "radioOptions":[ 'Color' ],
                     	"onClick":[{"type":"color", "element":"backgroundColor","prompt":"Background Color"}]
-              	},
+                },
               	{ "type":"radio", "element":"backgroundImage","fieldName":"backgroundType", "prompt":"Background Type ?", "radioOptions":[ 'Image' ],
               			"onClick":[{"type":"file", "element":"backgroundImage", "prompt":"Upload Background Image ?"}]
               	},
@@ -51,7 +51,12 @@
           {"label":"Text Attributes",
         	"configurationElements":[
         		{
-
+        			{"type":"fontSelect", "element":"fontFamily", "prompt":"Select Font:"},
+        			{"type":"select", "selectOptions":['10pt','12pt','18pt','24pt','36pt','48pt','72pt'], "element":"fontSize","prompt":"Size?"},
+        			{"type":"select", "selectOptions":['normal','bold','bolder','lighter'], "element":"fontWeight","prompt":"Weight?"},
+        			{"type":"select", "selectOptions":['normal','italic','oblique'], "element":"fontStyle", "prompt":"Style"},
+        			{"type":"select", "selectOptions":['left','center','right'], "element":"textAlign", "prompt":"Align:"},
+        			{"type":"color", "element":"color","prompt":"Color:"}
         		}
         	]
           }
