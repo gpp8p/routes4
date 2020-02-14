@@ -1,0 +1,58 @@
+        cardConfiguration:
+          [{"label":"Card Characteristics",
+            "configurationElements":[{"type":"color", "element":"backgroundColor","prompt":"Background Color"},
+              {"type":"fontSelect", "element":"fontFamily","prompt":"Select Font ?"},
+              {"type":"input", "element":"textInput", "fieldSize":"30", "prompt":"Enter Text:"},
+              {"type":"file", "element":"fileUpload",  "prompt":"Upload File:"},
+              {"type":"checkbox", "element":"border","prompt":"Include Border?",
+                "onClick":[{"type":"select","selectOptions":['thin','medium','thick'],"element":"borderSize","prompt":"Border Size?"},
+                  {"type":"color", "element":"borderColor","prompt":"Border Color"}]},
+              { "type":"radio", "element":"backgroundColor","fieldName":"backgroundType", "prompt":"Background Type ?", "radioOptions":[ 'Color' ],
+                    "onClick":[{"type":"color", "element":"shadowColor","prompt":"Shadow Color"}],
+              },
+              { "type":"radio", "element":"backgroundImage","fieldName":"backgroundType", "prompt":"Background Type ?", "radioOptions":[ 'Image' ]},
+              {"type":"checkbox", "element":"shadow","prompt":"Shadow ?",
+                "onClick":[{"type":"select","selectOptions":['5px','10px','20px'],"element":"shadowSize","prompt":"Shadow Size?"},
+                  {"type":"color", "element":"shadowColor","prompt":"Shadow Color"}]},
+
+            ]
+          }]
+
+
+
+          cardConfiguration:
+          [{"label":"Card Appearance",
+          	 "configurationElements":[
+          	 	{
+              		{ "type":"radio", "element":"backgroundType","fieldName":"backgroundType", "prompt":"Background Type ?", "radioOptions":[ 'Color' ],
+                    	"onClick":[{"type":"color", "element":"backgroundColor","prompt":"Background Color"}]
+              	},
+              	{ "type":"radio", "element":"backgroundImage","fieldName":"backgroundType", "prompt":"Background Type ?", "radioOptions":[ 'Image' ],
+              			"onClick":[{"type":"file", "element":"backgroundImage", "prompt":"Upload Background Image ?"}]
+              	},
+                {"type":"checkbox", "element":"border","prompt":"Include Border?",
+                "onClick":[{"type":"select","selectOptions":['thin','medium','thick'],"element":"borderSize","prompt":"Border Size?"},
+                  {"type":"color", "element":"borderColor","prompt":"Border Color"}]
+                },
+              	{"type":"checkbox", "element":"shadow","prompt":"Shadow ?",
+                "onClick":[{"type":"select","selectOptions":['5px','10px','20px'],"element":"shadowSize","prompt":"Shadow Size?"},
+                  {"type":"color", "element":"shadowColor","prompt":"Shadow Color"}]
+                },
+                {"type":"checkbox", "element":"roundIncluded", "prompt":"Round Corners ?"}
+          	 }]
+          },
+          {"label":"Headline",
+        	"configurationElements":[
+        		{
+					{"type":"input", "element":"textInput", "fieldSize":"80", "prompt":"Enter Text:"}
+        		}
+        	]
+          },
+          {"label":"Text Attributes",
+        	"configurationElements":[
+        		{
+
+        		}
+        	]
+          }
+          ]
