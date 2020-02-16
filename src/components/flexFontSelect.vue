@@ -3,7 +3,7 @@
             <span :style="{fontFamily : focused_font}">Font to use: </span>
             <select v-model="focused_font" class="selectStyle" ref="fontSelect" @change="fontSelected()">
                 <option value="" disabled selected class="optionStyle">Font</option>
-                <option v-for="(font, index) in available_fonts" :key="index" v-bind:value="font" v-bind:style="{fontFamily : font}" class="optionStyle" >{{ font }}</option>
+                <option v-for="(font, index) in available_fonts" :key="index" v-bind:value="font" :selected="font==focused_font" v-bind:style="{fontFamily : font}" class="optionStyle" >{{ font }}</option>
             </select>
         </span>
 
@@ -18,12 +18,17 @@
       configElement: {
         type: Object,
         required: true
+      },
+      currentValues:{
+        type: Object,
+        required: false
       }
+
     },
     data(){
       return{
         available_fonts: ['Arial', 'Times New Roman', 'Helvetica','Times','Courier New','Verdana','Courier','Arial Narrow','Candara','Geneva','Calibri','Optima','Cambria','Garamond','Perpetua','Monaco','Didot','Brush Script MT','Lucida Bright','Copperplate'],
-        focused_font:'',
+        focused_font:this.getCurrentValue(),
       }
     },
 // eslint-disable-next-line no-debugger
@@ -31,6 +36,13 @@
       fontSelected(){
 //        debugger;
         this.$emit('configSelected', [this.configElement.element, this.$refs.fontSelect.value]);
+      },
+      getCurrentValue(){
+        if(typeof(this.currentValues[this.configElement.element])=='undefined'){
+          return '';
+        }else{
+          return this.currentValues[this.configElement.element]
+        }
       }
 
     }

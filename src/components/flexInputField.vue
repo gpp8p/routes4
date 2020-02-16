@@ -11,7 +11,12 @@
       configElement: {
         type: Object,
         required: true
+      },
+      currentValues:{
+        type: Object,
+        required: false
       }
+
     },
     data(){
       return{

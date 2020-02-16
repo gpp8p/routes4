@@ -2,7 +2,7 @@
    <span>
         <select class="selectStyle" v-model="this.selectValue" ref="thisSelect" @change="broadcastValue(event)">
             <option class="optionStyle" value="" disabled selected>{{this.configElement.prompt}}</option>
-            <option class="optionStyle" v-for="(val, index) in selectionOptions" :key="index" v-bind:value="val" >{{ val }}</option>
+            <option class="optionStyle" v-for="(val, index) in selectionOptions" :selected="val==selectedValue" :key="index" v-bind:value="val" >{{ val }}</option>
         </select>
     </span>
 
@@ -15,12 +15,17 @@
       configElement: {
         type: Object,
         required: true
+      },
+      currentValues:{
+        type: Object,
+        required: false
       }
+
     },
     data(){
       return {
         selectionOptions: this.configElement.selectOptions,
-        selectValue: ''
+        selectValue: this.getCurrentValue(),
 //        selectOptions: []
       }
     },
@@ -29,6 +34,13 @@
 //        console.log(evt);
 //        debugger;
         this.$emit('configSelected', [this.configElement.element, this.$refs.thisSelect.value]);
+      },
+      getCurrentValue(){
+        if(typeof(this.currentValues[this.configElement.element])=='undefined'){
+          return '';
+        }else{
+          return this.currentValues[this.configElement.element]
+        }
       }
     }
   };

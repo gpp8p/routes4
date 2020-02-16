@@ -1,6 +1,6 @@
 <template>
     <span>
-        <input type="checkbox" @click="this.clicked" value="on" /> - {{this.configElement.prompt}}
+        <input type="checkbox" @click="this.clicked" :checked="checked" value="on" /> - {{this.configElement.prompt}}
     </span>
 </template>
 
@@ -17,14 +17,19 @@
       configElement: {
         type: Object,
         required: true
+      },
+      currentValues:{
+        type: Object,
+        required: false
       }
+
 // eslint-disable-next-line no-debugger
     },
     data(){
         return {
           showExpansion:null,
           sizePrompt:'Size',
-          checked: Boolean
+          checked: this.getCurrentValue()
         }
     },
     methods:{
@@ -42,7 +47,21 @@
       isClicked(){
 //        debugger;
         return this.checked;
+      },
+      getCurrentValue(){
+        if(typeof(this.currentValues[this.configElement.element])=='undefined'){
+          return false;
+        }else{
+          if(this.currentValues[this.configElement.element]=='checked'){
+//            debugger;
+            this.$emit('openCheckedByDefault',[this.configElement.element]);
+            return true;
+          }else{
+            return false;
+          }
+        }
       }
+
     }
   };
 </script>
