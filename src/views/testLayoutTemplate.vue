@@ -11,7 +11,13 @@
             <gridInput ref="gridInput" @editLayout="editLayout" @showLayout="showLayout" @storeValue="cellClicked"></gridInput>
         </div>
         <div v-if="this.viewStatus==this.VIEW_HEADLINE_CONFIG">
-            <ConfigurationComponent :cardType="this.cardTypeBeingConfigured" :instanceNumberBeingConfigured="this.instancePositionBeingConfigured" @configSelected="configSelectionEventHandler" :configurationElements="this.cardConfigurationElements"></ConfigurationComponent>
+            <flexConfig2
+                    :cardType="this.cardTypeBeingConfigured"
+                    :currentValues="this.cardCurrentConfigurationValues"
+                    :configElement="this.cardConfigurationElements"
+                    :instanceNumberBeingConfigured="this.instancePositionBeingConfigured"
+                    @configSelected="configSelectionEventHandler" >
+            </flexConfig2>
         </div>
 
     </section>
@@ -45,15 +51,16 @@
   import axios from 'axios';
   import editGrid2 from '../components/editGrid2';
   import gridInput from '../components/gridInput.vue';
+  import flexConfig2 from "../components/FlexConfig2.vue";
 //  import headlineComponent from '../components/headlineComponent.vue';
 //  import HeadlineConfig from '../components/ConfigureHeadline.vue';
-  import ConfigurationComponent  from '../components/ConfiguationComponent.vue';
+//  import ConfigurationComponent  from '../components/ConfiguationComponent.vue';
 //  import { Draggable } from 'draggable-vue-directive'
 //  import MoveablePanel from '../components/MoveablePanel.vue'
 
   export default {
     name: "testLayoutTemplate",
-    components: {LayoutListLine, layoutListHeader, focusTest, editGrid2, gridInput, ConfigurationComponent},
+    components: {LayoutListLine, layoutListHeader, focusTest, editGrid2, gridInput, flexConfig2},
  /*
     directives: {
       Draggable,
@@ -97,7 +104,8 @@
         instancePositionBeingConfigured:0,
         screenElementBeingConfigured: {},
         cardDataFunction:null,
-        cardConfigurationElements:null
+        cardConfigurationElements:{},
+        cardCurrentConfigurationValues:{}
       }
     },
     methods:{
@@ -310,13 +318,14 @@
 
         }
         if(msg[0]=='cardClicked'){
-//          debugger;
+          debugger;
           this.configCard=true;
           this.cardTypeBeingConfigured = msg[2]
           this.instancePositionBeingConfigured = msg[1];
           this.screenElementBeingConfigured = msg[4];
           this.cardDataFunction = msg[3];
           this.cardConfigurationElements=msg[4];
+          this.cardCurrentConfigurationValues=msg[5];
           this.viewStatus = this.VIEW_HEADLINE_CONFIG;
 //          if(msg[2]=='greenComponent'| msg[2]=='blankComponent'|msg[2]=='headlineComponent'){
 //            this.viewStatus = this.VIEW_HEADLINE_CONFIG;
