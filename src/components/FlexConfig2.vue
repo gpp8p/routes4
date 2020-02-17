@@ -2,7 +2,7 @@
     <span>
        <testRecursionComponent v-for="(configElement, index) in this.configurationElements[configurationLine].configurationElements"
                                :currentValues="configurationCurrentValues"
-                               :configElement="configurationElements"
+                               :configElement="configElement"
                                :key="index"
                                @configSelected="configSelectedEvent"  ></testRecursionComponent>
        <nextCancelButtons :currentStatus="this.configurationLine" @buttonClick="bumpLine" ></nextCancelButtons>
@@ -11,7 +11,7 @@
 </template>
 
 <script>
-  /* eslint-disable no-console */
+  /* eslint-disable no-console,no-debugger */
 
   import testRecursionComponent from "../components/testRecursionComponent.vue";
   import nextCancelButtons from "../components/nextCancelButtons.vue";
@@ -60,7 +60,8 @@
 //        console.log(msg);
       },
       bumpLine(msg){
-        if(this.configurationLine<this.cardConfiguration.length){
+        debugger;
+        if(this.configurationLine<this.configurationElements.length){
           switch(msg[0]){
             case 'next':
               this.configurationLine++;
