@@ -184,12 +184,12 @@
       },
       configSelectionEventHandler(msg){
         console.log(msg);
-//        debugger;
+ //       debugger;
         if(msg[0][0]=='cancel'){
           this.viewStatus=this.VIEW_TOP_MENU;
           this.cardDataFunction=null;
         }
-        this.cardDataFunction(msg[0][1], msg[0][0]);
+        this.cardDataFunction(msg[4], msg[0]);
 //      debugger;
 //        if(msg[0]=='backgroundColor'|| msg[0]=='backgroundImage'){
 //          this.$refs.editGrid.setElementStyle(msg[2], msg[0], msg[1]);
@@ -318,7 +318,7 @@
 
         }
         if(msg[0]=='cardClicked'){
-          debugger;
+//          debugger;
           this.configCard=true;
           this.cardTypeBeingConfigured = msg[2]
           this.instancePositionBeingConfigured = msg[1];

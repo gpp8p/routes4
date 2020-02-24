@@ -40,6 +40,8 @@ export default {
       cardTitle:this.getCardProps(),
       styling: {},
       content: {},
+      configurationCurrentValues:{},
+/*
       configurationCurrentValues:{
         "backgroundType":'checked',
         "backgroundColor":"#FFFFFF",
@@ -50,6 +52,7 @@ export default {
         "borderSize":"medium",
         "shadow":"checked",
         "shadowSize":"10px",
+        "shadowSizeSetAt":"10px",
         "shadowColor":"#BBBBBB",
         "textInput":"Have a nice Day!",
         "fontFamily":"Helvetica",
@@ -57,6 +60,7 @@ export default {
         "textAlign":"left",
         "color":"#0537aa"
       },
+*/
       cardConfiguration: [
         {
           "label": "Card Appearance",

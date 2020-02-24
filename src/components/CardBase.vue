@@ -53,13 +53,72 @@
             this.$el.style.borderRadius="6px";
             this.styling.borderRadius="border-radius:6px;";
             break;
-          case "shodowIncluded":
-            this.$el.style.boxShadow="10px 20px 30px black";
-            this.styling.boxShadow = "box-shadow:10px 20px 30px black;";
+          case "shadow":
+            if(cardData=="activated"){
+              this.$el.style.boxShadow="10px 20px 30px black";
+              this.configurationCurrentValues['shadowSizeSetAt']="default"
+              this.styling.boxShadow = "box-shadow:10px 20px 20px black;";
+            }else{
+              this.$el.style.boxShadow="";
+              this.configurationCurrentValues['shadowSizeSetAt']="";
+            }
             break;
+          case "shadowSize":
+            switch(cardData){
+              case "5px":
+                this.$el.style.boxShadow="5px 10px 20px black";
+                this.configurationCurrentValues['shadowSize']="5px";
+                this.configurationCurrentValues['shadowSizeSetAt']="5px";
+                break;
+              case "10px":
+                this.$el.style.boxShadow="10px 10px 30px black";
+                this.configurationCurrentValues['shadowSize']="10px";
+                this.configurationCurrentValues['shadowSizeSetAt']="10px";
+                break;
+              case "20px":
+                this.$el.style.boxShadow="20px 20px 30px black";
+                this.configurationCurrentValues['shadowSize']="20px";
+                this.configurationCurrentValues['shadowSizeSetAt']="20px";
+                break;
+              case "Shadow Size?":
+                this.$el.style.boxShadow="10px 20px 30px black";
+                this.configurationCurrentValues['shadowSizeSetAt']="default";
+                break;
+            }
+            break;
+          case "shadowColor":
+            switch(this.configurationCurrentValues['shadowSizeSetAt']){
+              case "5px":
+                this.$el.style.boxShadow="5px 10px 20px "+cardData;
+                this.configurationCurrentValues['shadowSize']="5px";
+                break;
+              case "10px":
+                this.$el.style.boxShadow="10px 10px 30px "+cardData;
+                this.configurationCurrentValues['shadowSize']="10px";
+                break;
+              case "20px":
+                this.$el.style.boxShadow="20px 20px 30px cardData";
+                this.configurationCurrentValues['shadowSize']="20px";
+                break;
+              case "Shadow Size?":
+                this.$el.style.boxShadow="10px 20px 30px cardData";
+                break;
+            }
+            break;
+
           case "border":
-            this.$el.style.border=cardData;
-            this.styling.border= "border:"+cardData+";";
+            if(cardData=='activated'){
+              this.$el.style.border="thin solid #0000FF";
+            }else{
+              this.$el.style.border=cardData;
+              this.styling.border= "border:"+cardData+";";
+            }
+            break;
+          case "borderSize":
+            this.$el.style.borderWidth = cardData;
+            break;
+          case "borderColor":
+            this.$el.style.borderColor = cardData;
             break;
         }
         return this.cardKey;
