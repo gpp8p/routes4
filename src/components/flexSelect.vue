@@ -36,7 +36,7 @@
         this.$emit('configSelected', [this.configElement.element, this.$refs.thisSelect.value]);
       },
       getCurrentValue(){
-        if(typeof(this.currentValues[this.configElement.element])=='undefined'){
+        if(typeof(this.currentValues[this.configElement.element])=='undefined'|this.currentValues[this.configElement.element]=='default'){
           return '';
         }else{
           return this.currentValues[this.configElement.element]
