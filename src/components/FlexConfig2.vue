@@ -4,7 +4,7 @@
                                :currentValues="configurationCurrentValues"
                                :configElement="configElement"
                                :key="index"
-                               @configSelected="configSelectedEvent"  ></testRecursionComponent>
+                               @configSelected="selectionHandler_flexConfig2"  ></testRecursionComponent>
        <nextCancelButtons :currentStatus="this.configurationLine" @buttonClick="bumpLine" ></nextCancelButtons>
     </span>
 
@@ -46,35 +46,26 @@
       }
     },
     methods:{
-      configSelectedEvent(msg) {
-//        debugger;
-        if (msg[3] == 'activated') {
-/*
-          if (this.closeExpanderFunction != null) {
-            if (msg[3] == 'deactivated') {
-              this.closeExpanderFunction();
-            }
-//            this.closeExpanderFunction();
-          }
-*/
-          this.closeExpanderFunction = msg[2];
-//        invoke the open expander fnction
-          msg[1](msg[0]);
-          this.$emit('configSelected', [msg[0], msg[1], this.closeExpander, msg[1], msg[3]]);
-
+      selectionHandler_flexConfig2(msg){
+        console.log('selectionHandler');
+        console.log(msg);
+        if (msg[1] == 'activated'){
+          //open expander function
+          msg[2](msg[0]);
+          this.closeExpanderFunction = msg[3];
         }else if(msg[3]== 'deactivated'){
           this.closeExpanderFunction();
-          this.$emit('configSelected', [msg[0], msg[1], this.closeExpander, msg[1], msg[3]]);
-        }else{
-//          msg[2](msg[0]);
-          this.$emit('configSelected', [msg[0], msg[1], this.closeExpander, msg[1], msg[4]]);
         }
-//        console.log(msg);
+        this.$emit('configSelected',[msg[0],msg[1],this.openExpander, this.closeExpander ]);
       },
+
       bumpLine(msg){
 //        debugger;
         if(this.configurationLine<this.configurationElements.length){
           switch(msg[0]){
+            case 'cancel':
+              this.$emit('configSelected',[msg[0]]);
+              break;
             case 'next':
               this.configurationLine++;
               break;

@@ -16,7 +16,7 @@
                     :currentValues="this.cardCurrentConfigurationValues"
                     :configElement="this.cardConfigurationElements"
                     :instanceNumberBeingConfigured="this.instancePositionBeingConfigured"
-                    @configSelected="configSelectionEventHandler" >
+                    @configSelected="selectionHandler_layout" >
             </flexConfig2>
         </div>
 
@@ -123,6 +123,26 @@
         this.viewStatus = this.VIEW_GRID_MENU;
         this.$refs.editGrid.reloadLayoutForDisplay(this.layoutId);
       },
+      showLayoutList(){
+//          debugger;
+        this.viewStatus = this.VIEW_TOP_MENU;
+        this.listView=true;
+        this.gridView=true;
+        //         this.$refs.editGrid.cancelLayoutEdit();
+        this.$refs.editGrid.hideGrid();
+        this.$refs.editGrid.showCards=false;
+        axios.get('http://localhost:8000//layoutList')
+          .then(response => {
+// eslint-disable-next-line no-debugger
+            // JSON responses are automatically parsed.
+            this.allLayouts = response.data;
+//              debugger;
+          })
+          .catch(e => {
+            this.errors.push(e);
+            console.log(e);
+          });
+      },
 
       showLayoutMenu(){
         this.viewStatus = this.VIEW_TOP_MENU;
@@ -182,23 +202,14 @@
 //        debugger;
         this.$refs.editGrid.setElementStyle(msg[2], msg[0], msg[1]);
       },
-      configSelectionEventHandler(msg){
-        console.log(msg);
- //       debugger;
-        if(msg[0][0]=='cancel'){
+      selectionHandler_layout(msg){
+        if(msg[0]=='cancel'){
           this.viewStatus=this.VIEW_TOP_MENU;
           this.cardDataFunction=null;
+          this.showLayoutList();
+        }else{
+          this.cardDataFunction(msg[1], msg[0]);
         }
-        this.cardDataFunction(msg[4], msg[0]);
-//      debugger;
-//        if(msg[0]=='backgroundColor'|| msg[0]=='backgroundImage'){
-//          this.$refs.editGrid.setElementStyle(msg[2], msg[0], msg[1]);
-//          this.cardDataFunction(msg[1],'backgroundColor');
-//        }
-//        if(msg[0]=='font'){
-//          this.$refs.editGrid.setElementStyle(msg[2], msg[0], msg[1]);
-//        }
-
       },
       textEntered(msg){
         console.log(msg);
@@ -210,7 +221,7 @@
       },
       cellClicked(msg){
         console.log(msg);
-//        debugger;
+        debugger;
         if(msg[0]=='topLeft'){
           this.$refs.gridInput.topLeftClicked();
           this.topLeftRow = msg[1];
@@ -235,24 +246,7 @@
           this.$refs.gridInput.nameEntered();
         }
         if(msg[0]=='returnToList'){
-//          debugger;
-          this.viewStatus = this.VIEW_TOP_MENU;
-          this.listView=true;
-          this.gridView=true;
- //         this.$refs.editGrid.cancelLayoutEdit();
-          this.$refs.editGrid.hideGrid();
-          this.$refs.editGrid.showCards=false;
-          axios.get('http://localhost:8000//layoutList')
-            .then(response => {
-// eslint-disable-next-line no-debugger
-              // JSON responses are automatically parsed.
-              this.allLayouts = response.data;
-//              debugger;
-            })
-            .catch(e => {
-              this.errors.push(e);
-              console.log(e);
-            });
+          this.showLayoutList();
         }
         if(msg[0]=='cardEntryReset'){
           this.$refs.editGrid.cancelLayoutEdit();
@@ -318,7 +312,7 @@
 
         }
         if(msg[0]=='cardClicked'){
-//          debugger;
+          debugger;
           this.configCard=true;
           this.cardTypeBeingConfigured = msg[2]
           this.instancePositionBeingConfigured = msg[1];
@@ -327,6 +321,9 @@
           this.cardConfigurationElements=msg[4];
           this.cardCurrentConfigurationValues=msg[5];
           this.viewStatus = this.VIEW_HEADLINE_CONFIG;
+          var cardId = msg[7].id;
+          this.cardDataFunction(cardId, 'loadConfiguration' );
+
 //          if(msg[2]=='greenComponent'| msg[2]=='blankComponent'|msg[2]=='headlineComponent'){
 //            this.viewStatus = this.VIEW_HEADLINE_CONFIG;
 //          }

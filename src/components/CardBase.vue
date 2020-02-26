@@ -10,6 +10,9 @@
           case "saveConfiguration":
             this.saveCardConfiguration();
             break;
+          case "loadConfiguration":
+            this.loadCardConfiguration(cardData);
+            break;
           case "title":
             this.cardTitle = cardData;
             this.configurationCurrentValues['title']=cardData;
@@ -149,11 +152,27 @@
           }
         }
       },
+      loadCardConfiguration(cardId){
+        axios
+          .get("http://localhost:8000/getCardDataById?cardId=" + cardId+"&&XDEBUG_SESSION_START=15122")
+          .then(response => {
+            // JSON responses are automatically parsed.
+          debugger;
+            this.cardConfigParams = response.data[0];
+            this.cardContent = response.data[1];
+          })
+          .catch(e => {
+            console.log(e);
+            this.errors.push(e);
+          });
+
+      },
+
       saveCardConfiguration(){
         var cardConfigurationPackage = [this.cardId, this.styling, this.content];
         var jsonCardConfigurationPackage = JSON.stringify(cardConfigurationPackage);
         debugger;
-        axios.post('http://localhost:8000/saveCardParameters?XDEBUG_SESSION_START=15122', {
+        axios.post('http://localhost:8000/saveCardParameters?XDEBUG_SESSION_START=14252', {
           cardParams: jsonCardConfigurationPackage,
         }).then(response=>
         {
