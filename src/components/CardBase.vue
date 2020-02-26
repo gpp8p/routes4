@@ -56,14 +56,17 @@
             break;
           case "textAlign":
             this.$el.style.textAlign=cardData;
+            this.configurationCurrentValues['textAlign']=cardData;
             this.styling.textAlign= "text-align:"+cardData+";";
             break;
           case "roundIncluded":
+            this.configurationCurrentValues['roundIncluded']="checked";
             this.$el.style.borderRadius="6px";
             this.styling.borderRadius="border-radius:6px;";
             break;
           case "shadow":
             if(cardData=="activated"){
+              this.configurationCurrentValues['shadow']="checked";
               this.$el.style.boxShadow="10px 20px 30px black";
               this.configurationCurrentValues['shadowSize']="default"
               this.styling.boxShadow = "box-shadow:10px 20px 20px black;";
@@ -118,6 +121,7 @@
 
           case "border":
             if(cardData=='activated'){
+              this.configurationCurrentValues['border']="checked";
               this.$el.style.border="thin solid #0000FF";
             }else{
               this.$el.style.border=cardData;
@@ -125,9 +129,11 @@
             }
             break;
           case "borderSize":
+            this.configurationCurrentValues['borderSize']=cardData;
             this.$el.style.borderWidth = cardData;
             break;
           case "borderColor":
+            this.configurationCurrentValues['borderColor']=cardData;
             this.$el.style.borderColor = cardData;
             break;
         }

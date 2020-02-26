@@ -108,7 +108,7 @@ export default {
         {
           "label": "Headline",
           "configurationElements": [
-            { "type": "input", "element": "textInput", "fieldSize": "80", "prompt": "Enter Text:" }
+            { "type": "input", "element": "title", "fieldSize": "80", "prompt": "Enter Text:" }
           ]
         },
         {
