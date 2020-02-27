@@ -324,6 +324,7 @@
           var cardId = msg[7].id;
           this.cardDataFunction(cardId, 'loadConfiguration' );
 
+
 //          if(msg[2]=='greenComponent'| msg[2]=='blankComponent'|msg[2]=='headlineComponent'){
 //            this.viewStatus = this.VIEW_HEADLINE_CONFIG;
 //          }

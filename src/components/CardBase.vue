@@ -160,6 +160,22 @@
           debugger;
             this.cardConfigParams = response.data[0];
             this.cardContent = response.data[1];
+
+            this.configurationCurrentValues={};
+            for(var c=0;c<this.cardConfigParams.length;c++){
+              var thisCarConfigurationKey = this.cardConfigParams[c][0];
+              var thisCardConfigurationValue= this.cardConfigParams[c][1];
+              this.styling[thisCarConfigurationKey]=thisCardConfigurationValue
+              this.configurationCurrentValues[thisCarConfigurationKey]= thisCardConfigurationValue;
+            }
+            this.content={};
+            for( c=0;c<this.cardContent.length;c++){
+              var thisCarContentKey = this.cardConfigParams[c][0];
+              var thisCardContentValue= this.cardConfigParams[c][1];
+              this.content[thisCarContentKey]=thisCardContentValue;
+              this.configurationCurrentValues[thisCarContentKey]= thisCardContentValue;
+            }
+            this.currentValues = this.configurationCurrentValues;
           })
           .catch(e => {
             console.log(e);
