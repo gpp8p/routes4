@@ -6,7 +6,7 @@
 </template>
 
 <script>
-  /* eslint-disable no-console */
+  /* eslint-disable no-console,no-debugger */
 
   export default {
     name: "flexColor2",
@@ -30,7 +30,7 @@
     },
     watch:{
       currentValues: function(){
-//          debugger;
+          debugger;
         this.val = this.getCurrentValue();
       }
     },
@@ -42,10 +42,12 @@
 
       },
       getCurrentValue(){
+        debugger;
         if(typeof(this.currentValues[this.configElement.element])=='undefined'){
           return '#FFFFFF';
         }else{
-          return this.currentValues[this.configElement.element]
+          var currentValuesEntriesParts = this.currentValues[this.configElement.element].split(":");
+          return currentValuesEntriesParts[1].replace(';','');
         }
       }
 

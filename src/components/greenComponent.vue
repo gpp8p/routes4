@@ -71,69 +71,75 @@ export default {
               "element": "backgroundTypeColor",
               "fieldName": "backgroundType",
               "prompt": "Background Type ?",
+              "valueFrom":"backgroundTypeColor",
               "radioOptions": ['Color'],
-              "onClick": [{ "type": "color", "element": "backgroundColor", "fieldName":"backgroundColor", "prompt": "Background Color" }]
+              "onClick": [{ "type": "color", "element": "backgroundColor", "valueFrom":"backgroundColor", "prompt": "Background Color" }]
             },
             {
               "type": "radio",
               "element": "backgroundTypeImage",
               "fieldName": "backgroundType",
               "prompt": "Background Type ?",
+              "valueFrom":"backgroundTypeImage",
               "radioOptions": ['Image'],
               "onClick": [{ "type": "file", "element": "backgroundImage", "prompt": "Upload Background Image ?" }]
             },
             {
-              "type": "checkbox", "element": "border", "fieldName":"borderInclude", "prompt": "Include Border?",
+              "type": "checkbox", "element": "border", "valueFrom":"borderInclude", "prompt": "Include Border?",
               "onClick": [{
                 "type": "select",
                 "selectOptions": ['thin', 'medium', 'thick'],
-                "fieldName":"borderSize",
+                "valueFrom":"borderSize",
                 "element": "borderSize",
                 "prompt": "Border Size?"
               },
-                { "type": "color", "element": "borderColor", "prompt": "Border Color" }]
+                { "type": "color", "valueFrom":"borderColor", "element": "borderColor", "prompt": "Border Color" }]
             },
             {
-              "type": "checkbox", "element": "shadow", "fieldName":"shadowInclude", "prompt": "Shadow ?"
+              "type": "checkbox", "element": "shadow", "valueFrom":"shadowInclude", "prompt": "Shadow ?"
             },
-            { "type": "checkbox", "element": "roundIncluded", "fieldName":"includeRound", "prompt": "Round Corners ?" }
+            { "type": "checkbox", "element": "roundIncluded", "valueFrom":"includeRound", "prompt": "Round Corners ?" }
           ]
         },
         {
           "label": "Headline",
           "configurationElements": [
-            { "type": "input", "element": "title", "fieldSize": "80", "prompt": "Enter Text:" }
+            { "type": "input", "element": "title", "valueFrom":"title", "fieldSize": "80", "prompt": "Enter Text:" }
           ]
         },
         {
           "label": "Text Attributes",
           "configurationElements": [
-            { "type": "fontSelect", "element": "fontFamily", "prompt": "Select Font:" },
+            { "type": "fontSelect", "valueFrom":"fontFamily", "element": "fontFamily", "prompt": "Select Font:" },
             {
               "type": "select",
               "selectOptions": ['10pt', '12pt', '18pt', '24pt', '36pt', '48pt', '72pt'],
+              "valueFrom":"fontSize",
               "element": "fontSize",
               "prompt": "Size?"
             },
             {
               "type": "select",
               "selectOptions": ['normal', 'bold', 'bolder', 'lighter'],
+              "valueFrom":"fontWeight",
               "element": "fontWeight",
               "prompt": "Weight?"
             },
             {
               "type": "select",
               "selectOptions": ['normal', 'italic', 'oblique'],
+              "valueFrom":"fontStyle",
               "element": "fontStyle",
               "prompt": "Style"
             },
             {
               "type": "select",
               "selectOptions": ['left', 'center', 'right'],
+              "valueFrom":"textAlign",
               "element": "textAlign",
               "prompt": "Align:"
             },
-            { "type": "color", "element": "color", "prompt": "Color:" }
+            { "type": "color", "valueFrom":"color", "element": "color", "prompt": "Color:" }
           ]
         },
         {

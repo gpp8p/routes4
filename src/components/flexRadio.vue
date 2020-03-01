@@ -7,7 +7,7 @@
 </template>
 
 <script>
-  /* eslint-disable no-console */
+  /* eslint-disable no-console,no-debugger */
 
   export default {
     name: "flexRadio",
@@ -49,18 +49,22 @@
         this.$emit('configSelected', [this.configElement.element,'activated', this.radioOptions[idx]]);
       },
       getCurrentValue(){
-        if(typeof(this.currentValues[this.configElement.element])=='undefined'){
-          return false;
-        }else{
-          if(this.currentValues[this.configElement.element]=='checked'){
-//            debugger;
-            this.$emit('openCheckedByDefault',[this.configElement.element]);
-            return true;
-          }else{
-            return false;
+//        debugger;
+        var currentValuesEntries = Object.entries(this.currentValues);
+        for(var v = 0;v<currentValuesEntries.length;v++){
+          var thisCurrentValue = currentValuesEntries[v];
+          if(thisCurrentValue[0]==this.configElement.valueFrom){
+            var currentValuesEntriesParts = currentValuesEntries[v][1].split(":");
+            if(currentValuesEntriesParts[1]=='checked;'){
+              this.$emit('openCheckedByDefault',[this.configElement.element]);
+              return true;
+            }else{
+              return false;
+            }
           }
         }
       }
+
     }
   };
 </script>

@@ -58,18 +58,24 @@
       },
       getCurrentValue(){
 //        debugger;
-        if(typeof(this.currentValues[this.configElement.element])=='undefined'){
-          return false;
-        }else{
-          if(this.currentValues[this.configElement.element]=='checked'){
-//            debugger;
-            this.$emit('openCheckedByDefault',[this.configElement.element]);
-            return true;
-          }else{
-            return false;
+        var currentValuesEntries = Object.entries(this.currentValues);
+        for(var v = 0;v<currentValuesEntries.length;v++){
+          var thisCurrentValue = currentValuesEntries[v];
+          if(thisCurrentValue[0]==this.configElement.valueFrom){
+            var currentValuesEntriesParts = currentValuesEntries[v][1].split(":");
+            if(currentValuesEntriesParts[1]=='checked;'){
+              this.$emit('openCheckedByDefault',[this.configElement.element]);
+              return true;
+            }else{
+              return false;
+            }
           }
         }
       }
+
+
+
+
 
     }
   };
