@@ -5,7 +5,7 @@
     name: "CardBase",
     methods: {
       setCardData(cardData, cardDataElement) {
-      debugger;
+//      debugger;
         switch (cardDataElement) {
           case "saveConfiguration":
             this.saveCardConfiguration();
@@ -17,6 +17,10 @@
             this.cardTitle = cardData;
             this.configurationCurrentValues['title']=cardData;
             this.content.title = cardData;
+            break;
+          case "backgroundType":
+            this.configurationCurrentValues['backgroundType']="checked";
+            this.styling.backgroundType="checked";
             break;
           case "backgroundColor":
             this.$el.style.backgroundColor=cardData;
@@ -66,18 +70,20 @@
             this.configurationCurrentValues['roundIncluded']="checked";
             this.$el.style.borderRadius="6px";
             this.styling.borderRadius="border-radius:6px;";
+            this.styling.roundIncluded="border-radius:6px;";
             break;
           case "shadow":
             if(cardData=="activated"){
               this.configurationCurrentValues['shadow']="checked";
               this.$el.style.boxShadow="10px 20px 30px black";
               this.configurationCurrentValues['shadowSize']="default"
-              this.styling.boxShadow = "box-shadow:10px 20px 20px black;";
+              this.styling.boxShadow = "box-shadow:10px 20px 30px black;";
             }else{
               this.$el.style.boxShadow="";
               this.configurationCurrentValues['shadowSize']="";
             }
             break;
+/*
           case "shadowSize":
 //            debugger;
             switch(cardData){
@@ -102,42 +108,48 @@
                 break;
             }
             break;
+
           case "shadowColor":
-            switch(this.configurationCurrentValues['shadowSize']){
+            switch(this.configurationCurrentValues['shadowSize']) {
               case "5px":
-                this.$el.style.boxShadow="5px 10px 20px "+cardData;
-                this.configurationCurrentValues['shadowSize']="5px";
+                this.$el.style.boxShadow = "5px 10px 20px " + cardData;
+//                this.configurationCurrentValues['shadowSize'] = "5px";
                 break;
               case "10px":
-                this.$el.style.boxShadow="10px 10px 30px "+cardData;
-                this.configurationCurrentValues['shadowSize']="10px";
+                this.$el.style.boxShadow = "10px 10px 30px " + cardData;
+//                this.configurationCurrentValues['shadowSize'] = "10px";
                 break;
               case "20px":
-                this.$el.style.boxShadow="20px 20px 30px cardData";
-                this.configurationCurrentValues['shadowSize']="20px";
+                this.$el.style.boxShadow = "20px 20px 30px " + cardData;
+//                this.configurationCurrentValues['shadowSize'] = "20px";
                 break;
               case "Shadow Size?":
-                this.$el.style.boxShadow="10px 20px 30px cardData";
+                this.$el.style.boxShadow = "10px 20px 30px "+cardData;
                 break;
             }
+
             break;
+*/
 
           case "border":
             if(cardData=='activated'){
-              this.configurationCurrentValues['border']="checked";
+              this.configurationCurrentValues['border']="border:thin solid #0000FF";
               this.$el.style.border="thin solid #0000FF";
+              this.styling.border="border:thin solid #0000FF;";
             }else{
-              this.$el.style.border=cardData;
-              this.styling.border= "border:"+cardData+";";
+              this.$el.style.border="";
+              this.styling.border= "";
             }
             break;
           case "borderSize":
             this.configurationCurrentValues['borderSize']=cardData;
+            this.styling.borderSize="border-width:"+cardData+";";
             this.$el.style.borderWidth = cardData;
             break;
           case "borderColor":
             this.configurationCurrentValues['borderColor']=cardData;
             this.$el.style.borderColor = cardData;
+            this.styling.borderColor="border-color:"+cardData+";";
             break;
         }
         return this.cardKey;
@@ -157,7 +169,7 @@
           .get("http://localhost:8000/getCardDataById?cardId=" + cardId+"&&XDEBUG_SESSION_START=15122")
           .then(response => {
             // JSON responses are automatically parsed.
-          debugger;
+//          debugger;
             this.cardConfigParams = response.data[0];
             this.cardContent = response.data[1];
 
@@ -175,7 +187,10 @@
               this.content[thisCarContentKey]=thisCardContentValue;
               this.configurationCurrentValues[thisCarContentKey]= thisCardContentValue;
             }
-            this.currentValues = this.configurationCurrentValues;
+            this.$emit('cardDataLoaded',[this.styling, this.configurationCurrentValues]);
+
+
+//            debugger;
           })
           .catch(e => {
             console.log(e);

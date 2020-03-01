@@ -1,7 +1,7 @@
 <template>
     <span>
        <testRecursionComponent v-for="(configElement, index) in this.configurationElements[configurationLine].configurationElements"
-                               :currentValues="configurationCurrentValues"
+                               :currentValues="currentValues"
                                :configElement="configElement"
                                :key="index"
                                @configSelected="selectionHandler_flexConfig2"  ></testRecursionComponent>
@@ -25,7 +25,7 @@
       },
       currentValues:{
         type: Object,
-        required: false
+        required:true
       },
       cardType:{
         type: String,
@@ -42,7 +42,7 @@
         closeExpanderFunction: null,
         configurationLine: 0,
         configurationElements:this.configElement,
-        configurationCurrentValues: this.currentValues
+        configurationCurrentValues:this.currentValues
       }
     },
     methods:{

@@ -43,7 +43,7 @@ export default {
       configurationCurrentValues:{},
 /*
       configurationCurrentValues:{
-        "backgroundType":'checked',
+        "backgroundTypeColor":'checked',
         "backgroundColor":"#FFFFFF",
         "fontSize":"12pt",
         "fontWeight":"bold",
@@ -68,41 +68,35 @@ export default {
 
             {
               "type": "radio",
-              "element": "backgroundType",
+              "element": "backgroundTypeColor",
               "fieldName": "backgroundType",
               "prompt": "Background Type ?",
               "radioOptions": ['Color'],
-              "onClick": [{ "type": "color", "element": "backgroundColor", "prompt": "Background Color" }]
+              "onClick": [{ "type": "color", "element": "backgroundColor", "fieldName":"backgroundColor", "prompt": "Background Color" }]
             },
             {
               "type": "radio",
-              "element": "backgroundImage",
+              "element": "backgroundTypeImage",
               "fieldName": "backgroundType",
               "prompt": "Background Type ?",
               "radioOptions": ['Image'],
               "onClick": [{ "type": "file", "element": "backgroundImage", "prompt": "Upload Background Image ?" }]
             },
             {
-              "type": "checkbox", "element": "border", "prompt": "Include Border?",
+              "type": "checkbox", "element": "border", "fieldName":"borderInclude", "prompt": "Include Border?",
               "onClick": [{
                 "type": "select",
                 "selectOptions": ['thin', 'medium', 'thick'],
+                "fieldName":"borderSize",
                 "element": "borderSize",
                 "prompt": "Border Size?"
               },
                 { "type": "color", "element": "borderColor", "prompt": "Border Color" }]
             },
             {
-              "type": "checkbox", "element": "shadow", "prompt": "Shadow ?",
-              "onClick": [{
-                "type": "select",
-                "selectOptions": ['5px', '10px', '20px'],
-                "element": "shadowSize",
-                "prompt": "Shadow Size?"
-              },
-                { "type": "color", "element": "shadowColor", "prompt": "Shadow Color" }]
+              "type": "checkbox", "element": "shadow", "fieldName":"shadowInclude", "prompt": "Shadow ?"
             },
-            { "type": "checkbox", "element": "roundIncluded", "prompt": "Round Corners ?" }
+            { "type": "checkbox", "element": "roundIncluded", "fieldName":"includeRound", "prompt": "Round Corners ?" }
           ]
         },
         {
@@ -156,8 +150,10 @@ export default {
   },
   methods: {
     cellClicked: function() {
-      //        console.log(' blank-component clicked');
-      //        this.cstyle='background-color: #ffffff;';
+//      debugger;
+      this.styling={};
+      this.loadCardConfiguration(this.cardId);
+//      debugger;
       this.$emit("cardClick", [
         "cardClicked",
         this.cardKey,

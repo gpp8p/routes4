@@ -32,6 +32,14 @@
 //        selectOptions: []
       }
     },
+    watch:{
+      currentValues: function(){
+//          debugger;
+        this.checked = this.getCurrentValue();
+      }
+    },
+
+
 // eslint-disable-next-line no-console
     methods:{
       valueChanged(){

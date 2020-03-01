@@ -9,6 +9,8 @@
 </template>
 
 <script>
+  /* eslint-disable no-debugger */
+
   export default {
     name: "flexSelect",
     props: {
@@ -22,6 +24,14 @@
       }
 
     },
+    watch:{
+      currentValues: function(){
+          debugger;
+        this.selectValue = this.getCurrentValue();
+      }
+    },
+
+
     data(){
       return {
         selectionOptions: this.configElement.selectOptions,

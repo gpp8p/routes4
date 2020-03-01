@@ -32,6 +32,14 @@
           checked: this.getCurrentValue()
         }
     },
+
+    watch:{
+        currentValues: function(){
+//          debugger;
+          this.checked = this.getCurrentValue();
+        }
+    },
+
     methods:{
       clicked(event){
         if (event.target.checked){
@@ -49,6 +57,7 @@
         return this.checked;
       },
       getCurrentValue(){
+//        debugger;
         if(typeof(this.currentValues[this.configElement.element])=='undefined'){
           return false;
         }else{

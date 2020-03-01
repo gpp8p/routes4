@@ -13,6 +13,7 @@
       @storeValue="processClick"
       @cardClick="processCardClick"
       @configurationHasBeenSaved="configurationHasBeenSaved"
+      @cardDataLoaded="cardDataLoaded"
       ref="key"
       ></generic-card>
 
@@ -105,6 +106,9 @@ export default {
     },
     showGrid(){
       this.displayGrid=true;
+    },
+    cardDataLoaded(msg){
+      this.$emit('cardDataLoaded',msg);
     },
     reloadLayout: function(msg) {
       this.cardInstances = [];

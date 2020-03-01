@@ -28,6 +28,13 @@
         val:this.getCurrentValue()
       }
     },
+    watch:{
+      currentValues: function(){
+//          debugger;
+        this.val = this.getCurrentValue();
+      }
+    },
+
     methods:{
       newColor(evt){
         console.log(evt.target.value);

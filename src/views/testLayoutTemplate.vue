@@ -36,7 +36,7 @@
                 </LayoutListLine>
         </div>
         <div v-if="gridView" style = "position: relative;">
-            <editGrid2  :layoutId="selectedLayoutId"  ref="editGrid" @storeValue="cellClicked" @configurationHasBeenSaved="configurationHasBeenSaved"></editGrid2>
+            <editGrid2  :layoutId="selectedLayoutId"  ref="editGrid" @storeValue="cellClicked" @configurationHasBeenSaved="configurationHasBeenSaved" @cardDataLoaded="cardDataLoaded"></editGrid2>
         </div>
     </section>
     </span>
@@ -165,6 +165,11 @@
         this.$refs.editGrid.showGrid();
         this.viewStatus = this.VIEW_GRID_MENU;
       },
+      cardDataLoaded(msg){
+        console.log(msg);
+        this.cardCurrentConfigurationValues=msg[0];
+//        debugger;
+      },
       submitNewLayout(msg) {
 //        console.log(msg);
         axios.post('http://localhost:8000/createLayout?XDEBUG_SESSION_START=18938', {
@@ -221,7 +226,7 @@
       },
       cellClicked(msg){
         console.log(msg);
-        debugger;
+//        debugger;
         if(msg[0]=='topLeft'){
           this.$refs.gridInput.topLeftClicked();
           this.topLeftRow = msg[1];
@@ -312,7 +317,7 @@
 
         }
         if(msg[0]=='cardClicked'){
-          debugger;
+//          debugger;
           this.configCard=true;
           this.cardTypeBeingConfigured = msg[2]
           this.instancePositionBeingConfigured = msg[1];
@@ -321,8 +326,8 @@
           this.cardConfigurationElements=msg[4];
           this.cardCurrentConfigurationValues=msg[5];
           this.viewStatus = this.VIEW_HEADLINE_CONFIG;
-          var cardId = msg[7].id;
-          this.cardDataFunction(cardId, 'loadConfiguration' );
+//          var cardId = msg[7].id;
+//          this.cardDataFunction(cardId, 'loadConfiguration' );
 
 
 //          if(msg[2]=='greenComponent'| msg[2]=='blankComponent'|msg[2]=='headlineComponent'){

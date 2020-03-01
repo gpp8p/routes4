@@ -8,6 +8,7 @@
                           :cardProperties = cardProperties
                           @cardClick="processCardClick"
                           @configurationHasBeenSaved="configurationHasBeenSaved"
+                          @cardDataLoaded="cardDataLoaded"
                           ref="cardKey"
         ></blank-component>
         <green-component  v-if="cardType=='greenComponent'" class="genericCardStyle"
@@ -18,6 +19,7 @@
                           :cardProperties = cardProperties
                           @cardClick="processCardClick"
                           @configurationHasBeenSaved="configurationHasBeenSaved"
+                          @cardDataLoaded="cardDataLoaded"
                           ref="cardKey"
         ></green-component>
 
@@ -92,6 +94,9 @@
         }
         return false;
       },
+      cardDataLoaded(msg){
+        this.$emit('cardDataLoaded', msg);
+      }
     }
   };
 </script>

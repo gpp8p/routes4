@@ -3,12 +3,15 @@
 </template>
 
 <script>
+  /* eslint-disable no-debugger */
+
   import MyButton from "../components/MyButton.vue";
   export default {
     name: "saveConfigurationButton",
     components:{MyButton},
     methods:{
       saveConfiguration(){
+//        debugger;
         this.$emit('configSelected', ['saveConfiguration','activated']);
       }
     },
