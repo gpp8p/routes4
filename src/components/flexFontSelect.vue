@@ -31,6 +31,12 @@
         focused_font:this.getCurrentValue(),
       }
     },
+    watch:{
+      currentValues: function(){
+//          debugger;
+        this.val = this.getCurrentValue();
+      }
+    },
 // eslint-disable-next-line no-debugger
     methods:{
       fontSelected(){
@@ -41,7 +47,8 @@
         if(typeof(this.currentValues[this.configElement.element])=='undefined'){
           return '';
         }else{
-          return this.currentValues[this.configElement.element]
+          var currentValuesEntriesParts = this.currentValues[this.configElement.element].split(":");
+          return currentValuesEntriesParts[1].replace(';','');
         }
       }
 

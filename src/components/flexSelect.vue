@@ -26,7 +26,7 @@
     },
     watch:{
       currentValues: function(){
-          debugger;
+//          debugger;
         this.selectValue = this.getCurrentValue();
       }
     },
@@ -49,7 +49,8 @@
         if(typeof(this.currentValues[this.configElement.element])=='undefined'|this.currentValues[this.configElement.element]=='default'){
           return '';
         }else{
-          return this.currentValues[this.configElement.element]
+          var currentValuesEntriesParts = this.currentValues[this.configElement.element].split(":");
+          return currentValuesEntriesParts[1].replace(';','');
         }
       }
     }

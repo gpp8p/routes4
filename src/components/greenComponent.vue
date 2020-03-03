@@ -154,6 +154,7 @@ export default {
 
 
   },
+
   methods: {
     cellClicked: function() {
 //      debugger;
@@ -168,7 +169,10 @@ export default {
         this.cardConfiguration,
         this.configurationCurrentValues,
       ]);
-      this.cardTitle = "";
+      if(this.cardTitle=='Click on this card to set it up (green card)'){
+        this.cardTitle = "";
+      }
+
     },
     refId: function() {
       return "card" + this.cardId;
@@ -178,8 +182,9 @@ export default {
       if ((typeof this.cardProperties === "undefined") | (this.cardProperties == "")) {
         return "Click on this card to set it up (green card)";
       }else {
-        var thisProp = this.cardProperties.split(String.fromCharCode(30));
-        return thisProp[1];
+        var colonDelimiterLocatedAt= this.cardProperties.indexOf(":");
+        var thisProp = this.cardProperties.substr(colonDelimiterLocatedAt+1);
+        return thisProp;
       }
     }
   }

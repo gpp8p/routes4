@@ -25,17 +25,25 @@
         value: this.getCurrentValue()
       }
     },
+    watch:{
+      currentValues: function(){
+//          debugger;
+        this.val = this.getCurrentValue();
+      }
+    },
     methods:{
       titleEntered(){
+ //       debugger;
         this.currentValues[this.configElement.element]=this.value;
         this.$emit('configSelected', [this.configElement.element, this.value, null, null]);
       },
       getCurrentValue(){
-        debugger;
+//        debugger;
         if(typeof(this.currentValues[this.configElement.element])=='undefined'&& this.value=='') {
           return '';
         }else{
-          return this.currentValues[this.configElement.element]
+          var currentValuesEntriesParts = this.currentValues[this.configElement.element].split(":");
+          return currentValuesEntriesParts[1].replace(';','');
         }
       }
 // eslint-disable-next-line no-debugger

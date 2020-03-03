@@ -1,11 +1,11 @@
 <script>
-  /* eslint-disable no-debugger,no-console */
+  /* eslint-disable no-debugger,no-console,no-undef */
   import axios from "axios";
   export default {
     name: "CardBase",
     methods: {
       setCardData(cardData, cardDataElement) {
-//      debugger;
+      debugger;
         switch (cardDataElement) {
           case "saveConfiguration":
             this.saveCardConfiguration();
@@ -16,7 +16,8 @@
           case "title":
             this.cardTitle = cardData;
             this.configurationCurrentValues['title']=cardData;
-            this.content.title = cardData;
+            this.content.title = "title:"+cardData;
+            delete this.styling.title;
             break;
           case "backgroundType":
             this.configurationCurrentValues['backgroundType']="checked";
@@ -133,6 +134,9 @@
 
           case "border":
             if(cardData=='activated'){
+              this.configurationCurrentValues['borderInclude']="checked";
+              this.styling.borderInclude="borderInclude:checked;";
+
               this.configurationCurrentValues['border']="border:thin solid #0000FF";
               this.$el.style.border="thin solid #0000FF";
               this.styling.border="border:thin solid #0000FF;";
@@ -169,7 +173,7 @@
           .get("http://localhost:8000/getCardDataById?cardId=" + cardId+"&&XDEBUG_SESSION_START=15122")
           .then(response => {
             // JSON responses are automatically parsed.
-//          debugger;
+          debugger;
             this.cardConfigParams = response.data[0];
             this.cardContent = response.data[1];
 
@@ -182,8 +186,8 @@
             }
             this.content={};
             for( c=0;c<this.cardContent.length;c++){
-              var thisCarContentKey = this.cardConfigParams[c][0];
-              var thisCardContentValue= this.cardConfigParams[c][1];
+              var thisCarContentKey = this.cardContent[c][0];
+              var thisCardContentValue= this.cardContent[c][1];
               this.content[thisCarContentKey]=thisCardContentValue;
               this.configurationCurrentValues[thisCarContentKey]= thisCardContentValue;
             }

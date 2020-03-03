@@ -167,7 +167,7 @@
       },
       cardDataLoaded(msg){
         console.log(msg);
-        this.cardCurrentConfigurationValues=msg[0];
+        this.cardCurrentConfigurationValues=msg[1];
 //        debugger;
       },
       submitNewLayout(msg) {
@@ -213,11 +213,13 @@
           this.cardDataFunction=null;
           this.showLayoutList();
         }else{
+ //         debugger;
           this.cardDataFunction(msg[1], msg[0]);
         }
       },
       textEntered(msg){
         console.log(msg);
+        debugger;
         this.cardDataFunction(msg[0],'title');
       },
       editLayout(){
