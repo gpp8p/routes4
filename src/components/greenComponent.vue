@@ -96,9 +96,9 @@ export default {
                 { "type": "color", "valueFrom":"borderColor", "element": "borderColor", "prompt": "Border Color" }]
             },
             {
-              "type": "checkbox", "element": "shadow", "valueFrom":"shadowInclude", "prompt": "Shadow ?"
+              "type": "checkbox", "element": "shadow", "valueFrom":"shadow", "prompt": "Shadow ?"
             },
-            { "type": "checkbox", "element": "roundIncluded", "valueFrom":"includeRound", "prompt": "Round Corners ?" }
+            { "type": "checkbox", "element": "roundIncluded", "valueFrom":"roundIncluded", "prompt": "Round Corners ?" }
           ]
         },
         {

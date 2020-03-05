@@ -46,11 +46,13 @@
         this.$emit('configSelected', [this.configElement.element, this.$refs.thisSelect.value]);
       },
       getCurrentValue(){
+        debugger;
         if(typeof(this.currentValues[this.configElement.element])=='undefined'|this.currentValues[this.configElement.element]=='default'){
           return '';
         }else{
-          var currentValuesEntriesParts = this.currentValues[this.configElement.element].split(":");
-          return currentValuesEntriesParts[1].replace(';','');
+          return this.currentValues[this.configElement.element];
+  //        var currentValuesEntriesParts = this.currentValues[this.configElement.element].split(":");
+  //        return currentValuesEntriesParts[1].replace(';','');
         }
       }
     }

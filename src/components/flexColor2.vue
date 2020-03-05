@@ -30,7 +30,7 @@
     },
     watch:{
       currentValues: function(){
-//          debugger;
+          debugger;
         this.val = this.getCurrentValue();
       }
     },
@@ -42,12 +42,11 @@
 
       },
       getCurrentValue(){
-//        debugger;
+        debugger;
         if(typeof(this.currentValues[this.configElement.element])=='undefined'){
           return '#FFFFFF';
         }else{
-          var currentValuesEntriesParts = this.currentValues[this.configElement.element].split(":");
-          return currentValuesEntriesParts[1].replace(';','');
+          return this.currentValues[this.configElement.element];
         }
       }
 

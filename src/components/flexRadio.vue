@@ -54,8 +54,8 @@
         for(var v = 0;v<currentValuesEntries.length;v++){
           var thisCurrentValue = currentValuesEntries[v];
           if(thisCurrentValue[0]==this.configElement.valueFrom){
-            var currentValuesEntriesParts = currentValuesEntries[v][1].split(":");
-            if(currentValuesEntriesParts[1]=='checked;'){
+            var currentValuesEntriesParts = currentValuesEntries[v][1];
+            if(currentValuesEntriesParts=='checked'){
               this.$emit('openCheckedByDefault',[this.configElement.element]);
               return true;
             }else{

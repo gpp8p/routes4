@@ -47,8 +47,9 @@
         if(typeof(this.currentValues[this.configElement.element])=='undefined'){
           return '';
         }else{
-          var currentValuesEntriesParts = this.currentValues[this.configElement.element].split(":");
-          return currentValuesEntriesParts[1].replace(';','');
+          return this.currentValues[this.configElement.element];
+//          var currentValuesEntriesParts = this.currentValues[this.configElement.element].split(":");
+//          return currentValuesEntriesParts[1].replace(';','');
         }
       }
 
