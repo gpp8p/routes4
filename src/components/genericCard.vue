@@ -108,6 +108,7 @@
       },
       cardPropertySet(msg){
         console.log(msg);
+        this.setCardData(msg[0], msg[1]);
       }
     }
   };
