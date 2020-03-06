@@ -53,8 +53,9 @@
           //open expander function
           msg[2](msg[0]);
           this.closeExpanderFunction = msg[3];
-        }else if(msg[3]== 'deactivated'){
-          this.closeExpanderFunction();
+        }else if(msg[1]== 'deactivated'){
+          msg[3](msg[0]);
+          //          this.closeExpanderFunction();
         }
         this.$emit('configSelected',[msg[0],msg[1],this.openExpander, this.closeExpander ]);
       },

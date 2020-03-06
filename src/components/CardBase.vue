@@ -5,7 +5,7 @@
     name: "CardBase",
     methods: {
       setCardData(cardData, cardDataElement) {
-      debugger;
+//      debugger;
         switch (cardDataElement) {
           case "saveConfiguration":
             this.saveCardConfiguration();
@@ -25,6 +25,7 @@
             break;
           case "backgroundColor":
             this.$el.style.backgroundColor=cardData;
+            this.$emit('cardPropertySet',[cardData, cardDataElement]);
             this.configurationCurrentValues['backgroundColor']=cardData;
             this.styling.backgroundColor="background-color:"+cardData+";";
             break
@@ -36,16 +37,19 @@
             this.$el.style.backgroundSize="100% 100%";
             this.configurationCurrentValues['backgroundSize']="100% 100%";
             this.styling.backgroundSize="background-size:100% 100%;";
+            this.$emit('cardPropertySet',[cardData, cardDataElement]);
             break;
           case "fontFamily":
             this.$el.style.fontFamily=cardData;
             this.configurationCurrentValues['fontFamily']=cardData;
             this.styling.fontFamily = "font-family:"+cardData+";";
+            this.$emit('cardPropertySet',[cardData, cardDataElement]);
             break;
           case "fontSize":
             this.$el.style.fontSize=cardData;
             this.configurationCurrentValues['fontSize']=cardData;
             this.styling.fontSize= "font-size:"+cardData+";";
+            this.$emit('cardPropertySet',[cardData, cardDataElement]);
             break;
           case "fontWeight":
             this.$el.style.fontWeight=cardData;
@@ -56,22 +60,33 @@
             this.$el.style.fontStyle=cardData;
             this.configurationCurrentValues['fontStyle']=cardData;
             this.styling.fontStyle= "font-style:"+cardData+";";
+            this.$emit('cardPropertySet',[cardData, cardDataElement]);
             break;
           case "color":
             this.$el.style.color=cardData;
             this.configurationCurrentValues['color']=cardData;
             this.styling.color= "color:"+cardData+";";
+            this.$emit('cardPropertySet',[cardData, cardDataElement]);
             break;
           case "textAlign":
             this.$el.style.textAlign=cardData;
             this.configurationCurrentValues['textAlign']=cardData;
             this.styling.textAlign= "text-align:"+cardData+";";
+            this.$emit('cardPropertySet',[cardData, cardDataElement]);
             break;
           case "roundIncluded":
-            this.configurationCurrentValues['roundIncluded']="checked";
-            this.$el.style.borderRadius="8px";
-            this.styling.borderRadius="border-radius:8px;";
-            this.styling.roundIncluded="roundIncluded:checked;";
+            if(cardData=="activated") {
+              this.configurationCurrentValues['roundIncluded'] = "checked";
+              this.$el.style.borderRadius = "8px";
+              this.styling.borderRadius = "border-radius:8px;";
+              this.styling.roundIncluded = "roundIncluded:checked;";
+            }else{
+              this.configurationCurrentValues['roundIncluded'] = "";
+              this.$el.style.borderRadius = "";
+              delete this.styling.borderRadius;
+              delete this.styling.roundIncluded;
+            }
+            this.$emit('cardPropertySet',[cardData, cardDataElement]);
             break;
           case "shadow":
             if(cardData=="activated"){
@@ -86,34 +101,50 @@
               delete this.styling.shadow;
               this.configurationCurrentValues['shadowSize']="";
             }
+            this.$emit('cardPropertySet',[cardData, cardDataElement]);
             break;
           case "border":
             if(cardData=='activated'){
               this.configurationCurrentValues['borderInclude']="checked";
               this.styling.borderInclude="borderInclude:checked;";
-
+              this.configurationCurrentValues['borderColor']='#0000FF';
               this.configurationCurrentValues['border']="border:thin solid #0000FF";
               this.$el.style.border="thin solid #0000FF";
               this.styling.border="border:thin solid #0000FF;";
             }else{
-              this.$el.style.border="";
+              this.configurationCurrentValues['borderSize']='';
+              this.configurationCurrentValues['borderColor']='#0000FF';
+              this.configurationCurrentValues['borderInclude']="";
+              this.configurationCurrentValues['border']="";
+              this.$el.style.border=null;
+              this.$el.style.borderWidth=null;
+              this.$el.style.borderColor=null;
               delete this.styling.border;
+              delete this.styling.borderSize;
+              delete this.styling.borderColor;
               delete this.styling.borderInclude;
             }
+            this.$emit('cardPropertySet',[cardData, cardDataElement]);
             break;
           case "borderSize":
             this.configurationCurrentValues['borderSize']=cardData;
             this.styling.borderSize="border-width:"+cardData+";";
             this.$el.style.borderWidth = cardData;
+            this.$emit('cardPropertySet',[cardData, cardDataElement]);
             break;
           case "borderColor":
             this.configurationCurrentValues['borderColor']=cardData;
             this.$el.style.borderColor = cardData;
             this.styling.borderColor="border-color:"+cardData+";";
+            this.$emit('cardPropertySet',[cardData, cardDataElement]);
             break;
         }
         return this.cardKey;
       },
+
+
+
+
       reloadCardData(cStyle){
 //        console.log(cStyle);
         var cssPropertyArray = cStyle.split(';');

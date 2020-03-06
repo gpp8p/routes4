@@ -9,6 +9,7 @@
                           @cardClick="processCardClick"
                           @configurationHasBeenSaved="configurationHasBeenSaved"
                           @cardDataLoaded="cardDataLoaded"
+                          @cardPropertySet="cardPropertySet"
                           ref="cardKey"
         ></blank-component>
         <green-component  v-if="cardType=='greenComponent'" class="genericCardStyle"
@@ -20,6 +21,7 @@
                           @cardClick="processCardClick"
                           @configurationHasBeenSaved="configurationHasBeenSaved"
                           @cardDataLoaded="cardDataLoaded"
+                          @cardPropertySet="cardPropertySet"
                           ref="cardKey"
         ></green-component>
 
@@ -36,9 +38,11 @@
 
   import BlankComponent from "./blankComponent";
   import GreenComponent from "./greenComponent";
+  import GenericCardBase from "./GenericCardBase.vue";
 //  import BlankComponent2 from "./simpleCard";
   export default {
     name: "genericCard",
+    extends: GenericCardBase,
     components: { BlankComponent, GreenComponent},
     props: {
       cardType: {
@@ -70,6 +74,11 @@
         required: false
       }
     },
+    data(){
+      return {
+
+      }
+    },
     methods: {
       processClick(msg){
 //        debugger;
@@ -96,6 +105,9 @@
       },
       cardDataLoaded(msg){
         this.$emit('cardDataLoaded', msg);
+      },
+      cardPropertySet(msg){
+        console.log(msg);
       }
     }
   };
