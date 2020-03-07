@@ -129,14 +129,19 @@
           case "borderSize":
             this.configurationCurrentValues['borderSize']=cardData;
             this.styling.borderSize="border-width:"+cardData+";";
+
+            this.styling.border = "border:"+cardData+" solid "+this.configurationCurrentValues['borderColor']+";";
+            var borderSet = cardData+" solid "+this.configurationCurrentValues['borderColor'];
 //            this.$el.style.borderWidth = cardData;
-            this.$emit('cardPropertySet',[cardData, cardDataElement]);
+            this.$emit('cardPropertySet',[borderSet, 'borderSize']);
             break;
           case "borderColor":
             this.configurationCurrentValues['borderColor']=cardData;
+            var borderColorSet = this.configurationCurrentValues['borderSize']+" solid "+this.configurationCurrentValues['borderColor'];
 //            this.$el.style.borderColor = cardData;
             this.styling.borderColor="border-color:"+cardData+";";
-            this.$emit('cardPropertySet',[cardData, cardDataElement]);
+            this.styling.border = "border:"+borderColorSet+";";
+            this.$emit('cardPropertySet',[borderColorSet, 'borderColor']);
             break;
         }
         return this.cardKey;
