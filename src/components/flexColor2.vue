@@ -1,8 +1,13 @@
 <template>
-        <span style="margin-top:  3px;">
-        {{configElement.prompt}}<input  type="color" @change="newColor" :value="val"/>
-        </span>
+        <span>
+                <label class="input-color-label" for="input-color">
+                     {{configElement.prompt}}
+                </label>
 
+                <span class="input-color-container">
+                      <input  id="input-color" type="color" class="input-color" @change="newColor" :value="val"/>
+                </span>
+        </span>
 </template>
 
 <script>
@@ -55,5 +60,31 @@
 </script>
 
 <style scoped>
+        .input-color-container {
+                position: relative;
+                overflow: hidden;
+                width: 30px;
+                height: 20px;
+                top: 2px;
+                margin-right: 5px;
+                border: solid 2px #ddd;
+                border-radius: 40px;
+        }
+
+        .input-color {
+                position: absolute;
+                right: -8px;
+                top: -5px;
+                width: 36px;
+                height: 26px;
+                border: none;
+        }
+
+        .input-color-label {
+                cursor: pointer;
+                text-decoration: underline;
+                color: #3498db;
+                margin-right: 30px;
+        }
 
 </style>

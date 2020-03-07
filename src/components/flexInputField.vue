@@ -35,7 +35,7 @@
       titleEntered(){
  //       debugger;
         this.currentValues[this.configElement.element]=this.value;
-        this.$emit('configSelected', [this.configElement.element, this.value, null, null]);
+        this.$emit('configSelected', [this.configElement.element, this.value, null, null,true]);
       },
       getCurrentValue(){
 //        debugger;

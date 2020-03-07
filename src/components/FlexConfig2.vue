@@ -47,6 +47,7 @@
     },
     methods:{
       selectionHandler_flexConfig2(msg){
+        debugger;
         console.log('selectionHandler');
         console.log(msg);
         if (msg[1] == 'activated'){
@@ -56,6 +57,11 @@
         }else if(msg[1]== 'deactivated'){
           msg[3](msg[0]);
           //          this.closeExpanderFunction();
+        }
+        if(typeof msg[4] != 'undefined'){
+          if(msg[4]==true){
+            this.bumpLine(['next']);
+          }
         }
         this.$emit('configSelected',[msg[0],msg[1],this.openExpander, this.closeExpander ]);
       },
