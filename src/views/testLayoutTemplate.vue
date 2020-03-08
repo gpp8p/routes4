@@ -298,6 +298,7 @@
 //            debugger;
             this.$refs.editGrid.reloadLayout(this.layoutId);
 
+
 //            this.$refs.gridInput.
 //            this.layoutSelected(response.data);
 //            this.$refs.editGrid.cancelLayoutEdit();

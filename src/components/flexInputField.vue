@@ -33,17 +33,21 @@
     },
     methods:{
       titleEntered(){
- //       debugger;
+//        debugger;
         this.currentValues[this.configElement.element]=this.value;
         this.$emit('configSelected', [this.configElement.element, this.value, null, null,true]);
       },
       getCurrentValue(){
-//        debugger;
+        debugger;
         if(typeof(this.currentValues[this.configElement.element])=='undefined'&& this.value=='') {
           return '';
         }else{
           var currentValuesEntriesParts = this.currentValues[this.configElement.element].split(":");
-          return currentValuesEntriesParts[1].replace(';','');
+          if(typeof(currentValuesEntriesParts[1])=='undefined'){
+            return currentValuesEntriesParts[0];
+          }else{
+            return currentValuesEntriesParts[1].replace(';','');
+          }
         }
       }
 // eslint-disable-next-line no-debugger

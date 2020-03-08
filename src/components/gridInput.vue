@@ -17,7 +17,7 @@
             </select>
             <MyButton @myButtonClicked="cancelClicked" buttonLabel="Cancel"></MyButton>
         </span>
-        <span v-if="this.gridInputStatus==this.GRID_TYPE_ENTERED">Save this card ? <MyButton @myButtonClicked="saveButtonClicked" buttonLabel="Submit"></MyButton><MyButton @myButtonClicked="cancelClicked" buttonLabel="Cancel"></MyButton></span>
+        <span v-if="this.gridInputStatus==this.GRID_TYPE_ENTERED">Save this card ? <MyButton @myButtonClicked="saveButtonClicked" buttonLabel="Save Blank Card"></MyButton><MyButton @myButtonClicked="cancelClicked" buttonLabel="Cancel"></MyButton></span>
         <span v-if="errorCondition" class="errorMsg">{{this.errorMessage}}</span>
         <span v-if="waitCondition" class="prompt">Please wait...</span>
 
@@ -117,6 +117,7 @@
         saveButtonClicked(){
           this.gridInputStatus=this.GRID_WAITINGFORCLICK;
           this.$emit('storeValue', ['insertCard', this.nameField.value,0 ]);
+          this.gridInputStatus=this.GRID_MENU;
         },
         cancelExitClicked(){
           this.gridInputStatus=this.GRID_MENU;
