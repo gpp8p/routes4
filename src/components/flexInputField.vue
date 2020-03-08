@@ -38,16 +38,13 @@
         this.$emit('configSelected', [this.configElement.element, this.value, null, null,true]);
       },
       getCurrentValue(){
-        debugger;
+//        debugger;
         if(typeof(this.currentValues[this.configElement.element])=='undefined'&& this.value=='') {
           return '';
         }else{
-          var currentValuesEntriesParts = this.currentValues[this.configElement.element].split(":");
-          if(typeof(currentValuesEntriesParts[1])=='undefined'){
-            return currentValuesEntriesParts[0];
-          }else{
-            return currentValuesEntriesParts[1].replace(';','');
-          }
+          var colonDelimiterLocatedAt= this.currentValues[this.configElement.element].indexOf(":");
+          var thisProp = this.currentValues[this.configElement.element].substr(colonDelimiterLocatedAt+1);
+          return thisProp;
         }
       }
 // eslint-disable-next-line no-debugger

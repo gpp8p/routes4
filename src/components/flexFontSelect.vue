@@ -44,6 +44,7 @@
         this.$emit('configSelected', [this.configElement.element, this.$refs.fontSelect.value]);
       },
       getCurrentValue(){
+//        debugger;
         if(typeof(this.currentValues[this.configElement.element])=='undefined'){
           return '';
         }else{

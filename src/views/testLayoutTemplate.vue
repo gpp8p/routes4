@@ -52,6 +52,7 @@
   import editGrid2 from '../components/editGrid2';
   import gridInput from '../components/gridInput.vue';
   import flexConfig2 from "../components/FlexConfig2.vue";
+
 //  import headlineComponent from '../components/headlineComponent.vue';
 //  import HeadlineConfig from '../components/ConfigureHeadline.vue';
 //  import ConfigurationComponent  from '../components/ConfiguationComponent.vue';
@@ -189,11 +190,13 @@
       },
 
       saveBlankLayout_new(msg){
-        axios.post('http://localhost:8000/createLayoutNoBlanks', {
+//        debugger;
+        axios.post('http://localhost:8000/createLayoutNoBlanks?XDEBUG_SESSION_START=17516', {
           name: msg[0],
           description: msg[1],
           height: msg[2],
-          width:msg[3]
+          width:msg[3],
+          backgroundColor:msg[4]
         }).then(response=>
         {
 //            debugger;
