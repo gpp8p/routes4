@@ -77,7 +77,7 @@ export default {
     });
   },
   methods: {
-    layoutGridParameters(height, width) {
+    layoutGridParameters(height, width, backgroundColor) {
       var heightSize = (95 / height).toFixed(2);
       var widthSize = (98 / width).toFixed(2);
       var gridHeightCss = "grid-template-rows: ";
@@ -90,7 +90,7 @@ export default {
         gridWidthCss = gridWidthCss + widthSize + "% ";
       }
       var gridCss =
-        "display: grid; grid-gap: 3px; background-color: #dbddd0; height: 90vh; color: #ffcd90; " +
+        "display: grid; grid-gap: 3px; background-color: "+backgroundColor+"; height: 90vh; color: #ffcd90; " +
         gridHeightCss +
         ";" +
         gridWidthCss +
@@ -111,6 +111,7 @@ export default {
       this.$emit('cardDataLoaded',msg);
     },
     reloadLayout: function(msg) {
+//      debugger;
       this.cardInstances = [];
       this.displayGrid=true;
       this.layoutId = msg;
@@ -120,14 +121,15 @@ export default {
         .get("http://localhost:8000/getLayout?layoutId=" + this.layoutId+"&&XDEBUG_SESSION_START=15122")
         .then(response => {
           // JSON responses are automatically parsed.
-//          debugger;
+          debugger;
           this.cardInstances = response.data.cards;
           this.gridParamDefinition = this.layoutGridParameters(
             response.data.layout.height,
-            response.data.layout.width
+            response.data.layout.width,
+            response.data.layout.backgroundColor
           );
 // build a blank layout using the dimensions of the layout loaded
-          var newBlankLayout = this.makeBlankLayout(response.data.layout.height,response.data.layout.width, response.data.layout.description, response.data.layout.menu_label)
+          var newBlankLayout = this.makeBlankLayout(response.data.layout.height,response.data.layout.width, response.data.layout.description, response.data.layout.menu_label, response.data.layout.backgroundColor)
 //          console.log(newBlankLayout);
           var layoutGrid = newBlankLayout[3];
           var cardsToDelete = [];
@@ -193,7 +195,8 @@ export default {
           this.cardInstances = response.data.cards;
           this.gridParamDefinition = this.layoutGridParameters(
             response.data.layout.height,
-            response.data.layout.width
+            response.data.layout.width,
+            response.data.layout.backgroundColor
           );
         })
         .catch(e => {
@@ -209,7 +212,8 @@ export default {
       this.cardInstances = blankCardInstances.cards;
       this.gridParamDefinition = this.layoutGridParameters(
         blankCardInstances.layout.height,
-        blankCardInstances.layout.width
+        blankCardInstances.layout.width,
+        blankCardInstances.layout.backgroundColor
       );
 //      console.log('gridParams:'+this.gridParamDefinition);
 
@@ -391,7 +395,7 @@ export default {
       this.$emit('storeValue', this.makeBlankLayout(height,width, description, menu_label));
     },
 
-    makeBlankLayout(height,width, description, menu_label){
+    makeBlankLayout(height,width, description, menu_label, backgroundColor){
 //      debugger;
       this.layoutGrid = [];
       var newCards = [];
@@ -410,7 +414,7 @@ export default {
         this.layoutGrid.push(gridRow);
       }
       var newLayout = {cards: newCards, layout: {description:description, menu_label: menu_label, height: (height-1), width:(width-1)}};
-      var newGridParameters = this.layoutGridParameters(height, width);
+      var newGridParameters = this.layoutGridParameters(height, width, backgroundColor);
       return ['newBlankGrid', newLayout, newGridParameters, this.layoutGrid ];
     },
 

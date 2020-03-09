@@ -76,7 +76,7 @@
     },
     methods: {
       getBackground(){
-        debugger;
+//        debugger;
         if(typeof(this.backgroundColor)=='undefined'){
           return '#DBAA6E';
         }else{
@@ -84,7 +84,7 @@
         }
       },
       bumpStatus() {
-        debugger;
+//        debugger;
         switch (this.statusNow) {
           case this.INPUT_MENU_LABEL:
             if (this.menuLabelInput.value == '') {
@@ -164,8 +164,6 @@
       },
       colorIsSelected(msg){
 //        debugger;
-        this.doColorPick=false;
-        this.statusNow=this.statusSave;
         this.selectedBackgroundColor = msg[0];
       }
     },

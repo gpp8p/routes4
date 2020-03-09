@@ -38,7 +38,8 @@
     methods: {
       newColor(evt) {
         console.log(evt.target.value);
-        this.$emit('configSelected', [this.configElement.element, evt.target.value]);
+        this.currentValues=evt.target.value;
+        this.$emit("colorSelected",[this.currentValues]);
 
       },
       getCurrentValue() {
