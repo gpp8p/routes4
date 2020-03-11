@@ -5,7 +5,7 @@
     name: "CardBase",
     methods: {
       setCardData(cardData, cardDataElement) {
-//      debugger;
+      debugger;
         switch (cardDataElement) {
           case "saveConfiguration":
             this.saveCardConfiguration();
@@ -23,6 +23,12 @@
             this.configurationCurrentValues['backgroundType']="checked";
             this.styling.backgroundType="backgroundType:checked;";
             break;
+          case 'backgroundTypeColor':
+            this.configurationCurrentValues['backgroundTypeColor']="checked";
+            this.styling.backgroundTypeImage="backgroundTypeColor:checked;"
+            delete this.styling.backgroundTypeImage;
+            break;
+
           case "backgroundColor":
 //            this.$el.style.backgroundColor=cardData;
             this.$emit('cardPropertySet',[cardData, cardDataElement]);
@@ -30,14 +36,20 @@
             this.styling.backgroundColor="background-color:"+cardData+";";
             break
           case "backgroundImage":
-            var backGroundImageReference = "url('" + cardData + "')";
+            var backGroundImageReference = "url(http://localhost:8000/storage/"+cardData+")";
+//            var backGroundImageReference = "url('" + cardData + "')";
 //            this.$el.style.backgroundImage = backGroundImageReference;
             this.configurationCurrentValues['backgroundImage']=backGroundImageReference;
-            this.styling.backgroundImage = "background-image:"+ cardData+";";
+            this.styling.backgroundImage = "background-image:"+ backGroundImageReference+";";
 //            this.$el.style.backgroundSize="100% 100%";
             this.configurationCurrentValues['backgroundSize']="100% 100%";
             this.styling.backgroundSize="background-size:100% 100%;";
-            this.$emit('cardPropertySet',[cardData, cardDataElement]);
+            this.$emit('cardPropertySet',[backGroundImageReference, cardDataElement]);
+            break;
+          case 'backgroundTypeImage':
+            this.configurationCurrentValues['backgroundTypeImage']="checked";
+            this.styling.backgroundTypeImage="backgroundTypeImage:checked;"
+            delete this.styling.backgroundTypeColor;
             break;
           case "fontFamily":
 //            this.$el.style.fontFamily=cardData;

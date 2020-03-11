@@ -14,6 +14,7 @@
                 <option value="select">Select Card Type</option>
                 <option  value="blankComponent">Blue Card</option>
                 <option  value="greenComponent">Green Card</option>
+                <option  value="cktestComponent">CK-Editor Card</option>
             </select>
             <MyButton @myButtonClicked="cancelClicked" buttonLabel="Cancel"></MyButton>
         </span>

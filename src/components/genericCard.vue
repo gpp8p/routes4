@@ -24,6 +24,19 @@
                           @cardPropertySet="cardPropertySet"
                           ref="cardKey"
         ></green-component>
+        <cktestComponent  v-if="cardType=='cktestComponent'" class="genericCardStyle"
+                          :card-style=cardStyle
+                          :card-id=cardId
+                          :card-key=cardKey
+                          :card-position=cardPosition
+                          :cardProperties = cardProperties
+                          @cardClick="processCardClick"
+                          @configurationHasBeenSaved="configurationHasBeenSaved"
+                          @cardDataLoaded="cardDataLoaded"
+                          @cardPropertySet="cardPropertySet"
+                          ref="cardKey"
+        ></cktestComponent>
+
 
 </span>
 
@@ -38,12 +51,13 @@
 
   import BlankComponent from "./blankComponent";
   import GreenComponent from "./greenComponent";
+  import cktestComponent from "./cktestComponent.vue"
   import GenericCardBase from "./GenericCardBase.vue";
 //  import BlankComponent2 from "./simpleCard";
   export default {
     name: "genericCard",
     extends: GenericCardBase,
-    components: { BlankComponent, GreenComponent},
+    components: { BlankComponent, GreenComponent, cktestComponent},
     props: {
       cardType: {
         type: String,
