@@ -43,7 +43,7 @@
         /*
           Make the request to the POST /single-file URL
         */
-        axios.post( 'http://localhost:8000/imageUpload?XDEBUG_SESSION_START=15617',
+        axios.post( 'http://localhost:8000/imageUpload?XDEBUG_SESSION_START=19403',
           formData,
           {
             headers: {

@@ -1,6 +1,6 @@
 <template>
   <div v-on:click="cellClicked" >
-    <vue-ckeditor type="classic" v-model="value1" :editors="editors"></vue-ckeditor>
+    <vue-ckeditor type="classic" v-model="editorData" :config="editorConfig" :editors="editors"></vue-ckeditor>
   </div>
 </template>
 
@@ -10,6 +10,12 @@
 import CardBase from "../components/CardBase.vue";
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import VueCkeditor from 'vue-ckeditor5'
+//import EssentialsPlugin from '@ckeditor/ckeditor5-essentials/src/essentials';
+//import BoldPlugin from '@ckeditor/ckeditor5-basic-styles/src/bold';
+//import ItalicPlugin from '@ckeditor/ckeditor5-basic-styles/src/italic';
+//import LinkPlugin from '@ckeditor/ckeditor5-link/src/link';
+//import ParagraphPlugin from '@ckeditor/ckeditor5-paragraph/src/paragraph';
+
 export default {
   name: "cktestComponent",
   extends: CardBase,
@@ -48,9 +54,12 @@ export default {
       styling: {},
       content: {},
       configurationCurrentValues:{},
+//      editor: ClassicEditor,
       editors: {
-        classic: ClassicEditor
+        classic: ClassicEditor,
       },
+      editorData: '<p>Content of the editor.</p>',
+
 /*
       configurationCurrentValues:{
         "backgroundTypeColor":'checked',
@@ -127,21 +136,7 @@ export default {
   methods: {
     cellClicked: function() {
 //      debugger;
-      this.styling={};
-      this.loadCardConfiguration(this.cardId);
-//      debugger;
-      this.$emit("cardClick", [
-        "cardClicked",
-        this.cardKey,
-        "greenComponent",
-        this.setCardData,
-        this.cardConfiguration,
-        this.configurationCurrentValues,
-      ]);
-      if(this.cardTitle=='Click on this card to set it up (green card)'){
-        this.cardTitle = "";
-      }
-
+      console.log('cktestComponent was clicked');
     },
     refId: function() {
       return "card" + this.cardId;

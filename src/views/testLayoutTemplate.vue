@@ -1,5 +1,18 @@
 <template>
     <span class="layoutScreen">
+      <div v-if="this.viewStatus==this.VIEW_FLOATING_CONFIG" id="infoi" v-bind:style='styleObject' >
+        <config-component
+                @newLocation="this.setNewLocation"
+                @startDrag="this.startDrag"
+                :cardType="this.cardTypeBeingConfigured"
+                :currentValues="this.cardCurrentConfigurationValues"
+                :configElement="this.cardConfigurationElements"
+                :instanceNumberBeingConfigured="this.instancePositionBeingConfigured"
+                @configSelected="selectionHandler_layout" >
+        >
+        </config-component>
+      </div>
+
     <section  class="navbar">
         <div v-if="this.viewStatus==this.VIEW_CREATE_LAYOUT">
             <focusTest @layoutInputComplete="saveBlankLayout_new" @layoutInputCanceled="this.showLayoutMenu"></focusTest>
@@ -52,6 +65,7 @@
   import editGrid2 from '../components/editGrid2';
   import gridInput from '../components/gridInput.vue';
   import flexConfig2 from "../components/FlexConfig2.vue";
+  import configComponent from "../components/configComponent.vue";
 
 //  import headlineComponent from '../components/headlineComponent.vue';
 //  import HeadlineConfig from '../components/ConfigureHeadline.vue';
@@ -61,7 +75,7 @@
 
   export default {
     name: "testLayoutTemplate",
-    components: {LayoutListLine, layoutListHeader, focusTest, editGrid2, gridInput, flexConfig2},
+    components: {LayoutListLine, layoutListHeader, focusTest, editGrid2, gridInput, flexConfig2, configComponent},
  /*
     directives: {
       Draggable,
@@ -86,6 +100,7 @@
         VIEW_GRID_MENU:2,
         VIEW_CARD_MENU:3,
         VIEW_HEADLINE_CONFIG:4,
+        VIEW_FLOATING_CONFIG:5,
         viewStatus: this.VIEW_TOP_MENU,
         allLayouts: [],
         newLayout: {},
@@ -106,7 +121,18 @@
         screenElementBeingConfigured: {},
         cardDataFunction:null,
         cardConfigurationElements:{},
-        cardCurrentConfigurationValues:{}
+        cardCurrentConfigurationValues:{},
+
+        componentLeft:0,
+        componentTop:0,
+        styleObject:{
+          left: '0px',
+          top: '100px',
+        },
+        offsetLeft:0,
+        offsetTop:0,
+        showDrg:true
+
       }
     },
     methods:{
@@ -331,7 +357,7 @@
           this.cardDataFunction = msg[3];
           this.cardConfigurationElements=msg[4];
           this.cardCurrentConfigurationValues=msg[5];
-          this.viewStatus = this.VIEW_HEADLINE_CONFIG;
+          this.viewStatus = this.VIEW_FLOATING_CONFIG;
 //          var cardId = msg[7].id;
 //          this.cardDataFunction(cardId, 'loadConfiguration' );
 
@@ -340,6 +366,22 @@
 //            this.viewStatus = this.VIEW_HEADLINE_CONFIG;
 //          }
         }
+
+      },
+
+      setNewLocation(msg){
+// eslint-disable-next-line no-debugger
+//      debugger;
+        this.componentLeft = msg[0]-this.offsetLeft;
+        this.componentTop = msg[1]-this.offsetTop;
+
+        this.styleObject.left = this.componentLeft+'px';
+        this.styleObject.top= this.componentTop+'px';
+      },
+      startDrag(msg){
+        console.log(msg);
+        this.offsetLeft = msg[0]-this.componentLeft;
+        this.offsetTop = msg[1]-this.componentTop;
 
       }
 
@@ -358,7 +400,7 @@
 
     }
     .layoutScreen {
-
+        position: relative;
     }
     .content {
         margin-left: 2px;
@@ -403,4 +445,14 @@
         background-color: #fff722;
         color:red;
     }
+    #infoi {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+    }
+    #infoi {
+        z-index: 10;
+    }
+
+
 </style>
