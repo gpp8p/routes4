@@ -7,6 +7,7 @@
 <script>
 /* eslint-disable no-console,no-debugger */
 
+
 import CardBase from "../components/CardBase.vue";
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import VueCkeditor from 'vue-ckeditor5'

@@ -75,6 +75,7 @@
     }
 </script>
 
+
 <style scoped>
     .redClass {
         height:200px;
