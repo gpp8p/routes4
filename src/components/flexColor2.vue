@@ -1,12 +1,15 @@
 <template>
-        <span>
+        <span class="colorSpan">
                 <label class="input-color-label" for="input-color">
                      {{configElement.prompt}}
                 </label>
 
                 <span class="input-color-container">
-                      <input  id="input-color" type="color" class="input-color" @change="newColor" :value="val"/>
+                    <input  id="input-color" type="color" class="input-color" @change="newColor" :value="val"/>
                 </span>
+
+
+
         </span>
 </template>
 
@@ -67,6 +70,7 @@
                 height: 20px;
                 top: 2px;
                 margin-right: 5px;
+                margin-top: 10px;
                 border: solid 2px #ddd;
                 border-radius: 40px;
         }
@@ -83,8 +87,11 @@
         .input-color-label {
                 cursor: pointer;
                 text-decoration: underline;
-                color: #3498db;
+                color: #dbd50c;
                 margin-right: 30px;
+        }
+        .colorSpan{
+            margin-left: 26px;
         }
 
 </style>

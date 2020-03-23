@@ -104,7 +104,7 @@ export default {
         {
           "label": "Headline",
           "configurationElements": [
-            { "type": "input", "element": "title", "valueFrom":"title", "fieldSize": "80", "prompt": "Enter Text:" }
+            { "type": "input", "element": "title", "valueFrom":"title", "fieldSize": "60", "prompt": "Enter Text:" }
           ]
         },
         {
@@ -116,14 +116,14 @@ export default {
               "selectOptions": ['10pt', '12pt', '18pt', '24pt', '36pt', '48pt', '72pt'],
               "valueFrom":"fontSize",
               "element": "fontSize",
-              "prompt": "Size?"
+              "prompt": "Size"
             },
             {
               "type": "select",
               "selectOptions": ['normal', 'bold', 'bolder', 'lighter'],
               "valueFrom":"fontWeight",
               "element": "fontWeight",
-              "prompt": "Weight?"
+              "prompt": "Weight"
             },
             {
               "type": "select",
@@ -137,7 +137,7 @@ export default {
               "selectOptions": ['left', 'center', 'right'],
               "valueFrom":"textAlign",
               "element": "textAlign",
-              "prompt": "Align:"
+              "prompt": "Align"
             },
             { "type": "color", "valueFrom":"color", "element": "color", "prompt": "Color:" }
           ]

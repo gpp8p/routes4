@@ -1,9 +1,11 @@
 <template>
    <span>
+
         <select class="selectStyle" v-model="this.selectValue" ref="thisSelect" @change="broadcastValue(event)">
             <option class="optionStyle" value="" disabled selected>{{this.configElement.prompt}}</option>
             <option class="optionStyle" v-for="(val, index) in selectionOptions" :selected="val==selectedValue" :key="index" v-bind:value="val" >{{ val }}</option>
         </select>
+       <span> - {{this.configElement.prompt}}</span>
     </span>
 
 </template>
@@ -65,10 +67,12 @@
         color:blue;
         font-weight: bold;
         font-size: 12px;
+        margin-bottom: 3px;
     }
     .optionStyle {
         background: #DBAA6E;
         color:blue;
+        width: 60px;
     }
 
 </style>

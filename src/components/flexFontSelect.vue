@@ -1,10 +1,11 @@
 <template>
       <span>
-            <span :style="{fontFamily : focused_font}">Font to use: </span>
+
             <select v-model="focused_font" class="selectStyle" ref="fontSelect" @change="fontSelected()">
                 <option value="" disabled selected class="optionStyle">Font</option>
                 <option v-for="(font, index) in available_fonts" :key="index" v-bind:value="font" :selected="font==focused_font" v-bind:style="{fontFamily : font}" class="optionStyle" >{{ font }}</option>
             </select>
+          <span :style="{fontFamily : focused_font}"> - Font to use</span>
         </span>
 
 </template>
@@ -67,10 +68,12 @@
         color:blue;
         font-weight: bold;
         font-size: 12px;
+        margin-bottom: 3px;
     }
     .optionStyle {
         background: #DBAA6E;
         color:blue;
+        width:60px;
     }
 
 

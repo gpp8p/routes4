@@ -1,5 +1,8 @@
 <template>
-    <MyButton @myButtonClicked="saveConfiguration" buttonLabel="Save Configuration"></MyButton>
+    <span class="saveConfigButton">
+        <MyButton @myButtonClicked="saveConfiguration" buttonLabel="Save Configuration"></MyButton>
+    </span>
+
 </template>
 
 <script>
@@ -30,5 +33,8 @@
 </script>
 
 <style scoped>
+    .saveConfigButton {
+        margin-left: 35%;
+    }
 
 </style>

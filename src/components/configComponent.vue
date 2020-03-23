@@ -1,7 +1,9 @@
 <template>
 
         <div id="drg" class="redClass" ref="drg"  draggable="true"  @dragstart="handleDragStart" @dragend="handleDragEnd" >
-                <div class="configComponentHeader"></div>
+                <div class="configComponentHeader">
+                        <span class="headingText">Configure Card</span>
+                </div>
                 <div class="configComponentBody">
                         <br/>
                         <configElement v-for="(configElement, index) in this.configurationElements[configurationLine].configurationElements"
@@ -9,7 +11,7 @@
                                        :configElement="configElement"
                                        :key="index"
                                        @configSelected="selectionHandler_flexConfig2"  ></configElement>
-                        <nextCancelButtons :currentStatus="this.configurationLine" @buttonClick="bumpLine" ></nextCancelButtons>
+                        <next-cancel-link :currentStatus="this.configurationLine" @buttonClick="bumpLine" ></next-cancel-link>
                 </div>
         </div>
 
@@ -17,11 +19,11 @@
 
 <script>
         import configElement from "../components/configElement.vue";
-        import nextCancelButtons from "../components/nextCancelButtons.vue";
+        import nextCancelLink from "../components/nextCancelLink.vue";
 
         export default {
         name: "configComponent",
-        components: {configElement, nextCancelButtons},
+        components: {configElement, nextCancelLink},
         data(){
             return {
                mouseIsDown:false,
@@ -95,6 +97,23 @@
                         this.$emit('configSelected',[msg[0],msg[1],this.openExpander, this.closeExpander ]);
                 },
 
+                bumpLine(msg){
+//        debugger;
+                        if(this.configurationLine<this.configurationElements.length){
+                                switch(msg[0]){
+                                        case 'cancel':
+                                                this.$emit('configSelected',[msg[0]]);
+                                                break;
+                                        case 'next':
+                                                this.configurationLine++;
+                                                break;
+                                        case 'previous':
+                                                this.configurationLine--;
+                                                break;
+                                }
+                        }
+                }
+
         }
     }
 </script>
@@ -102,7 +121,7 @@
 
 <style scoped>
     .redClass {
-        height:200px;
+        height:250px;
         width:500px;
         background-color: #ab97ff;
         border: 2px solid blue;
@@ -114,9 +133,20 @@
                 background-color: #fff722;
                 border-top-left-radius: 8px;
                 border-top-right-radius: 8px;
+                text-align: center;
+                color: blue;
+                font-family: Geneva;
+                font-size: 12px;
+                font-style: normal;
+                font-weight: bold;
+        }
+        .headingText{
+                margin-top: 5px;
         }
         .configComponentBody {
                 height: 90%;
+                margin-left: 10px;
+                margin-right: 10px;
         }
 
 </style>
