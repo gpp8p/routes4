@@ -3,6 +3,7 @@
         <div id="drg" class="redClass" ref="drg"  draggable="true"  @dragstart="handleDragStart" @dragend="handleDragEnd" >
                 <div class="configComponentHeader"></div>
                 <div class="configComponentBody">
+                        <br/>
                         <configElement v-for="(configElement, index) in this.configurationElements[configurationLine].configurationElements"
                                        :currentValues="currentValues"
                                        :configElement="configElement"
@@ -71,6 +72,29 @@
                     // eslint-disable-next-line no-console
                console.log(evt);
             },
+                selectionHandler_flexConfig2(msg){
+                        // eslint-disable-next-line no-debugger
+                        debugger;
+                        // eslint-disable-next-line no-console
+                        console.log('selectionHandler');
+                        // eslint-disable-next-line no-console
+                        console.log(msg);
+                        if (msg[1] == 'activated'){
+                                //open expander function
+                                msg[2](msg[0]);
+                                this.closeExpanderFunction = msg[3];
+                        }else if(msg[1]== 'deactivated'){
+                                msg[3](msg[0]);
+                                //          this.closeExpanderFunction();
+                        }
+                        if(typeof msg[4] != 'undefined'){
+                                if(msg[4]==true){
+                                        this.bumpLine(['next']);
+                                }
+                        }
+                        this.$emit('configSelected',[msg[0],msg[1],this.openExpander, this.closeExpander ]);
+                },
+
         }
     }
 </script>

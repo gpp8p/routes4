@@ -82,7 +82,7 @@ export default {
               "prompt": "Background Type ?",
               "valueFrom":"backgroundTypeImage",
               "radioOptions": ['Image'],
-              "onClick": [{ "type": "file", "element": "backgroundImage", "prompt": "Upload Background Image ?" }]
+              "onClick": [{ "type": "file", "element": "backgroundImage", "prompt": "Upload -" }]
             },
             {
               "type": "checkbox", "element": "border", "valueFrom":"borderInclude", "prompt": "Include Border?",

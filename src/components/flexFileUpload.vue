@@ -1,7 +1,7 @@
 <template>
     <span>
         {{this.configElement.prompt}} <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
-        <MyButton @myButtonClicked="submitFile" buttonLabel="Save This File?"></MyButton>
+        <MyButton @myButtonClicked="submitFile" buttonLabel="Save ?"></MyButton>
     </span>
 </template>
 

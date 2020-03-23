@@ -52,6 +52,7 @@
 //        debugger;
         var currentValuesEntries = Object.entries(this.currentValues);
         for(var v = 0;v<currentValuesEntries.length;v++){
+//          debugger;
           var thisCurrentValue = currentValuesEntries[v];
           if(thisCurrentValue[0]==this.configElement.valueFrom){
             var currentValuesEntriesParts = currentValuesEntries[v][1];

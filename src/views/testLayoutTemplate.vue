@@ -359,6 +359,7 @@
           this.cardConfigurationElements=msg[4];
           this.cardCurrentConfigurationValues=msg[5];
           this.viewStatus = this.VIEW_FLOATING_CONFIG;
+//          this.viewStatus=this.VIEW_HEADLINE_CONFIG;
 //          var cardId = msg[7].id;
 //          this.cardDataFunction(cardId, 'loadConfiguration' );
 
