@@ -91,9 +91,9 @@ export default {
                 "selectOptions": ['thin', 'medium', 'thick'],
                 "valueFrom":"borderSize",
                 "element": "borderSize",
-                "prompt": "Border Size?"
+                "prompt": "Size?"
               },
-                { "type": "color", "valueFrom":"borderColor", "element": "borderColor", "prompt": "Border Color" }]
+                { "type": "color", "valueFrom":"borderColor", "element": "borderColor", "prompt": "Color ?" }]
             },
             {
               "type": "checkbox", "element": "shadow", "valueFrom":"shadow", "prompt": "Shadow ?"

@@ -1,7 +1,13 @@
 <template>
-  <div v-on:click="cellClicked" >
+  <span>
+    <div class="configComponentHeader">
+          <span class="headingText"><MyClickLink @myButtonClicked="pageLinkClicked" buttonLabel="Page Link Helper"></MyClickLink></span>
+    </div>
+  <div v-on:click="cellClicked" class="configComponentBody">
     <vue-ckeditor type="classic" v-model="editorData" :config="editorConfig" :editors="editors"></vue-ckeditor>
   </div>
+
+  </span>
 </template>
 
 <script>
@@ -11,6 +17,7 @@
 import CardBase from "../components/CardBase.vue";
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import VueCkeditor from 'vue-ckeditor5'
+import MyClickLink from "../components/MyClickLink.vue"
 //import EssentialsPlugin from '@ckeditor/ckeditor5-essentials/src/essentials';
 //import BoldPlugin from '@ckeditor/ckeditor5-basic-styles/src/bold';
 //import ItalicPlugin from '@ckeditor/ckeditor5-basic-styles/src/italic';
@@ -21,7 +28,8 @@ export default {
   name: "cktestComponent",
   extends: CardBase,
   components: {
-    'vue-ckeditor': VueCkeditor.component
+    'vue-ckeditor': VueCkeditor.component,
+    MyClickLink
   },
 
   props: {
@@ -139,6 +147,9 @@ export default {
 //      debugger;
       console.log('cktestComponent was clicked');
     },
+    pageLinkClicked(){
+      this.$emit('linkHelperRequested');
+    },
     refId: function() {
       return "card" + this.cardId;
     },
@@ -157,6 +168,25 @@ export default {
 </script>
 
 <style scoped>
+  .configComponentHeader{
+    height:7%;
+    background-color: #c4e1ff;
+    text-align: center;
+    color: blue;
+    font-family: Geneva;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: bold;
+  }
+  .headingText{
+    margin-top: 5px;
+  }
+  .configComponentBody {
+    height: 93%;
+  }
+
+
+
 .cardStyle {
   height: 100%;
   width: 100%;

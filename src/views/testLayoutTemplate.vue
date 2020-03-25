@@ -1,7 +1,7 @@
 <template>
     <span class="layoutScreen">
       <div v-if="this.viewStatus==this.VIEW_FLOATING_CONFIG" id="infoi" v-bind:style='styleObject' >
-        <config-component
+        <config-component v-if="this.draggedComponent=='configComponent'"
                 @newLocation="this.setNewLocation"
                 @startDrag="this.startDrag"
                 :cardType="this.cardTypeBeingConfigured"
@@ -11,6 +11,14 @@
                 @configSelected="selectionHandler_layout" >
         >
         </config-component>
+        <page-directory v-if="this.draggedComponent=='linkHelper'"
+                        @newLocation="this.setNewLocation"
+                        @startDrag="this.startDrag"
+                        @configSelected="selectionHandler_layout" >
+
+        >
+        </page-directory>
+
       </div>
 
     <section  class="navbar">
@@ -49,7 +57,7 @@
                 </LayoutListLine>
         </div>
         <div v-if="gridView" style = "position: relative;">
-            <editGrid2  :layoutId="selectedLayoutId"  ref="editGrid" @storeValue="cellClicked" @configurationHasBeenSaved="configurationHasBeenSaved" @cardDataLoaded="cardDataLoaded"></editGrid2>
+            <editGrid2  :layoutId="selectedLayoutId"  ref="editGrid" @storeValue="cellClicked" @configurationHasBeenSaved="configurationHasBeenSaved" @cardDataLoaded="cardDataLoaded" @linkHelperRequested="linkHelperRequested"></editGrid2>
         </div>
     </section>
     </span>
@@ -67,6 +75,7 @@
   import gridInput from '../components/gridInput.vue';
   import flexConfig2 from "../components/FlexConfig2.vue";
   import configComponent from "../components/configComponent.vue";
+  import pageDirectory from "../components/pageDirectory.vue";
 
 //  import headlineComponent from '../components/headlineComponent.vue';
 //  import HeadlineConfig from '../components/ConfigureHeadline.vue';
@@ -76,7 +85,7 @@
 
   export default {
     name: "testLayoutTemplate",
-    components: {LayoutListLine, layoutListHeader, focusTest, editGrid2, gridInput, flexConfig2, configComponent},
+    components: {LayoutListLine, layoutListHeader, focusTest, editGrid2, gridInput, flexConfig2, configComponent, pageDirectory},
  /*
     directives: {
       Draggable,
@@ -132,7 +141,8 @@
         },
         offsetLeft:0,
         offsetTop:0,
-        showDrg:true
+        showDrg:true,
+        draggedComponent:''
 
       }
     },
@@ -232,6 +242,10 @@
         }).catch(function(error) {
           console.log(error);
         });
+      },
+      linkHelperRequested(){
+        this.viewStatus=this.VIEW_FLOATING_CONFIG;
+        this.draggedComponent="linkHelper";
       },
       fontSelectionMade(msg){
 //        debugger;
@@ -359,6 +373,7 @@
           this.cardConfigurationElements=msg[4];
           this.cardCurrentConfigurationValues=msg[5];
           this.viewStatus = this.VIEW_FLOATING_CONFIG;
+          this.draggedComponent = 'configComponent';
 //          this.viewStatus=this.VIEW_HEADLINE_CONFIG;
 //          var cardId = msg[7].id;
 //          this.cardDataFunction(cardId, 'loadConfiguration' );
@@ -379,11 +394,14 @@
 
         this.styleObject.left = this.componentLeft+'px';
         this.styleObject.top= this.componentTop+'px';
+
       },
       startDrag(msg){
+//        debugger;
         console.log(msg);
         this.offsetLeft = msg[0]-this.componentLeft;
         this.offsetTop = msg[1]-this.componentTop;
+
 
       }
 

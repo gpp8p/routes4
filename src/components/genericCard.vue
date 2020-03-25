@@ -34,6 +34,7 @@
                           @configurationHasBeenSaved="configurationHasBeenSaved"
                           @cardDataLoaded="cardDataLoaded"
                           @cardPropertySet="cardPropertySet"
+                          @linkHelperRequested="linkHelperRequested"
                           ref="cardKey"
         ></cktestComponent>
 
@@ -123,7 +124,11 @@
       cardPropertySet(msg){
         console.log(msg);
         this.setCardData(msg[0], msg[1]);
+      },
+      linkHelperRequested(){
+        this.$emit('linkHelperRequested');
       }
+
     }
   };
 </script>

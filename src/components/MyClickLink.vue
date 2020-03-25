@@ -23,7 +23,7 @@ export default {
      .linkStyle {
           margin-left: 10px;
           margin-right: 10px;
-          color: yellow;
+          color: #0537aa;
      }
      /* unvisited link */
      a:hover {

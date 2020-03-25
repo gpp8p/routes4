@@ -14,6 +14,7 @@
       @cardClick="processCardClick"
       @configurationHasBeenSaved="configurationHasBeenSaved"
       @cardDataLoaded="cardDataLoaded"
+      @linkHelperRequested="linkHelperRequested"
       ref="key"
       ></generic-card>
 
@@ -109,6 +110,9 @@ export default {
     },
     cardDataLoaded(msg){
       this.$emit('cardDataLoaded',msg);
+    },
+    linkHelperRequested(){
+      this.$emit("linkHelperRequested");
     },
     reloadLayout: function(msg) {
 //      debugger;
