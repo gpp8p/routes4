@@ -4,7 +4,11 @@
             <span class="headingText">Select Page</span>
         </div>
         <div class="configComponentBody">
-            <input type="text" v-model="message">
+            <select v-model="layoutSelected" @change="setMessage">
+                <option v-for="(option, index) in allLayouts" v-bind:value="option.id" :key="index">
+                    {{ option.menu_label }}
+                </option>
+            </select>
             <button type="button"
                     v-clipboard:copy="message"
                     v-clipboard:success="onCopy"
@@ -17,16 +21,36 @@
 <script>
   import Vue from 'vue'
   import VueClipboard from 'vue-clipboard2'
+  import axios from "axios";
 
   Vue.use(VueClipboard)
   export default {
     name: "pageDirectory",
     data: function () {
       return {
-        message: 'Copy These Text'
+        message: '',
+        allLayouts: [],
+        layoutSelected:0
       }
     },
+    mounted: function() {
+      axios.get('http://localhost:8000//layoutList')
+        .then(response => {
+// eslint-disable-next-line no-debugger
+          // JSON responses are automatically parsed.
+          this.allLayouts = response.data;
+        })
+        .catch(e => {
+          this.errors.push(e);
+        });
+    },
     methods:{
+      layoutUrl(){
+        return 'http://localhost:8000/getLayout?layoutId='+this.layoutSelected;
+      },
+      setMessage(){
+        this.message='http://localhost:8000/getLayout?layoutId='+this.layoutSelected;
+      },
       handleDragStart(evt){
         this.firstMouseX = evt.screenX;
         this.firstMouseY = evt.screenY;
