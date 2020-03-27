@@ -24,7 +24,37 @@
   import DisplayCkCard from "./displayCkCard";
   export default {
     name: "displayGenericCard",
-    components: { DisplayCkCard, DisplayGreenCard }
+    components: { DisplayCkCard, DisplayGreenCard },
+    props: {
+      cardType: {
+        type: String,
+        required: true
+      },
+      cardStyle: {
+        type: String,
+        required: true
+      },
+      cardId: {
+        type: String,
+        required: true
+      },
+      cardKey:{
+        type: String,
+        required: true
+      },
+      cardPosition: {
+        type: Array,
+        required: true
+      },
+      gridCss: {
+        type: String,
+        required: true
+      },
+      cardProperties: {
+        type: String,
+        required: false
+      }
+    },
   };
 </script>
 

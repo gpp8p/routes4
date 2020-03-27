@@ -1,6 +1,6 @@
 <template>
     <span class="layoutScreen">
-        <display-layout></display-layout>
+        <display-layout :layoutId="selectedLayoutId" ></display-layout>
     </span>
 </template>
 
@@ -8,7 +8,15 @@
   import displayLayout from "../components/displayLayout.vue";
   export default {
     name: "displayTemplate",
-    components: {displayLayout}
+    components: {displayLayout},
+    created(){
+      this.selectedLayoutId = this.$route.params.layoutId;
+    },
+    data(){
+      return {
+        selectedLayoutId:'',
+      }
+    },
   };
 </script>
 
