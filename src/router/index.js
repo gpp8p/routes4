@@ -12,6 +12,7 @@ import layoutIndex from "../views/LayoutIndex.vue";
 import TheNavigation from "../components/TheNavigation.vue";
 import focusTest from "../views/focusTest.vue";
 import testLayoutTemplate from "../views/testLayoutTemplate.vue";
+import displayTemplate from "../views/displayTemplate.vue";
 
 
 Vue.use(VueRouter);
@@ -87,10 +88,19 @@ const routes = [
     name: "testLayoutTemplate",
     component: testLayoutTemplate
 
+  },
+  {
+    path: "/displayTemplate",
+    name: "displayTemplate",
+    component: displayTemplate,
+    props: (route) => ({
+      layoutId: route.query.layoutId
+    })
   }
 
-
 ];
+
+
 
 const router = new VueRouter({
   routes

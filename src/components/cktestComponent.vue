@@ -4,7 +4,7 @@
           <span class="headingText"><MyClickLink @myButtonClicked="pageLinkClicked" buttonLabel="Page Link Helper"></MyClickLink></span>
     </div>
   <div v-on:click="cellClicked" class="configComponentBody">
-    <vue-ckeditor type="classic" v-model="editorData" :config="editorConfig" :editors="editors"></vue-ckeditor>
+    <vue-ckeditor type="classic" v-model="editorData" :config="editorConfig" :editors="editors" ></vue-ckeditor>
   </div>
 
   </span>
@@ -67,6 +67,7 @@ export default {
       editors: {
         classic: ClassicEditor,
       },
+      maxSize: '400px',
       editorData: '<p>Content of the editor.</p>',
 
 /*
@@ -167,7 +168,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
   .configComponentHeader{
     height:7%;
     background-color: #c4e1ff;
@@ -185,10 +186,13 @@ export default {
     height: 93%;
   }
 
+  .ck-editor__editable {
+    max-height: 500px;
+  }
 
 
-.cardStyle {
-  height: 100%;
-  width: 100%;
-}
+  .cardStyle {
+    height: 100%;
+    width: 100%;
+  }
 </style>

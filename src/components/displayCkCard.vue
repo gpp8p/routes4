@@ -1,4 +1,5 @@
 <template>
+    <span>This is CkCard</span>
     
 </template>
 

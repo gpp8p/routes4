@@ -1,6 +1,6 @@
 <template>
     <span class="layoutScreen">
-        <display-layout :layoutId="selectedLayoutId" ></display-layout>
+        <display-layout :layoutId="layoutId" ></display-layout>
     </span>
 </template>
 
@@ -9,8 +9,17 @@
   export default {
     name: "displayTemplate",
     components: {displayLayout},
-    created(){
+/*    created(){
       this.selectedLayoutId = this.$route.params.layoutId;
+      // eslint-disable-next-line no-debugger
+      debugger;
+    },
+ */
+    props:{
+      layoutId: {
+        type: String,
+        required: true
+      }
     },
     data(){
       return {

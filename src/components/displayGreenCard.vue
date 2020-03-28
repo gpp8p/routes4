@@ -29,6 +29,23 @@
         required: false
       }
     },
+    data(){
+      return {
+        cardTitle:this.getCardProps()
+      }
+    },
+    methods:{
+      getCardProps() {
+//      debugger;
+        if ((typeof this.cardProperties === "undefined") | (this.cardProperties == "")) {
+          return "(Card has no data)";
+        }else {
+          var colonDelimiterLocatedAt= this.cardProperties.indexOf(":");
+          var thisProp = this.cardProperties.substr(colonDelimiterLocatedAt+1);
+          return thisProp;
+        }
+      }
+    }
   };
 </script>
 
